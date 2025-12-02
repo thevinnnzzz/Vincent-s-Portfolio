@@ -110,57 +110,69 @@ const projectsData = {
             docs: null
         }
     },
-    'social-dashboard': {
-        id: 'social-dashboard',
-        name: 'Social Media Dashboard',
-        category: 'React, GraphQL, TailwindCSS',
-        tagline: 'Analytics at Your Fingertips',
-        image: 'https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1636&q=80',
-        shortDescription: 'Analytics dashboard for tracking social media metrics with interactive charts and data visualization.',
-        detailedDescription: 'An advanced social media analytics platform that aggregates data from multiple social networks into a unified dashboard. Built with React and GraphQL, it provides real-time insights into audience engagement, content performance, and growth trends. The dashboard features interactive charts, customizable widgets, and AI-powered recommendations to optimize your social media strategy.',
+    'identify': {
+        id: 'identify',
+        name: 'iDENTify',
+        category: 'Dental Patient Management System',
+        tagline: 'Professional Clinical Management Platform',
+        image: 'images/Projects/iDENTify_LAYOUT/admin/admin-dashboard.png',
+        shortDescription: 'A comprehensive web-based dental patient management system designed to streamline clinical operations for dental clinics and schools.',
+        detailedDescription: 'iDENTify is a comprehensive web-based dental patient management system designed to streamline clinical operations for dental clinics, academic institutions, and dental schools. The system provides complete solutions for managing patient information, clinical procedures, treatment records, and multi-level clinical supervision workflows. Features include multi-role authentication (Admin, Clinician, Clinical Instructor, COD), comprehensive Patient Information Records (PIR) with 5-step forms, procedure logging with auto-assignment to Clinical Instructors, and advanced analytics dashboard with real-time reporting.',
         features: [
             {
-                icon: 'fas fa-chart-bar',
-                title: 'Interactive Charts',
-                description: 'Beautiful, interactive data visualizations for easy insights'
+                icon: 'fas fa-user-shield',
+                title: 'Multi-Role Authentication',
+                description: 'Admin, Clinician, Clinical Instructor, and COD roles with role-based access control (RBAC)'
             },
             {
-                icon: 'fas fa-network-wired',
-                title: 'Multi-Platform',
-                description: 'Connect and analyze multiple social media accounts'
+                icon: 'fas fa-file-medical',
+                title: 'Patient Information Records',
+                description: 'Multi-step patient registration with demographics, health questionnaire, dental examination, and consent forms'
             },
             {
-                icon: 'fas fa-brain',
-                title: 'AI Insights',
-                description: 'Machine learning-powered recommendations and predictions'
+                icon: 'fas fa-stethoscope',
+                title: 'Procedure Logging',
+                description: 'Comprehensive dental procedure logging with auto-assignment to available Clinical Instructors'
             },
             {
-                icon: 'fas fa-file-export',
-                title: 'Export Reports',
-                description: 'Generate and export comprehensive analytics reports'
+                icon: 'fas fa-user-md',
+                title: 'Clinical Workflows',
+                description: 'COD assigns patients to Clinical Instructors with acceptance/approval workflows'
             },
             {
-                icon: 'fas fa-clock',
-                title: 'Real-time Data',
-                description: 'Live metrics and instant updates from all platforms'
+                icon: 'fas fa-chart-line',
+                title: 'Analytics Dashboard',
+                description: 'Role-specific statistics, patient status charts, and monthly submission trends'
             },
             {
-                icon: 'fas fa-sliders-h',
-                title: 'Custom Widgets',
-                description: 'Customizable dashboard widgets for personalized views'
+                icon: 'fas fa-moon',
+                title: 'Modern UI/UX',
+                description: 'Dark mode support, responsive design, and smooth animations with Tailwind CSS'
             }
         ],
         techStack: [
-            { name: 'React', icon: 'fab fa-react', color: 'text-blue-400' },
-            { name: 'GraphQL', icon: 'fas fa-project-diagram', color: 'text-pink-500' },
-            { name: 'TailwindCSS', icon: 'fas fa-palette', color: 'text-blue-500' },
+            { name: 'PHP', icon: 'fab fa-php', color: 'text-indigo-600' },
+            { name: 'MySQL', icon: 'fas fa-database', color: 'text-blue-600' },
+            { name: 'Tailwind CSS', icon: 'fas fa-palette', color: 'text-blue-500' },
+            { name: 'JavaScript', icon: 'fab fa-js', color: 'text-yellow-500' },
             { name: 'Chart.js', icon: 'fas fa-chart-pie', color: 'text-purple-500' },
-            { name: 'Node.js', icon: 'fab fa-node-js', color: 'text-green-500' }
+            { name: 'PDO', icon: 'fas fa-shield-alt', color: 'text-green-600' }
         ],
         links: {
-            live: '#',
-            github: '#',
+            live: null,
+            github: null,
             docs: null
+        },
+        // Image Viewer Configuration
+        hasImageViewer: true,
+        imageViewerConfig: {
+            userTypes: [
+                { id: 'admin', name: 'Admin', count: 54 },
+                { id: 'cod', name: 'COD', count: 11 },
+                { id: 'clinician', name: 'Clinician', count: 44 },
+                { id: 'ci', name: 'Clinical Instructor', count: 38 }
+            ],
+            basePath: 'images/Projects/iDENTify_layout/'
         }
     },
     'weather-app': {

@@ -15,6 +15,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="tailwind-config.js"></script>
+    <!-- Image Viewer Component -->
+    <link rel="stylesheet" href="image-viewer.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
@@ -202,6 +204,25 @@
             </div>
         </section>
 
+        <!-- Image Viewer Section (iDENTify only) -->
+        <section id="image-viewer-section" class="py-20 hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold mb-4">System <span class="gradient-text">Screenshots</span></h2>
+                    <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                    <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                        Explore the iDENTify system interface for different user roles
+                    </p>
+                </div>
+
+                <!-- User Type Selector -->
+                <div id="user-type-selector" class="user-type-selector"></div>
+
+                <!-- Image Viewer Container -->
+                <div id="image-viewer-container" class="image-viewer-container"></div>
+            </div>
+        </section>
+
         <!-- Technology Stack Section -->
         <section class="py-20">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -248,6 +269,7 @@
 
     <!-- Scripts -->
     <script src="projects-data.js"></script>
+    <script src="image-viewer.js"></script>
     <script src="project-overview.js"></script>
 </body>
 

@@ -101,6 +101,20 @@ function displayProject(project) {
     document.getElementById('loading').classList.add('hidden');
     document.getElementById('project-content').classList.remove('hidden');
 
+    // Initialize Image Viewer for iDENTify project
+    if (project.hasImageViewer && project.imageViewerConfig) {
+        const viewerSection = document.getElementById('image-viewer-section');
+        if (viewerSection) {
+            viewerSection.classList.remove('hidden');
+            // Initialize the image viewer component
+            setTimeout(() => {
+                if (window.initImageViewer) {
+                    window.initImageViewer(project.imageViewerConfig);
+                }
+            }, 100);
+        }
+    }
+
     // Add fade-in animation to feature cards
     setTimeout(() => {
         document.querySelectorAll('.feature-card, .tech-badge').forEach((el, index) => {
