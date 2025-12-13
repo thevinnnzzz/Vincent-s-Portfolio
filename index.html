@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vicent's Portfolio</title>
+
+    <!-- Favicon (using Font Awesome briefcase icon) -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/svgs/solid/briefcase.svg"
+        type="image/svg+xml">
+
+    <!-- Fallback for older browsers -->
+    <link rel="alternate icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4bc.png"
+        type="image/png">
+    <link rel="mask-icon"
+        href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/svgs/solid/briefcase.svg"
+        color="#000000">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="tailwind-config.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.5s ease;
+        }
+
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .active-nav::after {
+            width: 100%;
+        }
+
+        .blob {
+            filter: blur(60px);
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-card img {
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            left: -10px;
+            top: 0;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+        }
+
+        .skill-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .skill-progress {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 1s ease-in-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <!-- Floating blobs -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-500 blob animate-float"></div>
+        <div class="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-purple-500 blob animate-float-reverse"></div>
+        <div class="absolute bottom-1/4 right-1/3 w-56 h-56 rounded-full bg-pink-500 blob animate-float"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-xl font-bold gradient-text">Vincent's Portfolio</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-8">
+                        <a href="#home" class="nav-link px-3 py-2 text-sm font-medium active-nav">Home</a>
+                        <a href="#about" class="nav-link px-3 py-2 text-sm font-medium">About</a>
+                        <a href="#skills" class="nav-link px-3 py-2 text-sm font-medium">Skills</a>
+                        <a href="#projects" class="nav-link px-3 py-2 text-sm font-medium">Projects</a>
+                        <a href="#experience" class="nav-link px-3 py-2 text-sm font-medium">Experience</a>
+                        <a href="#certificates" class="nav-link px-3 py-2 text-sm font-medium">Certificates</a>
+                        <a href="#contact" class="nav-link px-3 py-2 text-sm font-medium">Contact</a>
+                        <button id="theme-toggle" class="p-2 rounded-full focus:outline-none">
+                            <i class="fas fa-moon text-gray-700 dark:text-yellow-300"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="p-2 rounded-md focus:outline-none">
+                        <i class="fas fa-bars text-gray-700 dark:text-gray-200"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 shadow-lg rounded-b-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium">Skills</a>
+                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium">Projects</a>
+                <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium">Experience</a>
+                <a href="#certificates" class="block px-3 py-2 rounded-md text-base font-medium">Certificates</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+                <div class="px-3 py-2">
+                    <button id="mobile-theme-toggle" class="p-2 rounded-full focus:outline-none">
+                        <i class="fas fa-moon text-gray-700 dark:text-yellow-300"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                        Hi, I'm <span class="gradient-text">Vincent</span>
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl font-semibold mb-6">
+                        <span class="inline-block mr-2">Creative</span>
+                        <span class="inline-block mr-2">Frontend</span>
+                        <span class="inline-block">Developer</span>
+                    </h2>
+                    <p class="text-lg mb-8 max-w-lg mx-auto md:mx-0">
+                        I build exceptional digital experiences with modern technologies and beautiful designs.
+                    </p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                        <a href="#contact"
+                            class="px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                            Contact Me
+                        </a>
+                        <a href="#projects"
+                            class="px-8 py-3 rounded-full border-2 border-gray-300 dark:border-gray-600 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 transform hover:scale-105">
+                            View Work
+                        </a>
+                    </div>
+                    <div class="mt-8 flex justify-center md:justify-start space-x-6">
+                        <a href="#"
+                            class="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
+                            <i class="fab fa-github text-2xl"></i>
+                        </a>
+                        <a href="#"
+                            class="text-gray-600 dark:text-gray-300 hover:text-blue-400 dark:hover:text-blue-400 transition-colors duration-300">
+                            <i class="fab fa-linkedin text-2xl"></i>
+                        </a>
+                        <a href="#"
+                            class="text-gray-600 dark:text-gray-300 hover:text-pink-500 dark:hover:text-pink-400 transition-colors duration-300">
+                            <i class="fab fa-dribbble text-2xl"></i>
+                        </a>
+                        <a href="#"
+                            class="text-gray-600 dark:text-gray-300 hover:text-blue-400 dark:hover:text-blue-400 transition-colors duration-300">
+                            <i class="fab fa-twitter text-2xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto relative">
+                        <div
+                            class="absolute inset-0 rounded-full bg-gradient-to-br from-blue-400 to-purple-600 opacity-20 animate-spin-slow">
+                        </div>
+                        <div
+                            class="absolute inset-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 opacity-20 animate-spin-slow animation-delay-2000">
+                        </div>
+                        <div
+                            class="absolute inset-8 rounded-full bg-gradient-to-br from-blue-600 to-purple-500 opacity-20 animate-spin-slow animation-delay-4000">
+                        </div>
+                        <img src="images/profile.webp" alt="Profile"
+                            class="relative w-full h-full rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-xl">
+                    </div>
+                    <div
+                        class="absolute -bottom-6 -left-6 w-24 h-24 rounded-full bg-blue-500/20 animate-bounce-slow hidden md:block">
+                    </div>
+                    <div
+                        class="absolute -top-6 -right-6 w-20 h-20 rounded-full bg-purple-500/20 animate-bounce-slow hidden md:block">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">About <span class="gradient-text">Me</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    Get to know more about who I am and what I do
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <div
+                        class="w-full h-80 md:h-96 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-xl overflow-hidden">
+                        <img src="images/aboutMe.jpg" alt="About me"
+                            class="w-full h-full object-cover mix-blend-overlay opacity-90">
+                    </div>
+                    <div
+                        class="absolute -bottom-6 -left-6 w-32 h-32 rounded-2xl bg-blue-500/20 -z-10 animate-float hidden md:block">
+                    </div>
+                    <div
+                        class="absolute -top-6 -right-6 w-28 h-28 rounded-2xl bg-purple-500/20 -z-10 animate-float-reverse hidden md:block">
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">Who am I?</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">
+                        I'm a passionate frontend developer with 5+ years of experience creating beautiful, functional,
+                        and user-friendly web applications. I specialize in React, Vue.js, and modern CSS frameworks.
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">
+                        My approach combines technical expertise with an eye for design, ensuring that the websites I
+                        build are not only performant but also visually stunning and intuitive to use.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center mr-4">
+                                <i class="fas fa-user text-blue-500"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">Name</p>
+                                <p class="text-gray-500 dark:text-gray-400">Vincent Dela Cruz</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-purple-500"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">Email</p>
+                                <p class="text-gray-500 dark:text-gray-400">vespanola636@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-pink-500/10 flex items-center justify-center mr-4">
+                                <i class="fas fa-map-marker-alt text-pink-500"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">Location</p>
+                                <p class="text-gray-500 dark:text-gray-400">Manila, Philippines</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center mr-4">
+                                <i class="fas fa-briefcase text-indigo-500"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">Freelance</p>
+                                <p class="text-gray-500 dark:text-gray-400">Available</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#"
+                            class="px-6 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300">
+                            Download CV
+                        </a>
+                        <a href="#contact"
+                            class="px-6 py-2 rounded-full border-2 border-gray-300 dark:border-gray-600 font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
+                            Hire Me
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">My <span class="gradient-text">Skills</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    The technologies and tools I use to bring ideas to life
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">Frontend Development</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>HTML/CSS</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>JavaScript</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>React</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Vue.js</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">Other Skills</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>UI/UX Design</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Node.js</span>
+                                <span>70%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Git</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Testing</span>
+                                <span>65%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16">
+                <h3 class="text-xl font-semibold mb-8 text-center">Tools & Technologies</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                    <div
+                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
+                        <i class="fab fa-html5 text-4xl text-orange-500 mb-3"></i>
+                        <span>HTML5</span>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
+                        <i class="fab fa-css3-alt text-4xl text-blue-500 mb-3"></i>
+                        <span>CSS3</span>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
+                        <i class="fab fa-js text-4xl text-yellow-500 mb-3"></i>
+                        <span>JavaScript</span>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
+                        <i class="fab fa-react text-4xl text-blue-400 mb-3"></i>
+                        <span>React</span>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
+                        <i class="fab fa-vuejs text-4xl text-green-500 mb-3"></i>
+                        <span>Vue.js</span>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
+                        <i class="fab fa-node-js text-4xl text-green-600 mb-3"></i>
+                        <span>Node.js</span>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
+                        <i class="fab fa-git-alt text-4xl text-orange-600 mb-3"></i>
+                        <span>Git</span>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
+                        <i class="fab fa-npm text-4xl text-red-500 mb-3"></i>
+                        <span>npm</span>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
+                        <i class="fab fa-sass text-4xl text-pink-500 mb-3"></i>
+                        <span>Sass</span>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
+                        <i class="fab fa-figma text-4xl text-purple-500 mb-3"></i>
+                        <span>Figma</span>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
+                        <i class="fas fa-database text-4xl text-blue-600 mb-3"></i>
+                        <span>MongoDB</span>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
+                        <i class="fab fa-github text-4xl text-gray-700 dark:text-gray-300 mb-3"></i>
+                        <span>GitHub</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">My <span class="gradient-text">Projects</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    Some of my recent work and personal projects
+                </p>
+            </div>
+
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Projects will be dynamically loaded here -->
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="#"
+                    class="px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center">
+                    View All Projects
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">My <span class="gradient-text">Experience</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    My professional journey and education
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-8 text-center">Work Experience</h3>
+                    <div class="relative pl-8 timeline">
+                        <!-- Experience 1 -->
+                        <div class="mb-8 timeline-item relative pl-8">
+                            <div
+                                class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold">Senior Frontend Developer</h4>
+                                    <span
+                                        class="text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 px-3 py-1 rounded-full">2021
+                                        - Present</span>
+                                </div>
+                                <h5 class="text-blue-500 dark:text-blue-400 mb-2">Tech Solutions Inc.</h5>
+                                <p class="text-gray-600 dark:text-gray-300">
+                                    Lead the frontend development team, implementing modern React applications with
+                                    TypeScript and Redux. Improved application performance by 40% through code
+                                    optimization.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Experience 2 -->
+                        <div class="mb-8 timeline-item relative pl-8">
+                            <div
+                                class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold">Frontend Developer</h4>
+                                    <span
+                                        class="text-sm bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 px-3 py-1 rounded-full">2018
+                                        - 2021</span>
+                                </div>
+                                <h5 class="text-purple-500 dark:text-purple-400 mb-2">Digital Creations</h5>
+                                <p class="text-gray-600 dark:text-gray-300">
+                                    Developed responsive web applications using Vue.js and implemented RESTful API
+                                    integrations. Collaborated with designers to create pixel-perfect UIs.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Experience 3 -->
+                        <div class="mb-8 timeline-item relative pl-8">
+                            <div
+                                class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold">Junior Web Developer</h4>
+                                    <span
+                                        class="text-sm bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-400 px-3 py-1 rounded-full">2016
+                                        - 2018</span>
+                                </div>
+                                <h5 class="text-pink-500 dark:text-pink-400 mb-2">Web Studio</h5>
+                                <p class="text-gray-600 dark:text-gray-300">
+                                    Built and maintained websites for clients using HTML, CSS, and JavaScript. Assisted
+                                    in the development of WordPress themes and plugins.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-semibold mb-8 text-center">Education</h3>
+                    <div class="relative pl-8 timeline">
+                        <!-- Education 1 -->
+                        <div class="mb-8 timeline-item relative pl-8">
+                            <div
+                                class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold">MSc in Computer Science</h4>
+                                    <span
+                                        class="text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 px-3 py-1 rounded-full">2014
+                                        - 2016</span>
+                                </div>
+                                <h5 class="text-blue-500 dark:text-blue-400 mb-2">Stanford University</h5>
+                                <p class="text-gray-600 dark:text-gray-300">
+                                    Specialized in Human-Computer Interaction and Web Technologies. Thesis on
+                                    "Optimizing Frontend Performance in Single Page Applications".
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Education 2 -->
+                        <div class="mb-8 timeline-item relative pl-8">
+                            <div
+                                class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold">BSc in Software Engineering</h4>
+                                    <span
+                                        class="text-sm bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 px-3 py-1 rounded-full">2010
+                                        - 2014</span>
+                                </div>
+                                <h5 class="text-purple-500 dark:text-purple-400 mb-2">MIT</h5>
+                                <p class="text-gray-600 dark:text-gray-300">
+                                    Focused on software development principles, algorithms, and data structures. Minor
+                                    in Graphic Design.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Education 3 -->
+                        <div class="mb-8 timeline-item relative pl-8">
+                            <div
+                                class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold">Web Development Bootcamp</h4>
+                                    <span
+                                        class="text-sm bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-400 px-3 py-1 rounded-full">2015</span>
+                                </div>
+                                <h5 class="text-pink-500 dark:text-pink-400 mb-2">General Assembly</h5>
+                                <p class="text-gray-600 dark:text-gray-300">
+                                    Intensive 12-week program covering full-stack web development with JavaScript,
+                                    Node.js, and modern frameworks.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section id="certificates" class="py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Certificates & <span class="gradient-text">Awards</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    Professional certifications and achievements across various technology domains
+                </p>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
+                <button data-category="networking"
+                    class="cert-tab-btn active px-6 py-3 rounded-full font-medium flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg transition-all duration-300">
+                    <i class="fas fa-network-wired"></i>
+                    <span>Networking</span>
+                </button>
+                <button data-category="cybersecurity"
+                    class="cert-tab-btn px-6 py-3 rounded-full font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Cybersecurity</span>
+                </button>
+                <button data-category="ai"
+                    class="cert-tab-btn px-6 py-3 rounded-full font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
+                    <i class="fas fa-brain"></i>
+                    <span>AI</span>
+                </button>
+                <button data-category="multimedia"
+                    class="cert-tab-btn px-6 py-3 rounded-full font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
+                    <i class="fas fa-photo-video"></i>
+                    <span>Multimedia</span>
+                </button>
+            </div>
+
+            <!-- Certificate Count -->
+            <div class="text-center mb-8">
+                <span id="index-cert-count"
+                    class="inline-block px-4 py-2 bg-white dark:bg-gray-900 rounded-full text-sm font-medium text-gray-600 dark:text-gray-400 shadow-sm">
+                    9 Certificates
+                </span>
+            </div>
+
+            <!-- Certificates Grid -->
+            <div id="index-certificates-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Certificates will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Get In <span class="gradient-text">Touch</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    Feel free to reach out for collaborations or just a friendly hello
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-8">
+                        I'm always open to discussing new projects, creative ideas or opportunities to be part of your
+                        vision. Don't hesitate to reach out.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mr-4">
+                                <i class="fas fa-map-marker-alt text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Location</h4>
+                                <p class="text-gray-600 dark:text-gray-400">Manila, Philippines</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-purple-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Email</h4>
+                                <p class="text-gray-600 dark:text-gray-400">delacruzvincent085@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-pink-500/10 flex items-center justify-center mr-4">
+                                <i class="fas fa-phone-alt text-pink-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Phone</h4>
+                                <p class="text-gray-600 dark:text-gray-400">+63 994 982 4524</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex space-x-6">
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center hover:bg-blue-400 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center hover:bg-pink-500 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center hover:bg-blue-400 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <form class="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg">
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-700 dark:text-gray-300 mb-2">Your Name</label>
+                            <input type="text" id="name"
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800">
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="email" class="block text-gray-700 dark:text-gray-300 mb-2">Your Email</label>
+                            <input type="email" id="email"
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800">
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="subject" class="block text-gray-700 dark:text-gray-300 mb-2">Subject</label>
+                            <input type="text" id="subject"
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800">
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 dark:text-gray-300 mb-2">Your
+                                Message</label>
+                            <textarea id="message" rows="4"
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800"></textarea>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-gray-100 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <span class="text-xl font-bold gradient-text">Portfolio</span>
+                </div>
+                <div class="text-gray-600 dark:text-gray-400 text-sm">
+                    © 2023 Vincent Dela Cruz. All rights reserved.
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <a href="#home"
+                        class="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300 inline-flex items-center">
+                        Back to Top
+                        <i class="fas fa-arrow-up ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="projects-data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
