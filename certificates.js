@@ -31,6 +31,9 @@ const certificatesData = {
         { title: "Multimedia in Marketing and Branding", org: "Lyceum of the Philippines University Batangas", date: "September 13, 2025" },
         { title: "Designing for Impact: A Seminar on User Experience", org: "Lyceum of the Philippines University Batangas", date: "November 8, 2025" },
         { title: "Visual Graphic NC III (Partial Fulfillment)", org: "TESDA", date: "December 2025" }
+    ],
+    microsoft: [
+        { title: "Microsoft Office Specialist: Excel Associate (Microsoft 365 Apps)", org: "Microsoft", date: "December 15, 2025" }
     ]
 };
 
@@ -39,7 +42,8 @@ const tabIcons = {
     networking: 'fa-network-wired',
     cybersecurity: 'fa-shield-alt',
     ai: 'fa-brain',
-    multimedia: 'fa-photo-video'
+    multimedia: 'fa-photo-video',
+    microsoft: 'fa-microsoft'
 };
 
 // Tab colors
@@ -47,7 +51,8 @@ const tabColors = {
     networking: { bg: 'blue', gradient: 'from-blue-500 to-cyan-500' },
     cybersecurity: { bg: 'red', gradient: 'from-red-500 to-orange-500' },
     ai: { bg: 'purple', gradient: 'from-purple-500 to-pink-500' },
-    multimedia: { bg: 'green', gradient: 'from-green-500 to-teal-500' }
+    multimedia: { bg: 'green', gradient: 'from-green-500 to-teal-500' },
+    microsoft: { bg: 'green', gradient: 'from-green-600 to-blue-600' }
 };
 
 let currentTab = 'networking';
@@ -67,8 +72,15 @@ function renderCertificates(category) {
     const color = tabColors[category];
     const icon = tabIcons[category];
 
+    // Adjust container classes based on number of certificates
+    if (certificates.length < 3) {
+        container.className = 'flex flex-wrap justify-center gap-6';
+    } else {
+        container.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
+    }
+
     container.innerHTML = certificates.map(cert => `
-        <div class="cert-card bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
+        <div class="cert-card bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700 ${certificates.length < 3 ? 'w-full md:w-96' : ''}">
             <div class="flex items-start gap-4">
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br ${color.gradient} flex items-center justify-center flex-shrink-0">
                     <i class="fas ${icon} text-white text-lg"></i>
