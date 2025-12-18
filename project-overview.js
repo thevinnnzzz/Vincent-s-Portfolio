@@ -169,13 +169,12 @@ function showError() {
 // Dark mode toggle
 function initThemeToggle() {
     const themeToggle = document.getElementById('theme-toggle');
+    if (!themeToggle) return;
 
-    // Check for saved theme preference or default to light mode
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
+    // Update icon based on current theme (dark class already applied by early detection script)
+    if (document.documentElement.classList.contains('dark')) {
         themeToggle.innerHTML = '<i class="fas fa-sun text-yellow-300"></i>';
     } else {
-        document.documentElement.classList.remove('dark');
         themeToggle.innerHTML = '<i class="fas fa-moon text-gray-700"></i>';
     }
 

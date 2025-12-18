@@ -1,5 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+<script>
+    // Early theme detection - runs before page renders to prevent flash
+    (function () {
+        const savedTheme = localStorage.getItem('color-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.documentElement.classList.add('dark');
+        }
+    })();
+</script>
 
 <head>
     <meta charset="UTF-8">

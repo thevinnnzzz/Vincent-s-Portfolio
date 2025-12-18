@@ -2,43 +2,46 @@
 const themeToggle = document.getElementById('theme-toggle');
 const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
 
-if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    document.documentElement.classList.add('dark');
-    themeToggle.innerHTML = '<i class="fas fa-sun text-yellow-300"></i>';
-    mobileThemeToggle.innerHTML = '<i class="fas fa-sun text-yellow-300"></i>';
+// Update icons based on current theme (dark class already applied by early detection script in HTML)
+if (document.documentElement.classList.contains('dark')) {
+    if (themeToggle) themeToggle.innerHTML = '<i class="fas fa-sun text-yellow-300"></i>';
+    if (mobileThemeToggle) mobileThemeToggle.innerHTML = '<i class="fas fa-sun text-yellow-300"></i>';
 } else {
-    document.documentElement.classList.remove('dark');
-    themeToggle.innerHTML = '<i class="fas fa-moon text-gray-700"></i>';
-    mobileThemeToggle.innerHTML = '<i class="fas fa-moon text-gray-700"></i>';
+    if (themeToggle) themeToggle.innerHTML = '<i class="fas fa-moon text-gray-700"></i>';
+    if (mobileThemeToggle) mobileThemeToggle.innerHTML = '<i class="fas fa-moon text-gray-700"></i>';
 }
 
-themeToggle.addEventListener('click', () => {
-    if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('color-theme', 'light');
-        themeToggle.innerHTML = '<i class="fas fa-moon text-gray-700"></i>';
-        mobileThemeToggle.innerHTML = '<i class="fas fa-moon text-gray-700"></i>';
-    } else {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('color-theme', 'dark');
-        themeToggle.innerHTML = '<i class="fas fa-sun text-yellow-300"></i>';
-        mobileThemeToggle.innerHTML = '<i class="fas fa-sun text-yellow-300"></i>';
-    }
-});
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+            themeToggle.innerHTML = '<i class="fas fa-moon text-gray-700"></i>';
+            if (mobileThemeToggle) mobileThemeToggle.innerHTML = '<i class="fas fa-moon text-gray-700"></i>';
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+            themeToggle.innerHTML = '<i class="fas fa-sun text-yellow-300"></i>';
+            if (mobileThemeToggle) mobileThemeToggle.innerHTML = '<i class="fas fa-sun text-yellow-300"></i>';
+        }
+    });
+}
 
-mobileThemeToggle.addEventListener('click', () => {
-    if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('color-theme', 'light');
-        themeToggle.innerHTML = '<i class="fas fa-moon text-gray-700"></i>';
-        mobileThemeToggle.innerHTML = '<i class="fas fa-moon text-gray-700"></i>';
-    } else {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('color-theme', 'dark');
-        themeToggle.innerHTML = '<i class="fas fa-sun text-yellow-300"></i>';
-        mobileThemeToggle.innerHTML = '<i class="fas fa-sun text-yellow-300"></i>';
-    }
-});
+if (mobileThemeToggle) {
+    mobileThemeToggle.addEventListener('click', () => {
+        if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+            if (themeToggle) themeToggle.innerHTML = '<i class="fas fa-moon text-gray-700"></i>';
+            mobileThemeToggle.innerHTML = '<i class="fas fa-moon text-gray-700"></i>';
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+            if (themeToggle) themeToggle.innerHTML = '<i class="fas fa-sun text-yellow-300"></i>';
+            mobileThemeToggle.innerHTML = '<i class="fas fa-sun text-yellow-300"></i>';
+        }
+    });
+}
 
 // Mobile menu toggle
 const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -65,6 +68,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Active navigation link based on scroll position
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('.nav-link');
+const navbar = document.querySelector('nav');
 
 window.addEventListener('scroll', () => {
     let current = '';
@@ -84,34 +88,59 @@ window.addEventListener('scroll', () => {
             link.classList.add('active-nav');
         }
     });
+
+    // Navbar scroll effect
+    if (navbar) {
+        if (window.scrollY > 50) {
+            navbar.classList.add('navbar-scrolled');
+        } else {
+            navbar.classList.remove('navbar-scrolled');
+        }
+    }
 });
 
 // Animate skill bars on scroll
-const skillBars = document.querySelectorAll('.skill-progress');
+function initSkillBarsAnimation() {
+    const skillSection = document.querySelector('#skills');
+    if (!skillSection) return;
 
-function animateSkillBars() {
-    skillBars.forEach(bar => {
-        const width = bar.style.width;
-        bar.style.width = '0';
+    const skillProgressBars = skillSection.querySelectorAll('.skill-progress');
 
-        setTimeout(() => {
-            bar.style.width = width;
-        }, 100);
-    });
-}
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            animateSkillBars();
-            observer.unobserve(entry.target);
+    // Store the target widths and set initial state
+    skillProgressBars.forEach(bar => {
+        const targetWidth = bar.style.width || bar.getAttribute('data-width');
+        if (targetWidth) {
+            bar.setAttribute('data-target-width', targetWidth);
+            bar.style.width = '0'; // Start at 0 for animation
         }
     });
-}, { threshold: 0.5 });
 
-document.querySelector('#skills').querySelectorAll('.skill-bar').forEach(el => {
-    observer.observe(el);
-});
+    // Create observer for the skills section
+    const skillsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Animate all skill bars when section comes into view
+                skillProgressBars.forEach((bar, index) => {
+                    const targetWidth = bar.getAttribute('data-target-width');
+                    if (targetWidth) {
+                        // Stagger the animations slightly for a nicer effect
+                        setTimeout(() => {
+                            bar.style.width = targetWidth;
+                        }, index * 100);
+                    }
+                });
+                // Only animate once
+                skillsObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    // Observe the skills section itself
+    skillsObserver.observe(skillSection);
+}
+
+// Initialize skill bars when DOM is ready
+document.addEventListener('DOMContentLoaded', initSkillBarsAnimation);
 
 // Dynamically generate project cards from projects-data.js
 function loadProjectCards() {
@@ -272,3 +301,250 @@ function setupIndexCertTabs() {
 
 // Initialize certificates when DOM is ready
 document.addEventListener('DOMContentLoaded', setupIndexCertTabs);
+
+// Typewriting animation for hero section
+document.addEventListener('DOMContentLoaded', function () {
+    const typingElement = document.querySelector('.typing');
+    const cursorElement = document.querySelector('.typed-cursor');
+
+    if (typingElement && typeof Typed !== 'undefined') {
+        // Hide the manual cursor since Typed.js creates its own
+        if (cursorElement) {
+            cursorElement.style.display = 'none';
+        }
+
+        new Typed('.typing', {
+            strings: ['Freelancer', 'Full-Stack Web Developer', 'Starting IT Technician'],
+            typeSpeed: 80,
+            backSpeed: 50,
+            backDelay: 1500,
+            startDelay: 500,
+            loop: true,
+            showCursor: true,
+            cursorChar: '|',
+            autoInsertCss: true
+        });
+    }
+});
+
+// ============================================
+// SCROLL REVEAL ANIMATIONS
+// ============================================
+
+function initScrollRevealAnimations() {
+    // Select all elements with reveal classes
+    const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // Section title animations
+    const sectionTitles = document.querySelectorAll('.section-title');
+    const titleObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.5 });
+
+    sectionTitles.forEach(title => titleObserver.observe(title));
+}
+
+// ============================================
+// STAGGERED CARD ANIMATIONS
+// ============================================
+
+function initStaggeredAnimations() {
+    // Add stagger classes to project cards
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach((card, index) => {
+        card.classList.add('reveal-scale');
+        card.style.transitionDelay = `${index * 0.1}s`;
+    });
+
+    // Add stagger to tool icons
+    const toolIcons = document.querySelectorAll('#skills .bg-white, #skills .dark\\:bg-gray-800');
+    toolIcons.forEach((icon, index) => {
+        icon.classList.add('reveal-scale', 'icon-bounce');
+        icon.style.transitionDelay = `${index * 0.05}s`;
+    });
+
+    // Add shimmer to buttons
+    const buttons = document.querySelectorAll('a[href="#contact"], a[href="#projects"], button[type="submit"]');
+    buttons.forEach(btn => {
+        btn.classList.add('btn-shimmer', 'glow-on-hover', 'ripple');
+    });
+
+    // Add animation to timeline items
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    timelineItems.forEach((item, index) => {
+        item.classList.add('reveal');
+        item.style.transitionDelay = `${index * 0.15}s`;
+    });
+
+    // Add animation to about section content
+    const aboutImage = document.querySelector('#about .relative');
+    const aboutText = document.querySelector('#about > div > div:last-child');
+    if (aboutImage) aboutImage.classList.add('reveal-left');
+    if (aboutText) aboutText.classList.add('reveal-right');
+
+    // Add animations to contact section
+    const contactLeft = document.querySelector('#contact .column.left, #contact > div > div > div:first-child');
+    const contactRight = document.querySelector('#contact .column.right, #contact > div > div > div:last-child');
+    if (contactLeft) contactLeft.classList.add('reveal-left');
+    if (contactRight) contactRight.classList.add('reveal-right');
+}
+
+// ============================================
+// PARALLAX EFFECT FOR FLOATING BLOBS
+// ============================================
+
+function initParallaxEffect() {
+    const blobs = document.querySelectorAll('.blob');
+
+    window.addEventListener('mousemove', (e) => {
+        const mouseX = e.clientX / window.innerWidth;
+        const mouseY = e.clientY / window.innerHeight;
+
+        blobs.forEach((blob, index) => {
+            const speed = (index + 1) * 20;
+            const x = (mouseX - 0.5) * speed;
+            const y = (mouseY - 0.5) * speed;
+
+            blob.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    });
+}
+
+// ============================================
+// SMOOTH SCROLL PROGRESS INDICATOR
+// ============================================
+
+function initScrollProgress() {
+    // Create progress bar element
+    const progressBar = document.createElement('div');
+    progressBar.id = 'scroll-progress';
+    progressBar.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+        z-index: 9999;
+        transition: width 0.1s ease;
+        width: 0%;
+    `;
+    document.body.appendChild(progressBar);
+
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        progressBar.style.width = `${scrollPercent}%`;
+    });
+}
+
+// ============================================
+// TILT EFFECT FOR CARDS
+// ============================================
+
+function initTiltEffect() {
+    const tiltCards = document.querySelectorAll('.tilt-card');
+
+    tiltCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+        });
+    });
+}
+
+// ============================================
+// COUNTER ANIMATION FOR STATS
+// ============================================
+
+function animateCounter(element, target, duration = 2000) {
+    let start = 0;
+    const increment = target / (duration / 16);
+
+    function updateCounter() {
+        start += increment;
+        if (start < target) {
+            element.textContent = Math.floor(start);
+            requestAnimationFrame(updateCounter);
+        } else {
+            element.textContent = target;
+        }
+    }
+
+    updateCounter();
+}
+
+// ============================================
+// MAGNETIC BUTTON EFFECT
+// ============================================
+
+function initMagneticButtons() {
+    const magneticButtons = document.querySelectorAll('.magnetic-btn');
+
+    magneticButtons.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translate(0, 0)';
+        });
+    });
+}
+
+// ============================================
+// INITIALIZE ALL ANIMATIONS
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Initialize all animation systems
+    initScrollRevealAnimations();
+    initStaggeredAnimations();
+    initParallaxEffect();
+    initScrollProgress();
+    initTiltEffect();
+    initMagneticButtons();
+
+    // Add reveal classes to main sections
+    const mainSections = document.querySelectorAll('section > div > .text-center');
+    mainSections.forEach(section => {
+        section.classList.add('reveal');
+    });
+
+    // Re-observe after adding classes
+    setTimeout(() => {
+        initScrollRevealAnimations();
+    }, 100);
+});
