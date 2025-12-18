@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         new Typed('.typing', {
-            strings: ['Freelancer', 'Full-Stack Web Developer', 'Starting IT Technician'],
+            strings: ['Freelancer', 'Programmer', 'Designer', 'Full-Stack Web Developer', 'Starting IT Technician'],
             typeSpeed: 80,
             backSpeed: 50,
             backDelay: 1500,
