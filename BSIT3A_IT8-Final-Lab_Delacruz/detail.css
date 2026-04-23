@@ -1,0 +1,641 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+body{
+    line-height: 1.5;
+    font-size: 1rem;
+    margin: 0;
+}
+.card-wrapper{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem;
+    width: 100%;
+}
+img{
+    width: 100%;
+    display: block;
+}
+.img-display{
+    overflow: hidden;
+}
+.img-showcase{
+    display: flex;
+    width: 100%;
+    transition: all 0.5s ease;
+}
+.img-showcase img{
+    min-width: 100%;
+}
+.img-select{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+.img-item{
+    margin: 0.3rem;
+}
+.img-item:nth-child(1),
+.img-item:nth-child(2),
+.img-item:nth-child(3){
+    margin-right: 0;
+}
+.img-item:hover{
+    opacity: 0.8;
+}
+.product-content{
+    padding: 2rem 1rem;
+}
+.product-title{
+    font-size: 3rem;
+    text-transform: capitalize;
+    font-weight: 700;
+    position: relative;
+    color: #12263a;
+    margin: 1rem 0;
+}
+.product-title::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 4px;
+    width: 80px;
+    background: #12263a;
+}
+.product-link{
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    background: #256eff;
+    color: #fff;
+    padding: 0 0.3rem;
+    transition: all 0.5s ease;
+}
+.product-link:hover{
+    opacity: 0.9;
+}
+.product-rating{
+    color: #ffc107;
+}
+.product-rating span{
+    font-weight: 600;
+    color: #252525;
+}
+.product-price{
+    margin: 1rem 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+.product-price span{
+    font-weight: 400;
+}
+.last-price span{
+    color: #f64749;
+    text-decoration: line-through;
+}
+.new-price span{
+    color: #256eff;
+}
+.product-detail h2{
+    text-transform: capitalize;
+    color: #12263a;
+    padding-bottom: 0.6rem;
+}
+.product-detail p{
+    font-size: 0.9rem;
+    padding: 0.3rem;
+    opacity: 0.8;
+}
+.product-detail ul{
+    margin: 1rem 0;
+    font-size: 0.9rem;
+}
+.product-detail ul li{
+    margin: 0;
+    list-style: none;
+    background: url(shoes_images/checked.png) left center no-repeat;
+    background-size: 18px;
+    padding-left: 1.7rem;
+    margin: 0.4rem 0;
+    font-weight: 600;
+    opacity: 0.9;
+}
+.product-detail ul li span{
+    font-weight: 400;
+}
+.purchase-info{
+    margin: 1.5rem 0;
+}
+.purchase-info input,
+.purchase-info .btn{
+    border: 1.5px solid #ddd;
+    border-radius: 25px;
+    text-align: center;
+    padding: 0.45rem 0.8rem;
+    outline: 0;
+    margin-right: 0.2rem;
+    margin-bottom: 1rem;
+}
+.purchase-info input{
+    width: 60px;
+}
+.purchase-info .btn{
+    cursor: pointer;
+    color: #fff;
+}
+.purchase-info .btn:first-of-type{
+    background: #256eff;
+}
+.purchase-info .btn:last-of-type{
+    background: #f64749;
+}
+.purchase-info .btn:hover{
+    opacity: 0.9;
+}
+.social-links{
+    display: flex;
+    align-items: center;
+}
+.social-links a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: #000;
+    border: 1px solid #000;
+    margin: 0 0.2rem;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: all 0.5s ease;
+}
+.social-links a:hover{
+    background: #000;
+    border-color: transparent;
+    color: #fff;
+}
+
+@media screen and (min-width: 992px){
+    .card{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 1.5rem;
+        align-items: center;
+    }
+    .card-wrapper{
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: auto;
+    }
+    .product-imgs{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .product-content{
+        padding-top: 0;
+    }
+}
+
+@media screen and (max-width: 991px){
+    .card-wrapper{
+        padding: 1rem;
+        height: auto;
+    }
+    .product-content{
+        padding: 2rem 1rem;
+    }
+    .product-imgs{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+
+/* Stylish Back Arrow Icon */
+.back-arrow {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+    color: #fff;
+    border-radius: 30px; /* Oval shape (increased from 50% for ellipse) */
+    padding: 10px 25px; /* Adjust padding for oval effect */
+    font-size: 1.5rem;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    transition: all 0.3s ease; /* Smooth transition */
+    z-index: 10; /* Ensures it's above other content */
+}
+
+/* Hover Effect */
+.back-arrow:hover {
+    background-color: rgba(0, 0, 0, 0.8); /* Darken the background on hover */
+    transform: scale(1.1); /* Slightly increase size */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3); /* Enhance shadow */
+}
+
+.back-arrow i {
+    transition: transform 0.3s ease; /* Smooth transition for the icon */
+}
+
+/* Rotate the icon slightly on hover */
+.back-arrow:hover i {
+    transform: rotate(-15deg);
+}
+
+
+.container{
+	max-width: 1170px;
+	margin:auto;
+}
+.row{
+	display: flex;
+	flex-wrap: wrap;
+}
+ul{
+	list-style: none;
+}
+.footer{
+	background-color: #24262b;
+    padding: 70px 0;
+}
+.footer-col{
+   width: 25%;
+   padding: 0 15px;
+}
+.footer-col h4{
+	font-size: 18px;
+	color: #ffffff;
+	text-transform: capitalize;
+	margin-bottom: 35px;
+	font-weight: 500;
+	position: relative;
+}
+.footer-col h4::before{
+	content: '';
+	position: absolute;
+	left:0;
+	bottom: -10px;
+	background-color: #e91e63;
+	height: 2px;
+	box-sizing: border-box;
+	width: 50px;
+}
+.footer-col ul li:not(:last-child){
+	margin-bottom: 10px;
+}
+.footer-col ul li a{
+	font-size: 16px;
+	text-transform: capitalize;
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: 300;
+	color: #bbbbbb;
+	display: block;
+	transition: all 0.3s ease;
+}
+.footer-col ul li a:hover{
+	color: #ffffff;
+	padding-left: 8px;
+}
+.footer-col .social-links a{
+	display: inline-block;
+	height: 40px;
+	width: 40px;
+	background-color: rgba(255,255,255,0.2);
+	margin:0 10px 10px 0;
+	text-align: center;
+	line-height: 40px;
+	border-radius: 50%;
+	color: #ffffff;
+	transition: all 0.5s ease;
+}
+.footer-col .social-links a:hover{
+	color: #24262b;
+	background-color: #ffffff;
+}
+
+/*responsive*/
+@media(max-width: 767px){
+  .footer-col{
+    width: 50%;
+    margin-bottom: 30px;
+}
+}
+@media(max-width: 574px){
+  .footer-col{
+    width: 100%;
+}
+}
+
+
+.wrapper {
+    background-color: #f7f7f7;
+    width: 100%;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.reviews .heading {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 0;
+}
+
+.reviews .heading .title {
+    font-size: 36px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.reviews .heading .subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: #666;
+    text-align: center;
+}
+
+.reviews .items {
+    display: flex;
+    justify-content: center; /* Ensures items are aligned in a row */
+    gap: 2rem;
+    padding: 2rem 0;
+    flex-wrap: nowrap; /* Ensures the items stay in one line */
+}
+
+.reviews .card {
+    width: 280px; /* Fixes the width of the cards */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #f1f1f1;
+    border-radius: 10px;
+    padding: 2rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reviews .card:hover {
+    box-shadow: 0 4px 16px rgba(156, 203, 235, 0.5);
+    transform: translateY(-5px);
+    border-color: #90c9f7;
+}
+
+.reviews .image {
+    width: 120px;
+    height: 120px;
+    border: 5px solid #90c9f7;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.reviews .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.reviews .card:hover .image {
+    transform: scale(1.05);
+}
+
+.reviews .name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #111;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.reviews .rating {
+    display: flex;
+    justify-content: center;
+    gap: 0.3rem;
+    margin-bottom: 1rem;
+}
+
+.rating .icon {
+    font-size: 20px;
+    color: #bbb;
+}
+
+.rating .icon.active {
+    color: #f4b400;
+}
+
+.reviews .desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 120px;
+    overflow: hidden;
+    padding: 1rem 0;
+}
+
+.reviews .desc p {
+    font-size: 14px;
+    line-height: 22px;
+    font-style: normal;
+    text-align: center;
+    color: #777;
+}
+
+/* New Style Enhancements */
+.reviews .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.reviews .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.15);
+}
+
+.reviews .heading .title {
+    color: #2a2a2a;
+}
+
+.reviews .rating .icon {
+    color: #999;
+}
+
+.reviews .rating .icon.active {
+    color: #ff9900;
+}
+
+.reviews .heading .title {
+    font-size: 36px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #4a90e2, #2a9fd6);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-align: center;
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, text-shadow 0.3s ease, color 0.3s ease;
+}
+
+/* Hover effect for title */
+.reviews .heading .title:hover {
+    transform: scale(1.1); /* Makes the title grow slightly */
+    text-shadow: 0px 0px 15px rgba(72, 152, 230, 0.7); /* Adds a glowing effect */
+    color: #4a90e2; /* Adds color on hover */
+}
+
+.reviews .heading .subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: #666;
+    text-align: center;
+    padding-top: 10px;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover effect for subtitle */
+.reviews .heading .subtitle:hover {
+    color: #4a90e2; /* Adds color on hover */
+    transform: translateY(3px);
+}
+
+/* Animated underline for subtitle */
+.reviews .heading .subtitle::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #4a90e2;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease;
+}
+
+/* Trigger the underline animation when subtitle is hovered */
+.reviews .heading .subtitle:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+
+/* Modal Popup Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark background */
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 50%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-20px);
+    animation: slideUp 0.5s ease-out forwards;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    color: #333;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #e74c3c; /* Close button hover color */
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.modal-description {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Slide-up animation for modal content */
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce</title>
+
+    <!-- Link to Custom CSS File -->
+    <link rel="stylesheet" href="shop-css.css">
+    <!-- Link to Boxicons for Icons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <!-- Nav -->
+        <div class="nav container" style="height: 75px">
+            <a href="portfolio-html.html" class="logo" style="width: 230px">
+                <img src="img/logo-black-removebg-preview.png" alt="logo">
+            </a>
+            <!-- Header Icons -->
+            <div class="header-icons">
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <i class="bx bx-search search-icon"></i>
+                    <input type="text" class="search-bar" placeholder="Search...">
+                </div>
+                <!-- Cart Icon -->
+                <i class="bx bx-shopping-bag" id="card-icon">
+                    <span id="cart-indicator" class="cart-indicator">0</span> <!-- Cart indicator -->
+                </i>
+	 <!-- Login/Logout Button -->
+                <button id="auth-btn" class="auth-btn">Login</button>
+            </div>
+            <!-- Cart -->
+            <div class="card">
+                <h2 class="card-title">Your Cart</h2>
+                <!-- Content -->
+                <div class="card-content">
+                    <!-- Product items will be dynamically added here -->
+                </div>
+                <!-- Total -->
+                <div class="total">
+                    <div class="total-title">Total</div>
+                    <div class="total-price">$0</div>
+                </div>
+                <!-- Buy Button -->
+                <button type="button" class="btn-buy">Buy Now</button>
+                <!-- Card Close -->
+                <i class="bx bx-x" id="close-card"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Shop Section -->
+    <section class="shop container" style="margin-top:100px">
+        <h2 class="section-title">Shop Products</h2>
+        <!-- Sorting Buttons -->
+        <div class="sorting-buttons" style="display: flex; align-items: center; gap: 10px;">
+            <button id="sort-price" class="sort-btn">Sort by Price</button>
+            <button id="sort-name" class="sort-btn">Sort A-Z</button>
+	 <!-- Dropdown Category Selector -->
+    <select id="category-select" class="category-dropdown">
+        <option value="all">All Categories</option>
+        <option value="watch">Watch</option>
+        <option value="jacket">Jacket</option>
+        <option value="cap">Cap</option>
+        <option value="shirt">Shirt</option>
+        <option value="trouser">Trouser</option>
+    </select>
+        </div>
+        <!-- Content -->
+<div class="shop-content">
+    <!-- Box-1 -->
+    <div class="product-box" data-category="shirt" data-id="breeze-linen-shirt">
+        <img src="img/shirt/Breeze Linen Shirt-₱1,595.00.png" alt="" class="product-img" data-full="img/shirt/Breeze Linen Shirt-₱1,595.00.png">
+        <i class='bx bx-show product-detail-icon'></i>
+        <h2 class="product-title">Breeze Linen Shirt</h2>
+        <span class="price">$27.28</span>
+        <i class='bx bx-shopping-bag add-card'></i>
+    </div>
+
+    <!-- Box-2 -->
+    <div class="product-box" data-category="watch" data-id="aeroclassic-aviator">
+        <img src="img/watch/AeroClassic Aviator 1945-₱7,750.00.png" alt="" class="product-img" data-full="img/watch/AeroClassic Aviator 1945-₱7,750.00.png">
+        <i class='bx bx-show product-detail-icon'></i>
+        <h2 class="product-title">AeroClassic Aviator</h2>
+        <span class="price">$132.56</span>
+        <i class='bx bx-shopping-bag add-card'></i>
+    </div>
+
+    <!-- Box-3 -->
+    <div class="product-box" data-category="jacket" data-id="heritage-denim-jacket">
+        <img src="img/jacket/Heritage Distressed Denim Jacket fir Women-₱3,250.00.png" alt="" class="product-img" data-full="img/jacket/Heritage Distressed Denim Jacket fir Women-₱3,250.00.png">
+        <i class='bx bx-show product-detail-icon'></i>
+        <h2 class="product-title">Heritage Distressed Denim</h2>
+        <span class="price">$55.59</span>
+        <i class='bx bx-shopping-bag add-card'></i>
+    </div>
+
+    <!-- Box-4 -->
+    <div class="product-box" data-category="trouser" data-id="breezy-linen-pants">
+        <img src="img/trouser/Breezy Linen Relaxed Pants-₱1,295.00.png" alt="" class="product-img" data-full="img/trouser/Breezy Linen Relaxed Pants-₱1,295.00.png">
+        <i class='bx bx-show product-detail-icon'></i>
+        <h2 class="product-title">Breezy Linen Relaxed Pants</h2>
+        <span class="price">$22.15</span>
+        <i class='bx bx-shopping-bag add-card'></i>
+    </div>
+
+    <!-- Box-5 -->
+    <div class="product-box" data-category="cap" data-id="frontier-cowboy-hat">
+        <img src="img/cap/Frontier Classic Cowboy Hat-₱1,895.00.png" alt="" class="product-img" data-full="img/cap/Frontier Classic Cowboy Hat-₱1,895.00.png">
+        <i class='bx bx-show product-detail-icon'></i>
+        <h2 class="product-title">Frontier Classic Cowboy Hat</h2>
+        <span class="price">$32.41</span>
+        <i class='bx bx-shopping-bag add-card'></i>
+    </div>
+
+    <!-- Box-6 -->
+    <div class="product-box" data-category="shirt" data-id="skyline-crop-tee">
+        <img src="img/shirt/Skyline Graphic Crop Tee-₱695.00.png" alt="" class="product-img" data-full="img/shirt/Skyline Graphic Crop Tee-₱695.00.png">
+        <i class='bx bx-show product-detail-icon'></i>
+        <h2 class="product-title">Skyline Graphic Crop Tee</h2>
+        <span class="price">$11.88</span>
+        <i class='bx bx-shopping-bag add-card'></i>
+    </div>
+
+    <!-- Box-7 -->
+    <div class="product-box" data-category="watch" data-id="aqua-diver-watch">
+        <img src="img/watch/AquaMaster Diver 300-₱12,950.00.png" alt="" class="product-img" data-full="img/watch/AquaMaster Diver 300-₱12,950.00.png">
+        <i class='bx bx-show product-detail-icon'></i>
+        <h2 class="product-title">AquaMaster Diver</h2>
+        <span class="price">$221.50</span>
+        <i class='bx bx-shopping-bag add-card'></i>
+    </div>
+
+    <!-- Box-8 -->
+    <div class="product-box" data-category="jacket" data-id="urban-aviator-bomber">
+        <img src="img/jacket/Urban Aviator Bomber Jacket-₱3,999.00.png" alt="" class="product-img" data-full="img/jacket/Urban Aviator Bomber Jacket-₱3,999.00.png">
+        <i class='bx bx-show product-detail-icon'></i>
+        <h2 class="product-title">Urban Aviator Bomber Jacket</h2>
+        <span class="price">$68.40</span>
+        <i class='bx bx-shopping-bag add-card'></i>
+    </div>
+
+    <!-- Box-9 -->
+    <div class="product-box" data-category="trouser" data-id="durablepro-utility-pants">
+        <img src="img/trouser/DurablePro Utility Work Pants-₱1,895.00.png" alt="" class="product-img" data-full="img/trouser/DurablePro Utility Work Pants-₱1,895.00.png">
+        <i class='bx bx-show product-detail-icon'></i>
+        <h2 class="product-title">DurablePro Utility Work Pants</h2>
+        <span class="price">$32.41</span>
+        <i class='bx bx-shopping-bag add-card'></i>
+    </div>
+
+    <!-- Box-10 -->
+    <div class="product-box" data-category="cap" data-id="heritage-curve-cap">
+        <img src="img/cap/Heritage Curve Baseball Cap-₱645.00.png" alt="" class="product-img" data-full="img/cap/Heritage Curve Baseball Cap-₱645.00.png">
+        <i class='bx bx-show product-detail-icon'></i>
+        <h2 class="product-title">Heritage Curve Baseball Cap</h2>
+        <span class="price">$11.03</span>
+        <i class='bx bx-shopping-bag add-card'></i>
+    </div>
+
+    <!-- Box-11 -->
+    <div class="product-box" data-category="shirt" data-id="tropicana-hawaiian-shirt">
+        <img src="img/shirt/Tropicana Resort Hawaiian Shirt-₱1,295.00.png" alt="" class="product-img" data-full="img/shirt/Tropicana Resort Hawaiian Shirt-₱1,295.00.png">
+        <i class='bx bx-show product-detail-icon'></i>
+        <h2 class="product-title">Tropicana Resort Hawaiian Shirt</h2>
+        <span class="price">$22.15</span>
+        <i class='bx bx-shopping-bag add-card'></i>
+    </div>
+
+    <!-- Box-12 -->
+    <div class="product-box" data-category="watch" data-id="skyline-aviator-chrono">
+        <img src="img/watch/Skyline Aviator Chrono Watch- ₱15,799.00.png" alt="" class="product-img" data-full="img/watch/Skyline Aviator Chrono Watch- ₱15,799.00.png">
+        <i class='bx bx-show product-detail-icon'></i>
+        <h2 class="product-title">Skyline Aviator Chrono</h2>
+        <span class="price">$270.23</span>
+        <i class='bx bx-shopping-bag add-card'></i>
+    </div>
+
+    <!-- Box-13 -->
+    <div class="product-box" data-category="jacket" data-id="victory-varsity-jacket">
+        <img src="img/jacket/Victory Collegiate Varsity Jacket-₱4,499.00.png" alt="" class="product-img" data-full="img/jacket/Victory Collegiate Varsity Jacket-₱4,499.00.png">
+        <i class='bx bx-show product-detail-icon'></i>
+        <h2 class="product-title">Victory Collegiate Varsity Jacket</h2>
+        <span class="price">$76.95</span>
+        <i class='bx bx-shopping-bag add-card'></i>
+    </div>
+
+    <!-- Box-14 -->
+    <div class="product-box" data-category="trouser" data-id="vintage-pleat-trousers">
+        <img src="img/trouser/Vintage Pleat Tapered Trousers-₱1,845.00.png" alt="" class="product-img" data-full="img/trouser/Vintage Pleat Tapered Trousers-₱1,845.00.png">
+        <i class='bx bx-show product-detail-icon'></i>
+        <h2 class="product-title">Vintage Pleat Tapered Trousers</h2>
+        <span class="price">$31.55</span>
+        <i class='bx bx-shopping-bag add-card'></i>
+    </div>
+
+    <!-- Box-15 -->
+    <div class="product-box" data-category="cap" data-id="nordic-knit-beanie">
+        <img src="img/cap/Nordic Knit Beanie-₱495.00.png" alt="" class="product-img" data-full="img/cap/Nordic Knit Beanie-₱495.00.png">
+        <i class='bx bx-show product-detail-icon'></i>
+        <h2 class="product-title">Nordic Knit Beanie</h2>
+        <span class="price">$8.46</span>
+        <i class='bx bx-shopping-bag add-card'></i>
+    </div>
+</div>
+
+
+<!-- Lightbox/Preview Overlay -->
+<div id="lightbox" class="lightbox-overlay">
+    <span id="close-btn" class="close-btn">&times;</span>
+    <img id="lightbox-img" class="lightbox-img" src="" alt="Product Image Preview">
+</div>
+
+    </section>
+
+    <!-- Login Modal -->
+<div class="modal" id="login-modal">
+    <div class="modal-content">
+        <span class="close" id="close-modal">&times;</span>
+        <h2>Login</h2>
+        <form id="login-form">
+            <label for="login-email">Email:</label>
+            <input type="email" id="login-email" placeholder="Enter your email" required>
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" placeholder="Enter your password" required>
+            
+            <!-- Role selection -->
+           <div class="role-selection">
+    <input type="radio" id="login-admin" name="login-role" value="admin" required>
+    <label for="login-admin">Admin</label>
+
+    <input type="radio" id="login-user" name="login-role" value="user" required>
+    <label for="login-user">User</label>
+</div>
+
+
+            <button type="submit" class="btn-login">Login</button>
+        </form>
+        <p style="text-align: center">Don't have an account? <a href="#" id="show-signup">Sign up</a></p>
+    </div>
+</div>
+
+
+   <!-- Sign-Up Modal -->
+<div class="modal" id="signup-modal">
+    <div class="modal-content">
+        <span class="close" id="close-signup-modal">&times;</span>
+        <h2>Sign Up</h2>
+        <form id="signup-form">
+            <label for="signup-first-name">First Name:</label>
+            <input type="text" id="signup-first-name" placeholder="Enter your first name" required>
+
+            <label for="signup-last-name">Last Name:</label>
+            <input type="text" id="signup-last-name" placeholder="Enter your last name" required>
+
+            <label for="signup-email">Email:</label>
+            <input type="email" id="signup-email" placeholder="Enter your email" required>
+
+            <label for="signup-password">Password:</label>
+            <input type="password" id="signup-password" placeholder="Create a password" required>
+
+            <!-- Role selection -->
+            <div class="role-selection">
+                <input type="radio" id="signup-admin" name="signup-role" value="admin" required>
+                <label for="signup-admin">Admin</label>
+
+                <input type="radio" id="signup-user" name="signup-role" value="user" required>
+                <label for="signup-user">User</label>
+            </div>
+
+            <button type="submit" class="btn-signup">Sign Up</button>
+        </form>
+        <p style="text-align: center">Already have an account? <a href="#" id="back-to-login">Back to Login</a></p>
+    </div>
+</div>
+
+<footer class="footer">
+  	 <div class="container">
+  	 	<div class="row">
+  	 		<div class="footer-col">
+  	 			<h4>company</h4>
+  	 			<ul>
+  	 				<li><a href="#">about us</a></li>
+  	 				<li><a href="#">our services</a></li>
+  	 				<li><a href="#">privacy policy</a></li>
+  	 				<li><a href="#">affiliate program</a></li>
+  	 			</ul>
+  	 		</div>
+  	 		<div class="footer-col">
+  	 			<h4>get help</h4>
+  	 			<ul>
+  	 				<li><a href="#">FAQ</a></li>
+  	 				<li><a href="#">shipping</a></li>
+  	 				<li><a href="#">returns</a></li>
+  	 				<li><a href="#">order status</a></li>
+  	 				<li><a href="#">payment options</a></li>
+  	 			</ul>
+  	 		</div>
+  	 		<div class="footer-col">
+  	 			<h4>online shop</h4>
+  	 			<ul>
+  	 				<li><a href="#">watch</a></li>
+  	 				<li><a href="#">bag</a></li>
+  	 				<li><a href="#">shoes</a></li>
+  	 				<li><a href="#">dress</a></li>
+  	 			</ul>
+  	 		</div>
+  	 		<div class="footer-col">
+  	 			<h4>follow us</h4>
+  	 			<div class="social-links">
+  	 				<a href="#"><i class="fab fa-facebook-f"></i></a>
+  	 				<a href="#"><i class="fab fa-twitter"></i></a>
+  	 				<a href="#"><i class="fab fa-instagram"></i></a>
+  	 				<a href="#"><i class="fab fa-linkedin-in"></i></a>
+  	 			</div>
+  	 		</div>
+  	 	</div>
+  	 </div>
+  </footer>
+    <!-- Link to Custom JavaScript File -->
+    <script src="shop-js.js"></script>
+
+
+</body>
+
+</html>
