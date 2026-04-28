@@ -555,6 +555,16 @@ document.addEventListener('DOMContentLoaded', function () {
         section.classList.add('reveal');
     });
 
+    // CV Download Handler
+    const downloadCvBtn = document.getElementById('download-cv');
+    if (downloadCvBtn) {
+        downloadCvBtn.addEventListener('click', function(e) {
+            // We'll let the default download attribute work, 
+            // but we add a small console log for debugging
+            console.log('CV Download initiated');
+        });
+    }
+
     // Re-observe after adding classes
     setTimeout(() => {
         initScrollRevealAnimations();
