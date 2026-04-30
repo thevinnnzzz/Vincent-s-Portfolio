@@ -115,7 +115,7 @@ const projectsData = {
         name: 'iDENTify',
         category: 'Dental Patient Management System',
         tagline: 'Professional Clinical Management Platform',
-        image: 'images/Projects/iDENTify_LAYOUT/admin/admin-dashboard.png',
+        image: 'images/Projects/iDENTify_layout/admin/admin-dashboard.png',
         shortDescription: 'A comprehensive web-based dental patient management system designed to streamline clinical operations for dental clinics and schools.',
         detailedDescription: 'iDENTify is a comprehensive web-based dental patient management system designed to streamline clinical operations for dental clinics, academic institutions, and dental schools. The system provides complete solutions for managing patient information, clinical procedures, treatment records, and multi-level clinical supervision workflows. Features include multi-role authentication (Admin, Clinician, Clinical Instructor, COD), comprehensive Patient Information Records (PIR) with 5-step forms, procedure logging with auto-assignment to Clinical Instructors, and advanced analytics dashboard with real-time reporting.',
         features: [
