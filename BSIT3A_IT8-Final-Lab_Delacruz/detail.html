@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Product Card/Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css">
+
+  </head>
+  <body>
+    <!-- Back Arrow Icon -->
+    <a href="javascript:history.back()" class="back-arrow">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <div class="card-wrapper">
+      <div class="card">
+        <!-- card left -->
+        <div class="product-imgs">
+          <div class="img-display">
+            <div class="img-showcase">
+              <!-- Main product image will be dynamically inserted here -->
+            </div>
+          </div>
+          <div class="img-select">
+            <!-- Image thumbnails will be dynamically inserted here -->
+          </div>
+        </div>
+        <!-- card right -->
+        <div class="product-content">
+          <h2 class="product-title"> <!-- Product title will be inserted here --> </h2>
+          <a href="#" class="product-link"> <!-- Product link will be inserted here --> </a>
+          <div class="product-rating">
+            <!-- Rating stars and number will be inserted here -->
+          </div>
+
+          <div class="product-price">
+            <p class="last-price">Old Price: <span class="old-price"> <!-- Old Price will be inserted here --> </span></p>
+            <p class="new-price">New Price: <span class="new-price"> <!-- New Price will be inserted here --> </span></p>
+          </div>
+
+          <div class="product-detail">
+            <h2>About this item: </h2>
+            <p class="product-description"> <!-- Product description will be inserted here --> </p>
+            <ul class="product-details-list"> 
+              <!-- Product details will be inserted here -->
+            </ul>
+          </div>
+
+          <div class="purchase-info">
+            <input type="number" min="0" value="1">
+            <button type="button" class="btn">
+              Add to Cart <i class="fas fa-shopping-cart"></i>
+            </button>
+            <button type="button" class="btn">Compare</button>
+          </div>
+
+          <div class="social-links">
+            <p>Share At: </p>
+            <a href="#">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="#">
+              <i class="fab fa-pinterest"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="wrapper reviews">
+        <div class="container">
+            <div class="heading">
+                <h1 class="title">What Our Customers Say </h1>
+                <h2 class="subtitle">read latest reviews</h2>
+            </div>
+            <div class="items">
+                <div class="card">
+                    <div class="image">
+                        <img src="img/joshz.jpg" alt="" srcset="">
+                    </div>
+                    <div class="info">
+                        <h1 class="name">Joshz Marasigan</h1>
+                    </div>
+                    <div class="rating">
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                    </div>
+                    <div class="desc">
+                        <p>"Fantastic experience from start to finish, this product delivers exceptional value and performance."
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image">
+                        <img src="img/ralph.jpg" alt="" srcset="">
+                    </div>
+                    <div class="info">
+                        <h1 class="name">Ralph Alday</h1>
+                    </div>
+                    <div class="rating">
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon "><i class='bx bx-star'></i></span>
+                    </div>
+                    <div class="desc">
+                        <p>"An outstanding product that exceeded all my expectations, highly recommended for anyone seeking quality and reliability."
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image">
+                        <img src="img/maru.jpg" alt="" srcset="">
+                    </div>
+                    <div class="info">
+                        <h1 class="name">Maru Almedilla</h1>
+                    </div>
+                    <div class="rating">
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon "><i class='bx bx-star'></i></span>
+                        <span class="icon "><i class='bx bx-star'></i></span>
+                    </div>
+                    <div class="desc">
+                        <p>"A true game-changer, it made my daily routine so much easier and more efficient!"
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image">
+                        <img src="img/timi.jpg" alt="" srcset="">
+                    </div>
+                    <div class="info">
+                        <h1 class="name">Timi Maquinto</h1>
+                    </div>
+                    <div class="rating">
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon "><i class='bx bx-star'></i></span>
+                    </div>
+                    <div class="desc">
+                        <p>"Impressive quality, easy to use, and definitely worth every penny."
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image">
+                        <img src="img/jonas.jpg" alt="" srcset="">
+                    </div>
+                    <div class="info">
+                        <h1 class="name">Jonas Castillo</h1>
+                    </div>
+                    <div class="rating">
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                        <span class="icon active"><i class='bx bx-star'></i></span>
+                    </div>
+                    <div class="desc">
+                        <p>"This product stands out for its excellent craftsmanship and remarkable functionality, I couldn’t be happier."
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+  	 <div class="container">
+  	 	<div class="row">
+  	 		<div class="footer-col">
+  	 			<h4>company</h4>
+  	 			<ul>
+  	 				<li><a href="#">about us</a></li>
+  	 				<li><a href="#">our services</a></li>
+  	 				<li><a href="#">privacy policy</a></li>
+  	 				<li><a href="#">affiliate program</a></li>
+  	 			</ul>
+  	 		</div>
+  	 		<div class="footer-col">
+  	 			<h4>get help</h4>
+  	 			<ul>
+  	 				<li><a href="#">FAQ</a></li>
+  	 				<li><a href="#">shipping</a></li>
+  	 				<li><a href="#">returns</a></li>
+  	 				<li><a href="#">order status</a></li>
+  	 				<li><a href="#">payment options</a></li>
+  	 			</ul>
+  	 		</div>
+  	 		<div class="footer-col">
+  	 			<h4>online shop</h4>
+  	 			<ul>
+  	 				<li><a href="#">watch</a></li>
+  	 				<li><a href="#">shirt</a></li>
+  	 				<li><a href="#">cap</a></li>
+  	 				<li><a href="#">jacket</a></li>
+					<li><a href="#">trouser</a></li>
+  	 			</ul>
+  	 		</div>
+  	 		<div class="footer-col">
+  	 			<h4>follow us</h4>
+  	 			<div class="social-links">
+  	 				<a href="#"><i class="fab fa-facebook-f"></i></a>
+  	 				<a href="#"><i class="fab fa-twitter"></i></a>
+  	 				<a href="#"><i class="fab fa-instagram"></i></a>
+  	 				<a href="#"><i class="fab fa-linkedin-in"></i></a>
+  	 			</div>
+  	 		</div>
+  	 	</div>
+  	 </div>
+  </footer>
+
+    <script src="detail.js"></script>
+  </body>
+</html>
