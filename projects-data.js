@@ -287,57 +287,72 @@ const projectsData = {
             docs: null
         }
     },
-    'recipe-finder': {
-        id: 'recipe-finder',
-        name: 'Recipe Finder',
-        category: 'React, API Integration',
-        tagline: 'Discover Your Next Meal',
-        image: 'https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1636&q=80',
-        shortDescription: 'Search and discover recipes with filtering by ingredients, dietary restrictions, and cooking time.',
-        detailedDescription: 'A comprehensive recipe discovery application that helps users find the perfect meal based on available ingredients, dietary preferences, and time constraints. Built with React and integrated with multiple recipe APIs, it offers a vast database of recipes with detailed nutritional information, step-by-step cooking instructions, and the ability to save favorites and create shopping lists.',
+    'attendance-system': {
+        id: 'attendance-system',
+        name: 'EduTrack',
+        category: 'School Attendance Management System',
+        tagline: 'Smart Attendance Tracking & Analytics Platform',
+        image: 'images/Projects/Attendance_system_layout/login_form.png',
+        shortDescription: 'A comprehensive school attendance management system with real-time analytics, email notifications, and multi-role dashboards.',
+        detailedDescription: 'EduTrack is a modern school attendance management system designed to streamline attendance tracking for educational institutions. The platform features real-time analytics dashboards, automated email notifications for absent and late students, and comprehensive reporting tools. Built with React and Firebase, it provides administrators, teachers, and staff with intuitive interfaces for managing student attendance, generating reports, and monitoring attendance trends through interactive charts and visualizations.',
         features: [
             {
-                icon: 'fas fa-utensils',
-                title: 'Recipe Search',
-                description: 'Search from thousands of recipes worldwide'
+                icon: 'fas fa-chart-line',
+                title: 'Analytics Dashboard',
+                description: 'Real-time attendance metrics with weekly trends, present/absent/late breakdowns, and visual charts'
             },
             {
-                icon: 'fas fa-filter',
-                title: 'Smart Filters',
-                description: 'Filter by ingredients, diet type, cuisine, and more'
+                icon: 'fas fa-users',
+                title: 'Student Management',
+                description: 'Comprehensive student enrollment, profile management, and attendance history tracking'
             },
             {
-                icon: 'fas fa-heart',
-                title: 'Save Favorites',
-                description: 'Bookmark your favorite recipes for easy access'
+                icon: 'fas fa-clipboard-check',
+                title: 'Attendance Tracking',
+                description: 'Daily attendance marking with status options: Present, Absent, Late, and Excused'
             },
             {
-                icon: 'fas fa-shopping-cart',
-                title: 'Shopping Lists',
-                description: 'Generate shopping lists from recipe ingredients'
+                icon: 'fas fa-file-alt',
+                title: 'Reports & Analytics',
+                description: 'Generate detailed attendance reports with filtering by date range, student, and status'
             },
             {
-                icon: 'fas fa-apple-alt',
-                title: 'Nutrition Info',
-                description: 'Detailed nutritional information for each recipe'
+                icon: 'fas fa-envelope',
+                title: 'Email Notifications',
+                description: 'Automated email alerts to parents/guardians when students are marked absent or late'
             },
             {
-                icon: 'fas fa-clock',
-                title: 'Time Filter',
-                description: 'Find recipes based on available cooking time'
+                icon: 'fas fa-user-shield',
+                title: 'User Management',
+                description: 'Role-based access control for System Administrators with secure authentication'
             }
         ],
         techStack: [
             { name: 'React', icon: 'fab fa-react', color: 'text-blue-400' },
-            { name: 'JavaScript', icon: 'fab fa-js', color: 'text-yellow-500' },
-            { name: 'REST API', icon: 'fas fa-server', color: 'text-purple-500' },
-            { name: 'CSS3', icon: 'fab fa-css3-alt', color: 'text-blue-500' },
-            { name: 'LocalStorage', icon: 'fas fa-database', color: 'text-green-600' }
+            { name: 'TypeScript', icon: 'fas fa-code', color: 'text-blue-600' },
+            { name: 'Vite', icon: 'fas fa-bolt', color: 'text-purple-500' },
+            { name: 'Tailwind CSS', icon: 'fas fa-palette', color: 'text-blue-500' },
+            { name: 'Firebase', icon: 'fas fa-fire', color: 'text-orange-500' },
+            { name: 'Express', icon: 'fas fa-server', color: 'text-green-600' },
+            { name: 'Node.js', icon: 'fab fa-node-js', color: 'text-green-500' },
+            { name: 'Recharts', icon: 'fas fa-chart-bar', color: 'text-purple-600' },
+            { name: 'shadcn-ui', icon: 'fas fa-layer-group', color: 'text-gray-700' },
+            { name: 'Lucide React', icon: 'fas fa-icons', color: 'text-teal-500' },
+            { name: 'Nodemailer', icon: 'fas fa-envelope', color: 'text-blue-600' },
+            { name: 'Motion', icon: 'fas fa-magic', color: 'text-purple-500' }
         ],
         links: {
-            live: '#',
-            github: '#',
+            live: null,
+            github: null,
             docs: null
+        },
+        // Image Viewer Configuration
+        hasImageViewer: true,
+        imageViewerConfig: {
+            userTypes: [
+                { id: 'teacher', name: 'Teacher', count: 5 }
+            ],
+            basePath: 'images/Projects/Attendance_system_layout/'
         }
     }
 };

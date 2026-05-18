@@ -6,7 +6,7 @@
 class ImageViewer {
     constructor(config) {
         this.config = config;
-        this.currentUserType = 'admin';
+        this.currentUserType = config.userTypes ? config.userTypes[0].id : 'admin';
         this.images = {};
         this.currentImageIndex = 0;
         this.isLightboxOpen = false;
@@ -26,19 +26,28 @@ class ImageViewer {
         const container = document.getElementById('user-type-selector');
         if (!container) return;
 
-        const userTypes = [
+        const userTypes = this.config.userTypes || [
             { id: 'admin', name: 'Admin', icon: 'fas fa-user-shield' },
             { id: 'cod', name: 'COD', icon: 'fas fa-users-cog' },
             { id: 'clinician', name: 'Clinician', icon: 'fas fa-user-md' },
             { id: 'ci', name: 'Clinical Instructor', icon: 'fas fa-chalkboard-teacher' }
         ];
 
+        const iconMap = {
+            'dashboard': 'fas fa-chart-line',
+            'students': 'fas fa-users',
+            'attendance': 'fas fa-clipboard-check',
+            'reports': 'fas fa-file-alt',
+            'user-management': 'fas fa-user-cog',
+            'teacher': 'fas fa-chalkboard-teacher'
+        };
+
         container.innerHTML = userTypes.map(type => `
             <button 
                 class="user-type-btn ${type.id === this.currentUserType ? 'active' : ''}" 
                 data-type="${type.id}"
             >
-                <i class="${type.icon}"></i>
+                <i class="${type.icon || iconMap[type.id] || 'fas fa-image'}"></i>
                 ${type.name}
             </button>
         `).join('');
@@ -96,18 +105,41 @@ class ImageViewer {
     }
 
     async fetchImagesForUserType(userType) {
-        // Get all images from the folder
-        const basePath = `images/Projects/iDENTify_layout/${userType}/`;
-
-        // For now, we'll use a predefined list of images
-        // In a real implementation, you might use a directory listing API
-        const imageFiles = this.discoverImages(basePath, userType);
+        const basePath = this.config.basePath || 'images/Projects/iDENTify_layout/';
+        
+        // Check if this is a flat structure (like Attendance System) or nested (like iDENTify)
+        const isNestedStructure = this.config.userTypes && this.config.userTypes.some(t => t.id === 'admin' || t.id === 'cod');
+        
+        let imageFiles;
+        if (isNestedStructure) {
+            // iDENTify style: images in subfolders
+            const nestedPath = basePath + userType + '/';
+            imageFiles = this.discoverImages(nestedPath, userType);
+        } else {
+            // Attendance System style: flat structure with tab-named images
+            imageFiles = this.discoverFlatImages(basePath, userType);
+        }
 
         return imageFiles.map((filename, index) => ({
-            src: basePath + filename,
+            src: (isNestedStructure ? basePath + userType + '/' : basePath) + filename,
             caption: this.formatCaption(filename),
             index: index
         }));
+    }
+
+    discoverFlatImages(basePath, userType) {
+        // For flat structure like Attendance System, map user types to their corresponding image files
+        const flatImageMap = {
+            'teacher': ['login_form.png', 'dashboard_tab.png', 'Students_tab.png', 'Attendance_tab.png', 'Reports_tab.png', 'User_management_tab.png'],
+            'dashboard': ['dashboard_tab.png'],
+            'students': ['Students_tab.png'],
+            'attendance': ['Attendance_tab.png'],
+            'reports': ['Reports_tab.png'],
+            'user-management': ['User_management_tab.png'],
+            'login': ['login_form.png']
+        };
+
+        return flatImageMap[userType] || [];
     }
 
     discoverImages(basePath, userType) {
@@ -187,11 +219,24 @@ class ImageViewer {
     }
 
     getUserTypeName(userType) {
+        // First check config for custom names
+        if (this.config.userTypes) {
+            const found = this.config.userTypes.find(t => t.id === userType);
+            if (found) return found.name;
+        }
+        
+        // Fallback to iDENTify names
         const names = {
             'admin': 'Admin',
             'cod': 'COD',
             'clinician': 'Clinician',
-            'ci': 'Clinical Instructor'
+            'ci': 'Clinical Instructor',
+            'dashboard': 'Dashboard',
+            'students': 'Students',
+            'attendance': 'Attendance',
+            'reports': 'Reports',
+            'user-management': 'User Management',
+            'teacher': 'Teacher'
         };
         return names[userType] || userType;
     }

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Project Details - Vincent's Portfolio</title>
+</head>
+<body>
+
+<!-- Loading State -->
+<div id="loading" class="min-h-screen flex items-center justify-center pt-16">
+    <div class="text-center">
+        <i class="fas fa-spinner fa-spin text-4xl text-blue-500 mb-4"></i>
+        <p class="text-gray-600 dark:text-gray-300">Loading project...</p>
+    </div>
+</div>
+
+<!-- Error State -->
+<div id="error" class="hidden min-h-screen flex items-center justify-center pt-16">
+    <div class="text-center max-w-md mx-auto px-4">
+        <i class="fas fa-exclamation-triangle text-6xl text-yellow-500 mb-4"></i>
+        <h2 class="text-2xl font-bold mb-4">Project Not Found</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">The project you're looking for doesn't exist or has been removed.</p>
+        <a href="#" data-spa="true" data-route="/" class="px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 inline-block">
+            Return to Portfolio
+        </a>
+    </div>
+</div>
+
+<!-- Project Content -->
+<div id="project-content" class="hidden">
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Project Info -->
+                <div class="fade-in">
+                    <p id="project-category" class="text-blue-500 dark:text-blue-400 font-medium mb-2"></p>
+                    <h1 id="project-name" class="text-4xl md:text-6xl font-bold mb-4"></h1>
+                    <p id="project-tagline" class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-6"></p>
+                    <p id="project-description"
+                        class="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed"></p>
+
+                    <!-- Action Buttons -->
+                    <div id="project-links" class="flex flex-wrap gap-4 mb-8">
+                        <!-- Links will be dynamically added here -->
+                    </div>
+
+                    <!-- Scroll Indicator -->
+                    <div class="flex items-center text-gray-500 dark:text-gray-400">
+                        <i class="fas fa-chevron-down animate-bounce mr-2"></i>
+                        <span>Scroll to explore features</span>
+                    </div>
+                </div>
+
+                <!-- Project Image -->
+                <div class="fade-in">
+                    <div class="relative">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl transform rotate-3">
+                        </div>
+                        <img id="project-image" src="" alt="Project preview"
+                            class="hero-image relative rounded-2xl shadow-2xl w-full h-auto object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Key <span class="gradient-text">Features</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    Explore the powerful features that make this project stand out
+                </p>
+            </div>
+
+            <div id="features-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Features will be dynamically added here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Viewer Section (iDENTify only) -->
+    <section id="image-viewer-section" class="py-20 hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">System <span class="gradient-text">Screenshots</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    Explore the iDENTify system interface for different user roles
+                </p>
+            </div>
+
+            <!-- User Type Selector -->
+            <div id="user-type-selector" class="user-type-selector"></div>
+
+            <!-- Image Viewer Container -->
+            <div id="image-viewer-container" class="image-viewer-container"></div>
+        </div>
+    </section>
+
+    <!-- Technology Stack Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Technology <span class="gradient-text">Stack</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    Built with modern technologies and best practices
+                </p>
+            </div>
+
+            <div id="tech-stack" class="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
+                <!-- Tech stack badges will be dynamically added here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20 bg-gradient-to-br from-blue-500 to-purple-600">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Interested in Working Together?</h2>
+            <p class="text-xl text-white/90 mb-8">
+                Let's create something amazing. Get in touch to discuss your next project.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#" data-spa="true" data-route="/#contact"
+                    class="px-8 py-3 rounded-full bg-white text-blue-600 font-medium shadow-lg hover:shadow-xl transition-all duration-300 inline-block">
+                    Contact Me
+                </a>
+                <a href="#" data-spa="true" data-route="/projects"
+                    class="px-8 py-3 rounded-full border-2 border-white text-white font-medium hover:bg-white/10 transition-all duration-300 inline-block">
+                    View More Projects
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Scroll to Top Button -->
+<button id="scroll-top"
+    class="hidden fixed bottom-8 right-8 w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 z-40">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+</body>
+</html>
