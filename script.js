@@ -593,11 +593,10 @@ document.addEventListener('DOMContentLoaded', function () {
         contactForm.addEventListener('submit', async function (e) {
             e.preventDefault();
             const submitBtn = document.getElementById('submit-btn');
-            const statusDiv = document.getElementById('form-status');
+            const successOverlay = document.getElementById('success-overlay');
 
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            statusDiv.classList.add('hidden');
+            submitBtn.innerHTML = '<span class="spinner"></span>Sending...';
 
             try {
                 const response = await fetch('/.netlify/functions/send-email', {
@@ -614,20 +613,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 const data = await response.json();
 
                 if (response.ok) {
-                    statusDiv.className = 'mb-4 p-3 rounded-lg text-sm bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400';
-                    statusDiv.textContent = 'Message sent successfully!';
                     contactForm.reset();
+                    successOverlay.classList.add('show');
+                    setTimeout(() => {
+                        successOverlay.classList.remove('show');
+                    }, 5000);
                 } else {
                     throw new Error(data.error || 'Failed to send');
                 }
             } catch (error) {
-                statusDiv.className = 'mb-4 p-3 rounded-lg text-sm bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400';
-                statusDiv.textContent = 'Failed to send message. Please try again.';
-            } finally {
-                statusDiv.classList.remove('hidden');
+                submitBtn.innerHTML = 'Send Message';
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Message';
+                alert('Failed to send message. Please try again.');
+                return;
             }
+
+            submitBtn.innerHTML = 'Send Message';
+            submitBtn.disabled = false;
         });
     }
 

@@ -699,6 +699,89 @@
         .hero-profile-img {
             cursor: zoom-in;
         }
+
+        /* ── Contact Form Loading & Success Animations ── */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .success-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.95);
+            border-radius: 0.75rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            z-index: 10;
+        }
+        .dark .success-overlay {
+            background: rgba(17,24,39,0.95);
+        }
+        .success-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .checkmark-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
+        }
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .checkmark-circle i {
+            color: #fff;
+            font-size: 28px;
+            animation: checkDraw 0.4s 0.3s ease both;
+        }
+        @keyframes checkDraw {
+            0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
+        }
+
+        .success-title {
+            margin-top: 16px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            animation: fadeUp 0.4s 0.4s ease both;
+        }
+        .success-subtitle {
+            margin-top: 8px;
+            font-size: 0.875rem;
+            color: #6b7280;
+            text-align: center;
+            max-width: 260px;
+            animation: fadeUp 0.4s 0.5s ease both;
+        }
+        .dark .success-subtitle {
+            color: #9ca3af;
+        }
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 
@@ -1396,9 +1479,15 @@
                     </div>
                 </div>
 
-                <div>
+                <div class="relative">
                     <form id="contact-form" class="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg">
-                        <div id="form-status" class="hidden mb-4 p-3 rounded-lg text-sm"></div>
+                        <div id="success-overlay" class="success-overlay">
+                            <div class="checkmark-circle">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <p class="success-title text-gray-800 dark:text-white">Thank You!</p>
+                            <p class="success-subtitle">Your message has been sent. Vincent will get back to you as soon as possible.</p>
+                        </div>
                         <div class="mb-6">
                             <label for="name" class="block text-gray-700 dark:text-gray-300 mb-2">Your Name</label>
                             <input type="text" id="name" required
