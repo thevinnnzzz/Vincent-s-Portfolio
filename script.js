@@ -616,18 +616,26 @@ document.addEventListener('DOMContentLoaded', function () {
                     contactForm.reset();
                     if (data.requiresVerification) {
                         successOverlay.innerHTML = `
-                            <div class="success-content">
-                                <i class="fas fa-envelope-circle-check success-icon"></i>
-                                <h2>Verification Email Sent!</h2>
-                                <p>Please check your inbox and click the verification link to send your message.</p>
+                            <div class="verification-state">
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-paper-plane"></i>
+                                </div>
+                                <h3 class="success-title">Check Your Inbox</h3>
+                                <p class="success-subtitle">We've sent a verification link to your email. Please click it to complete your message.</p>
+                                <div class="spam-notice">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <span>Don't see it? Check your spam folder.</span>
+                                </div>
                             </div>
                         `;
                     } else {
                         successOverlay.innerHTML = `
-                            <div class="success-content">
-                                <i class="fas fa-check-circle success-icon"></i>
-                                <h2>Message Sent!</h2>
-                                <p>Thank you for reaching out. I'll get back to you soon.</p>
+                            <div class="success-state">
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <h3 class="success-title">Message Sent!</h3>
+                                <p class="success-subtitle">Thank you for reaching out. Vincent will get back to you as soon as possible.</p>
                             </div>
                         `;
                     }
@@ -637,7 +645,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         setTimeout(() => {
                             location.reload();
                         }, 300);
-                    }, 5000);
+                    }, 6000);
                 } else {
                     throw new Error(data.error || 'Failed to send');
                 }
