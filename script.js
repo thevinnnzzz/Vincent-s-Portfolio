@@ -684,7 +684,20 @@ document.addEventListener('DOMContentLoaded', function () {
                         }, 6000);
                     }
                 } else if (response.status === 429) {
-                    throw new Error(data.error || 'Too many requests. Please wait a minute.');
+                    // Show rate limit / pending verification message in overlay
+                    successOverlay.innerHTML = `
+                        <div class="verification-state">
+                            <div class="icon-wrapper" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                            <h3 class="success-title">Please Wait</h3>
+                            <p class="success-subtitle">${data.error || 'Verification email already sent. Please check your inbox.'}</p>
+                        </div>
+                    `;
+                    successOverlay.classList.add('show');
+                    submitBtn.innerHTML = 'Send Message';
+                    submitBtn.disabled = false;
+                    return;
                 } else {
                     throw new Error(data.error || 'Failed to send');
                 }

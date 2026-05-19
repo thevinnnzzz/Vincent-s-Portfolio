@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
+const { getStore } = require('@netlify/blobs');
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -171,6 +172,14 @@ exports.handler = async (event, context) => {
       transporter.sendMail(mailToVincent),
       transporter.sendMail(mailToVisitor)
     ]);
+
+    // Clear pending verification status
+    try {
+      const store = getStore({ name: 'verifications', consistency: 'strong' });
+      await store.delete(`pending:${email}`);
+    } catch (e) {
+      console.warn('Failed to clear pending verification blob:', e.message);
+    }
 
     const successHtml = `
       <!DOCTYPE html>

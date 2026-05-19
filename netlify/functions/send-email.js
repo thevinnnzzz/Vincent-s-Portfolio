@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
+const { getStore } = require('@netlify/blobs');
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -11,6 +12,7 @@ const ENCRYPTION_KEY = process.env.EMAIL_ENCRYPTION_KEY || crypto.randomBytes(32
 const IV_LENGTH = 16;
 const TOKEN_EXPIRY = 24 * 60 * 60 * 1000;
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const PENDING_TTL = 600; // 10 minutes
 const requestLog = new Map();
 
 function encrypt(data) {
@@ -130,6 +132,21 @@ exports.handler = async (event, context) => {
       };
     }
 
+    // Check for pending verification using Netlify Blobs
+    const store = getStore({ name: 'verifications', consistency: 'strong' });
+    const pendingKey = `pending:${cleanEmail}`;
+    const existingPending = await store.get(pendingKey);
+    
+    if (existingPending) {
+      return {
+        statusCode: 429,
+        headers,
+        body: JSON.stringify({ 
+          error: 'Verification email already sent. Please check your inbox or wait 10 minutes before requesting a new one.' 
+        })
+      };
+    }
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -187,6 +204,9 @@ exports.handler = async (event, context) => {
     };
 
     await transporter.sendMail(verificationEmail);
+
+    // Mark email as pending verification in blob store
+    await store.set(pendingKey, JSON.stringify({ sentAt: Date.now() }), { ttl: PENDING_TTL });
 
     return {
       statusCode: 200,
