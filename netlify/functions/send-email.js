@@ -36,8 +36,8 @@ exports.handler = async (event, context) => {
 
     await transporter.verify();
 
-    const mailOptions = {
-      from: `"${name}" <${process.env.GMAIL_USER}>`,
+    const mailToVincent = {
+      from: `"Portfolio Contact" <${process.env.GMAIL_USER}>`,
       to: process.env.GMAIL_USER,
       replyTo: email,
       subject: `Portfolio Contact: ${subject}`,
@@ -51,7 +51,23 @@ exports.handler = async (event, context) => {
       `
     };
 
-    await transporter.sendMail(mailOptions);
+    const mailToVisitor = {
+      from: `"Vincent Dela Cruz" <${process.env.GMAIL_USER}>`,
+      to: email,
+      subject: 'Thank you for reaching out!',
+      html: `
+        <h2>Hi ${name},</h2>
+        <p>Thank you for your message! I've received your inquiry regarding "<strong>${subject}</strong>".</p>
+        <p>I'll get back to you as soon as possible.</p>
+        <br>
+        <p>Best regards,<br><strong>Vincent Dela Cruz</strong></p>
+      `
+    };
+
+    await Promise.all([
+      transporter.sendMail(mailToVincent),
+      transporter.sendMail(mailToVisitor)
+    ]);
 
     return {
       statusCode: 200,
