@@ -33,6 +33,246 @@
     <script src="tailwind-config.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap');
+
+        /* ── Splash Screen ───────────────────────────────── */
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #0a0f1e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: opacity 0.7s ease, visibility 0.7s ease;
+        }
+
+        #splash-screen.splash-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Animated background grid */
+        .splash-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(59,130,246,0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59,130,246,0.07) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridDrift 20s linear infinite;
+        }
+
+        @keyframes gridDrift {
+            from { transform: translate(0, 0); }
+            to   { transform: translate(40px, 40px); }
+        }
+
+        /* Glowing orbs */
+        .splash-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.35;
+            animation: orbFloat 8s ease-in-out infinite alternate;
+        }
+
+        .splash-orb-1 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #1d4ed8, #6366f1);
+            top: -100px; left: -100px;
+            animation-delay: 0s;
+        }
+
+        .splash-orb-2 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, #6366f1, #8b5cf6);
+            bottom: -80px; right: -80px;
+            animation-delay: -4s;
+        }
+
+        .splash-orb-3 {
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, #3b82f6, #1d4ed8);
+            top: 50%; left: 60%;
+            animation-delay: -2s;
+        }
+
+        @keyframes orbFloat {
+            from { transform: translate(0, 0) scale(1); }
+            to   { transform: translate(30px, 20px) scale(1.1); }
+        }
+
+        /* Logo container */
+        .splash-logo-ring {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin-bottom: 32px;
+            animation: splashLogoIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes splashLogoIn {
+            from { opacity: 0; transform: scale(0.5) rotate(-15deg); }
+            to   { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        .splash-logo-ring::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #1d4ed8, #3b82f6, #6366f1, #8b5cf6, #1d4ed8);
+            animation: spin-slow 3s linear infinite;
+        }
+
+        .splash-logo-inner {
+            position: absolute;
+            inset: 4px;
+            border-radius: 50%;
+            background: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .splash-logo-inner i {
+            font-size: 2.4rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Name */
+        .splash-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 900;
+            letter-spacing: -0.01em;
+            background: linear-gradient(90deg, #93c5fd, #ffffff, #c4b5fd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: splashTextIn 0.7s ease both;
+            animation-delay: 0.7s;
+            text-align: center;
+        }
+
+        /* Tagline */
+        .splash-tagline {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: rgba(148,163,184,0.8);
+            margin-top: 8px;
+            animation: splashTextIn 0.7s ease both;
+            animation-delay: 0.95s;
+        }
+
+        @keyframes splashTextIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Loading bar */
+        .splash-loader-wrap {
+            margin-top: 48px;
+            width: 200px;
+            animation: splashTextIn 0.5s ease both;
+            animation-delay: 1.2s;
+        }
+
+        .splash-loader-track {
+            width: 100%;
+            height: 3px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 99px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .splash-loader-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 99px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #3b82f6);
+            background-size: 200% 100%;
+            animation: loaderFill 2s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+                       shimmerBar 1.5s ease-in-out infinite;
+            animation-delay: 1.3s, 1.3s;
+        }
+
+        @keyframes loaderFill {
+            0%   { width: 0%; }
+            60%  { width: 75%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes shimmerBar {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .splash-loader-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .splash-loader-label span {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.7rem;
+            color: rgba(148,163,184,0.6);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .splash-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .splash-dots span {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(99,102,241,0.7);
+            animation: dotBlink 1.2s ease-in-out infinite;
+            letter-spacing: 0;
+        }
+
+        .splash-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .splash-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dotBlink {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50%       { opacity: 1;   transform: scale(1.4); }
+        }
+
+        /* Particles */
+        .splash-particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: rgba(99,102,241,0.6);
+            animation: particleFly linear infinite;
+        }
+
+        @keyframes particleFly {
+            0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+            10%  { opacity: 1; }
+            90%  { opacity: 1; }
+            100% { transform: translateY(-20vh) scale(1.5); opacity: 0; }
+        }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -621,7 +861,107 @@
         }
 
         #mobile-menu-button {
-            margin-right: 130px;
+            margin-right: 0;
+        }
+
+        /* ── Global Responsive Fixes ─────────────────────── */
+
+        /* Prevent horizontal overflow on all devices */
+        html, body {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+
+        /* Touch-friendly tap targets */
+        @media (max-width: 768px) {
+            /* Splash screen mobile */
+            .splash-orb-1 { width: 220px; height: 220px; }
+            .splash-orb-2 { width: 180px; height: 180px; }
+            .splash-orb-3 { width: 120px; height: 120px; }
+            .splash-logo-ring { width: 88px; height: 88px; margin-bottom: 24px; }
+            .splash-logo-inner i { font-size: 1.9rem; }
+            .splash-loader-wrap { width: 160px; margin-top: 36px; }
+            .splash-tagline { font-size: 0.72rem; letter-spacing: 0.15em; }
+
+            /* Nav: logo truncation guard */
+            nav .flex-shrink-0 span {
+                font-size: 1rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 180px;
+            }
+
+            /* Hero section: tighter padding on small screens */
+            #home { padding-top: 1rem; }
+            #home .py-20 { padding-top: 3rem; padding-bottom: 3rem; }
+
+            /* Profile image sizing */
+            .hero-profile-frame { width: 220px !important; height: 220px !important; }
+
+            /* Hero badge — smaller on mobile */
+            .hero-badge {
+                font-size: 0.68rem;
+                padding: 5px 10px;
+                bottom: -8px;
+                right: -8px;
+            }
+
+            /* About image height */
+            #about .h-80 { height: 260px; }
+
+            /* Tools grid: 3 cols on mobile */
+            .tools-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 0.75rem !important;
+            }
+            .tools-grid > div { padding: 0.75rem 0.5rem; }
+            .tools-grid i { font-size: 1.75rem !important; }
+            .tools-grid span { font-size: 0.7rem; text-align: center; }
+
+            /* Certificate tabs: icon-only on mobile */
+            .cert-tab-btn { padding: 0.5rem 0.75rem; font-size: 0.8rem; }
+            .cert-tab-btn .cert-tab-label { display: none; }
+
+            /* Contact social icons: wrap */
+            #contact .contact-social { flex-wrap: wrap; gap: 0.75rem; }
+            #contact .contact-social > a { margin-left: 0 !important; }
+
+            /* Footer social: wrap */
+            footer .footer-social { flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+            footer .footer-social > a { margin-left: 0 !important; }
+
+            /* Project cards: no scale transform on touch */
+            .project-card:hover { transform: none; }
+            .tilt-card:hover { transform: none; }
+            .card-hover:hover { transform: translateY(-4px); }
+        }
+
+        /* Very small phones (< 380px) */
+        @media (max-width: 380px) {
+            .splash-name { font-size: 1.5rem; }
+            nav .flex-shrink-0 span { max-width: 140px; font-size: 0.9rem; }
+            .hero-profile-frame { width: 180px !important; height: 180px !important; }
+            .tools-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+
+        /* Tablet (768–1024px) tweaks */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .hero-profile-frame { width: 280px !important; height: 280px !important; }
+        }
+
+        /* Mobile menu: easy tap targets */
+        #mobile-menu a {
+            display: block;
+            padding: 0.75rem 1rem;
+            min-height: 44px;
+            line-height: 1.5;
+        }
+
+        /* Safe area insets for notched phones */
+        @supports (padding: env(safe-area-inset-bottom)) {
+            footer { padding-bottom: calc(2rem + env(safe-area-inset-bottom)); }
+            nav { padding-top: env(safe-area-inset-top); }
         }
 
         /* ── Profile Lightbox ───────────────────────────── */
@@ -786,6 +1126,44 @@
 </head>
 
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+
+    <!-- ══════════════ SPLASH SCREEN ══════════════ -->
+    <div id="splash-screen">
+        <!-- Animated background -->
+        <div class="splash-grid"></div>
+        <div class="splash-orb splash-orb-1"></div>
+        <div class="splash-orb splash-orb-2"></div>
+        <div class="splash-orb splash-orb-3"></div>
+
+        <!-- Floating particles (generated by JS) -->
+        <div id="splash-particles"></div>
+
+        <!-- Logo ring -->
+        <div class="splash-logo-ring">
+            <div class="splash-logo-inner">
+                <i class="fas fa-briefcase"></i>
+            </div>
+        </div>
+
+        <!-- Name -->
+        <h1 class="splash-name">Vincent Dela Cruz</h1>
+        <p class="splash-tagline">Portfolio &nbsp;·&nbsp; Developer &amp; Designer</p>
+
+        <!-- Loading bar -->
+        <div class="splash-loader-wrap">
+            <div class="splash-loader-track">
+                <div class="splash-loader-bar"></div>
+            </div>
+            <div class="splash-loader-label">
+                <span>Loading</span>
+                <div class="splash-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ══════════════ END SPLASH ══════════════════ -->
+
     <!-- Floating blobs -->
     <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-700 blob animate-float"></div>
@@ -797,26 +1175,29 @@
     <nav class="fixed w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <div class="flex-shrink-0 flex items-center">
-                    <span class="text-xl font-bold gradient-text">Vincent Dela Cruz</span>
+                <div class="flex-shrink-0 flex items-center min-w-0">
+                    <span class="text-lg sm:text-xl font-bold gradient-text truncate max-w-[200px] sm:max-w-none">Vincent Dela Cruz</span>
                 </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-center space-x-8">
-                        <a href="#home" class="nav-link px-3 py-2 text-sm font-medium active-nav">Home</a>
-                        <a href="#about" class="nav-link px-3 py-2 text-sm font-medium">About</a>
-                        <a href="#skills" class="nav-link px-3 py-2 text-sm font-medium">Skills</a>
-                        <a href="#projects" class="nav-link px-3 py-2 text-sm font-medium">Projects</a>
-                        <a href="#experience" class="nav-link px-3 py-2 text-sm font-medium">Experience</a>
-                        <a href="#certificates" class="nav-link px-3 py-2 text-sm font-medium">Certificates</a>
-                        <a href="#contact" class="nav-link px-3 py-2 text-sm font-medium">Contact</a>
-                        <button id="theme-toggle" class="p-2 rounded-full focus:outline-none">
+                <div class="hidden md:flex items-center">
+                    <div class="ml-10 flex items-center space-x-4 lg:space-x-8">
+                        <a href="#home" class="nav-link px-2 lg:px-3 py-2 text-sm font-medium active-nav">Home</a>
+                        <a href="#about" class="nav-link px-2 lg:px-3 py-2 text-sm font-medium">About</a>
+                        <a href="#skills" class="nav-link px-2 lg:px-3 py-2 text-sm font-medium">Skills</a>
+                        <a href="#projects" class="nav-link px-2 lg:px-3 py-2 text-sm font-medium">Projects</a>
+                        <a href="#experience" class="nav-link px-2 lg:px-3 py-2 text-sm font-medium">Experience</a>
+                        <a href="#certificates" class="nav-link px-2 lg:px-3 py-2 text-sm font-medium">Certificates</a>
+                        <a href="#contact" class="nav-link px-2 lg:px-3 py-2 text-sm font-medium">Contact</a>
+                        <button id="theme-toggle" class="p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 ml-2">
                             <i class="fas fa-moon text-gray-700 dark:text-yellow-300"></i>
                         </button>
                     </div>
                 </div>
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="p-2 rounded-md focus:outline-none">
-                        <i class="fas fa-bars text-gray-700 dark:text-gray-200"></i>
+                <div class="md:hidden flex items-center gap-2">
+                    <button id="theme-toggle-mobile-top" class="p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <i class="fas fa-moon text-gray-700 dark:text-yellow-300"></i>
+                    </button>
+                    <button id="mobile-menu-button" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <i class="fas fa-bars text-gray-700 dark:text-gray-200 text-lg"></i>
                     </button>
                 </div>
             </div>
@@ -824,14 +1205,14 @@
 
         <!-- Mobile menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 shadow-lg rounded-b-lg">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium">About</a>
-                <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium">Skills</a>
-                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium">Projects</a>
-                <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium">Experience</a>
-                <a href="#certificates" class="block px-3 py-2 rounded-md text-base font-medium">Certificates</a>
-                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            <div class="px-2 pt-2 pb-4 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Home</a>
+                <a href="#about" class="block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">About</a>
+                <a href="#skills" class="block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Skills</a>
+                <a href="#projects" class="block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Projects</a>
+                <a href="#experience" class="block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Experience</a>
+                <a href="#certificates" class="block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Certificates</a>
+                <a href="#contact" class="block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Contact</a>
                 <div class="px-3 py-2">
                     <button id="mobile-theme-toggle" class="p-2 rounded-full focus:outline-none">
                         <i class="fas fa-moon text-gray-700 dark:text-yellow-300"></i>
@@ -1134,7 +1515,7 @@
 
             <div class="mt-16">
                 <h3 class="text-xl font-semibold mb-8 text-center">Tools & Technologies</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                <div class="tools-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
                     <div
                         class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
                         <i class="fab fa-html5 text-4xl text-orange-500 mb-3"></i>
@@ -1360,27 +1741,27 @@
                 <button data-category="networking"
                     class="cert-tab-btn active px-6 py-3 rounded-full font-medium flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg transition-all duration-300">
                     <i class="fas fa-network-wired"></i>
-                    <span>Networking</span>
+                    <span class="cert-tab-label">Networking</span>
                 </button>
                 <button data-category="cybersecurity"
                     class="cert-tab-btn px-6 py-3 rounded-full font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
                     <i class="fas fa-shield-alt"></i>
-                    <span>Cybersecurity</span>
+                    <span class="cert-tab-label">Cybersecurity</span>
                 </button>
                 <button data-category="ai"
                     class="cert-tab-btn px-6 py-3 rounded-full font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
                     <i class="fas fa-brain"></i>
-                    <span>AI</span>
+                    <span class="cert-tab-label">AI</span>
                 </button>
                 <button data-category="multimedia"
                     class="cert-tab-btn px-6 py-3 rounded-full font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
                     <i class="fas fa-photo-video"></i>
-                    <span>Multimedia</span>
+                    <span class="cert-tab-label">Multimedia</span>
                 </button>
                 <button data-category="microsoft"
                     class="cert-tab-btn px-6 py-3 rounded-full font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
                     <i class="fab fa-microsoft"></i>
-                    <span>Microsoft</span>
+                    <span class="cert-tab-label">Microsoft</span>
                 </button>
             </div>
 
@@ -1450,7 +1831,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-8 flex space-x-6">
+                    <div class="contact-social mt-8 flex space-x-6">
                         <a href="https://www.facebook.com/thevinnnzzz?mibextid=ZbWKwL" target="_blank"
                             class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors duration-300">
                             <i class="fab fa-facebook-f"></i>
@@ -1536,7 +1917,7 @@
                 </div>
 
                 <!-- Social Media Links -->
-                <div class="flex items-center space-x-6">
+                <div class="footer-social flex items-center space-x-6">
                     <a href="https://www.facebook.com/thevinnnzzz?mibextid=ZbWKwL" target="_blank"
                         class="icon-bounce text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500 transition-colors duration-300">
                         <i class="fab fa-facebook-f text-xl"></i>
@@ -1582,6 +1963,78 @@
             <img src="images/profile.jpg" alt="Vincent Dela Cruz" class="profile-lightbox-img">
         </div>
     </div>
+
+    <!-- Splash Screen Logic -->
+    <script>
+        // Wire the extra mobile top-bar theme toggle to match the existing ones
+        (function () {
+            const topMobileToggle = document.getElementById('theme-toggle-mobile-top');
+            if (topMobileToggle) {
+                topMobileToggle.addEventListener('click', function () {
+                    document.documentElement.classList.toggle('dark');
+                    const isDark = document.documentElement.classList.contains('dark');
+                    localStorage.setItem('color-theme', isDark ? 'dark' : 'light');
+                    // Sync icons across all theme toggles
+                    document.querySelectorAll('#theme-toggle i, #mobile-theme-toggle i, #theme-toggle-mobile-top i').forEach(icon => {
+                        icon.className = isDark ? 'fas fa-sun text-yellow-300' : 'fas fa-moon text-gray-700 dark:text-yellow-300';
+                    });
+                });
+            }
+
+            // Auto-close mobile menu when any nav link is tapped
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', function () {
+                    const menu = document.getElementById('mobile-menu');
+                    if (menu) menu.classList.add('hidden');
+                });
+            });
+        })();
+    </script>
+    <script>
+        (function () {
+            // Generate floating particles
+            const container = document.getElementById('splash-particles');
+            for (let i = 0; i < 18; i++) {
+                const p = document.createElement('div');
+                p.className = 'splash-particle';
+                p.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    width: ${Math.random() * 3 + 1}px;
+                    height: ${Math.random() * 3 + 1}px;
+                    animation-duration: ${Math.random() * 8 + 6}s;
+                    animation-delay: ${Math.random() * 5}s;
+                    opacity: ${Math.random() * 0.5 + 0.3};
+                `;
+                container.appendChild(p);
+            }
+
+            // Hide splash after load bar finishes (~3.5s total)
+            function dismissSplash() {
+                const splash = document.getElementById('splash-screen');
+                splash.classList.add('splash-hidden');
+                // Allow scroll and interaction on main page
+                document.body.style.overflow = '';
+                // Remove from DOM after transition
+                setTimeout(() => splash.remove(), 750);
+            }
+
+            // Lock scroll while splash is visible
+            document.body.style.overflow = 'hidden';
+
+            // Wait for page assets + artificial loading bar duration
+            const minDuration = 3200; // ms — matches loaderFill animation (2s delay + 2s duration + buffer)
+            const start = Date.now();
+
+            window.addEventListener('load', function () {
+                const elapsed = Date.now() - start;
+                const remaining = Math.max(0, minDuration - elapsed);
+                setTimeout(dismissSplash, remaining);
+            });
+
+            // Failsafe: always dismiss after 5s even if load event is slow
+            setTimeout(dismissSplash, 5000);
+        })();
+    </script>
 
     <script src="projects-data.js"></script>
     <script src="script.js"></script>
