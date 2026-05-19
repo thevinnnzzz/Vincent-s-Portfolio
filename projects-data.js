@@ -223,13 +223,9 @@ const projectsData = {
             { name: 'Boxicons', icon: 'fas fa-icons', color: 'text-purple-500' }
         ],
         links: {
-            live: 'https://notificationsys.netlify.app/',
+            live: 'BSIT3A_IT8-Final-Lab_Delacruz/shop1-html.html',
             github: null,
             docs: null
-        },
-        demoCredentials: {
-            email: 'admin@school.edu',
-            password: 'admin12345'
         },
         hasMultipleDemos: true,
         demoOptions: [
@@ -346,9 +342,13 @@ const projectsData = {
             { name: 'Motion', icon: 'fas fa-magic', color: 'text-purple-500' }
         ],
         links: {
-            live: null,
+            live: 'https://notificationsys.netlify.app/',
             github: null,
             docs: null
+        },
+        demoCredentials: {
+            email: 'admin@school.edu',
+            password: 'admin12345'
         },
         // Image Viewer Configuration
         hasImageViewer: true,
