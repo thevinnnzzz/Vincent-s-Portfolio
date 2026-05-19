@@ -10,6 +10,8 @@ const headers = {
 const ENCRYPTION_KEY = process.env.EMAIL_ENCRYPTION_KEY || crypto.randomBytes(32).toString('hex');
 const IV_LENGTH = 16;
 const TOKEN_EXPIRY = 24 * 60 * 60 * 1000;
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const requestLog = new Map();
 
 function encrypt(data) {
   const iv = crypto.randomBytes(IV_LENGTH);
@@ -53,6 +55,19 @@ function formatDate() {
   return new Date().toUTCString();
 }
 
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const lastRequest = requestLog.get(ip);
+  
+  if (lastRequest && now - lastRequest < RATE_LIMIT_WINDOW) {
+    const waitTime = Math.ceil((RATE_LIMIT_WINDOW - (now - lastRequest)) / 1000);
+    return { limited: true, waitTime };
+  }
+  
+  requestLog.set(ip, now);
+  return { limited: false };
+}
+
 exports.handler = async (event, context) => {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers, body: '' };
@@ -60,6 +75,19 @@ exports.handler = async (event, context) => {
 
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, headers, body: 'Method Not Allowed' };
+  }
+
+  const clientIp = event.headers['x-nf-client-connection-ip'] || 'unknown';
+  const rateLimit = checkRateLimit(clientIp);
+  
+  if (rateLimit.limited) {
+    return {
+      statusCode: 429,
+      headers,
+      body: JSON.stringify({ 
+        error: `Too many requests. Please wait ${rateLimit.waitTime} seconds before trying again.` 
+      })
+    };
   }
 
   try {

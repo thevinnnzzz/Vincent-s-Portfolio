@@ -590,10 +590,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // Contact Form Handler
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
+        let isCooldown = false;
+        
         contactForm.addEventListener('submit', async function (e) {
             e.preventDefault();
             const submitBtn = document.getElementById('submit-btn');
             const successOverlay = document.getElementById('success-overlay');
+
+            if (isCooldown) {
+                alert('Please wait before sending another message.');
+                return;
+            }
 
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span class="spinner"></span>Sending...';
@@ -649,18 +656,31 @@ document.addEventListener('DOMContentLoaded', function () {
                             }, 300);
                         }, 6000);
                     }
+                } else if (response.status === 429) {
+                    throw new Error(data.error || 'Too many requests. Please wait a minute.');
                 } else {
                     throw new Error(data.error || 'Failed to send');
                 }
             } catch (error) {
                 submitBtn.innerHTML = 'Send Message';
                 submitBtn.disabled = false;
-                alert('Failed to send message. Please try again.');
+                alert(error.message);
                 return;
             }
 
-            submitBtn.innerHTML = 'Send Message';
-            submitBtn.disabled = false;
+            // Start cooldown
+            isCooldown = true;
+            let timeLeft = 60;
+            const cooldownInterval = setInterval(() => {
+                timeLeft--;
+                submitBtn.innerHTML = `Wait ${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    clearInterval(cooldownInterval);
+                    submitBtn.innerHTML = 'Send Message';
+                    submitBtn.disabled = false;
+                    isCooldown = false;
+                }
+            }, 1000);
         });
     }
 
