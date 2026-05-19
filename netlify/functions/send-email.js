@@ -101,12 +101,32 @@ exports.handler = async (event, context) => {
       };
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    // Stricter email validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const cleanEmail = email.trim().toLowerCase();
+    
+    if (!emailRegex.test(cleanEmail)) {
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ error: 'Invalid email address' })
+        body: JSON.stringify({ error: 'Please enter a valid email address.' })
+      };
+    }
+
+    // Block disposable/temporary email domains
+    const disposableDomains = [
+      'tempmail.com', 'throwaway.email', 'guerrillamail.com', 'mailinator.com',
+      'yopmail.com', 'sharklasers.com', 'grr.la', 'dispostable.com',
+      'trashmail.com', 'fakeinbox.com', 'mailnesia.com', 'tempail.com',
+      'temp-mail.org', 'mohmal.com', 'burnermail.io', 'emailondeck.com'
+    ];
+    
+    const domain = cleanEmail.split('@')[1];
+    if (disposableDomains.includes(domain)) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: 'Temporary email addresses are not allowed. Please use a permanent email.' })
       };
     }
 
@@ -120,7 +140,7 @@ exports.handler = async (event, context) => {
 
     await transporter.verify();
 
-    const encryptedToken = encrypt({ name, email, subject, message });
+    const encryptedToken = encrypt({ name, email: cleanEmail, subject, message });
     const tokenString = Buffer.from(JSON.stringify(encryptedToken)).toString('base64url');
     const siteUrl = process.env.SITE_URL || process.env.URL || 'https://your-portfolio.netlify.app';
     const verificationUrl = `${siteUrl}/.netlify/functions/verify-email?token=${tokenString}`;
@@ -132,7 +152,7 @@ exports.handler = async (event, context) => {
       },
       to: {
         name: name,
-        address: email
+        address: cleanEmail
       },
       replyTo: process.env.GMAIL_USER,
       subject: 'Please verify your email to send your message',

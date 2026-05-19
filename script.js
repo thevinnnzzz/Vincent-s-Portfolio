@@ -592,13 +592,40 @@ document.addEventListener('DOMContentLoaded', function () {
     if (contactForm) {
         let isCooldown = false;
         
+        // Email validation regex
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        
+        // List of common disposable/temporary email domains
+        const disposableDomains = [
+            'tempmail.com', 'throwaway.email', 'guerrillamail.com', 'mailinator.com',
+            'yopmail.com', 'sharklasers.com', 'grr.la', 'dispostable.com',
+            'trashmail.com', 'fakeinbox.com', 'mailnesia.com', 'tempail.com'
+        ];
+
         contactForm.addEventListener('submit', async function (e) {
             e.preventDefault();
             const submitBtn = document.getElementById('submit-btn');
             const successOverlay = document.getElementById('success-overlay');
+            const emailInput = document.getElementById('email');
+            const emailValue = emailInput.value.trim().toLowerCase();
 
             if (isCooldown) {
                 alert('Please wait before sending another message.');
+                return;
+            }
+
+            // Validate email format
+            if (!emailRegex.test(emailValue)) {
+                alert('Please enter a valid email address.');
+                emailInput.focus();
+                return;
+            }
+
+            // Check for disposable email domains
+            const domain = emailValue.split('@')[1];
+            if (disposableDomains.includes(domain)) {
+                alert('Please use a permanent email address. Temporary emails are not allowed.');
+                emailInput.focus();
                 return;
             }
 
@@ -611,7 +638,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         name: document.getElementById('name').value,
-                        email: document.getElementById('email').value,
+                        email: emailValue,
                         subject: document.getElementById('subject').value,
                         message: document.getElementById('message').value
                     })
