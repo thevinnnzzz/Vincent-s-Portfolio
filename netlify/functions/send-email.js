@@ -94,7 +94,7 @@ exports.handler = async (event, context) => {
 
     const encryptedToken = encrypt({ name, email, subject, message });
     const tokenString = Buffer.from(JSON.stringify(encryptedToken)).toString('base64url');
-    const siteUrl = process.env.SITE_URL || 'https://your-portfolio.netlify.app';
+    const siteUrl = process.env.SITE_URL || process.env.URL || 'https://your-portfolio.netlify.app';
     const verificationUrl = `${siteUrl}/.netlify/functions/verify-email?token=${tokenString}`;
 
     const verificationEmail = {
