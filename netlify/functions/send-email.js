@@ -1,8 +1,18 @@
 const nodemailer = require('nodemailer');
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS'
+};
+
 exports.handler = async (event, context) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers, body: '' };
+  }
+
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+    return { statusCode: 405, headers, body: 'Method Not Allowed' };
   }
 
   try {
@@ -11,6 +21,7 @@ exports.handler = async (event, context) => {
     if (!name || !email || !subject || !message) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ error: 'All fields are required' })
       };
     }
@@ -22,6 +33,8 @@ exports.handler = async (event, context) => {
         pass: process.env.GMAIL_APP_PASSWORD
       }
     });
+
+    await transporter.verify();
 
     const mailOptions = {
       from: `"${name}" <${process.env.GMAIL_USER}>`,
@@ -42,13 +55,15 @@ exports.handler = async (event, context) => {
 
     return {
       statusCode: 200,
+      headers,
       body: JSON.stringify({ message: 'Email sent successfully' })
     };
   } catch (error) {
-    console.error('Email error:', error);
+    console.error('Email error:', error.message);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Failed to send email' })
+      headers,
+      body: JSON.stringify({ error: error.message })
     };
   }
 };
