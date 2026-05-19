@@ -640,12 +640,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         `;
                     }
                     successOverlay.classList.add('show');
-                    setTimeout(() => {
-                        successOverlay.classList.remove('show');
+                    
+                    if (!data.requiresVerification) {
                         setTimeout(() => {
-                            location.reload();
-                        }, 300);
-                    }, 6000);
+                            successOverlay.classList.remove('show');
+                            setTimeout(() => {
+                                location.reload();
+                            }, 300);
+                        }, 6000);
+                    }
                 } else {
                     throw new Error(data.error || 'Failed to send');
                 }
