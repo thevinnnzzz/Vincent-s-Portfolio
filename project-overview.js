@@ -101,6 +101,25 @@ function displayProject(project) {
         `;
     }
 
+    // Display demo credentials if available
+    if (project.demoCredentials) {
+        const creds = project.demoCredentials;
+        const credsHtml = `
+            <div class="mt-4 p-4 bg-gray-100 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 inline-block">
+                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <i class="fas fa-info-circle mr-1 text-blue-500"></i>Demo Login
+                </p>
+                <p class="text-xs text-gray-600 dark:text-gray-400">
+                    <span class="font-medium">Email:</span> ${creds.email}
+                </p>
+                <p class="text-xs text-gray-600 dark:text-gray-400">
+                    <span class="font-medium">Password:</span> ${creds.password}
+                </p>
+            </div>
+        `;
+        linksContainer.insertAdjacentHTML('afterend', credsHtml);
+    }
+
     // Display features
     const featuresGrid = document.getElementById('features-grid');
     featuresGrid.innerHTML = '';

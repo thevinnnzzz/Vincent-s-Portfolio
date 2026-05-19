@@ -223,9 +223,13 @@ const projectsData = {
             { name: 'Boxicons', icon: 'fas fa-icons', color: 'text-purple-500' }
         ],
         links: {
-            live: 'BSIT3A_IT8-Final-Lab_Delacruz/shop1-html.html',
+            live: 'https://notificationsys.netlify.app/',
             github: null,
             docs: null
+        },
+        demoCredentials: {
+            email: 'admin@school.edu',
+            password: 'admin12345'
         },
         hasMultipleDemos: true,
         demoOptions: [
