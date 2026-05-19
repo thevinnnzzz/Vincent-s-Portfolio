@@ -587,6 +587,50 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Contact Form Handler
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submit-btn');
+            const statusDiv = document.getElementById('form-status');
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            statusDiv.classList.add('hidden');
+
+            try {
+                const response = await fetch('/.netlify/functions/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: document.getElementById('name').value,
+                        email: document.getElementById('email').value,
+                        subject: document.getElementById('subject').value,
+                        message: document.getElementById('message').value
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    statusDiv.className = 'mb-4 p-3 rounded-lg text-sm bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400';
+                    statusDiv.textContent = 'Message sent successfully!';
+                    contactForm.reset();
+                } else {
+                    throw new Error(data.error || 'Failed to send');
+                }
+            } catch (error) {
+                statusDiv.className = 'mb-4 p-3 rounded-lg text-sm bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400';
+                statusDiv.textContent = 'Failed to send message. Please try again.';
+            } finally {
+                statusDiv.classList.remove('hidden');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Message';
+            }
+        });
+    }
+
     // Re-observe after adding classes
     setTimeout(() => {
         initScrollRevealAnimations();
