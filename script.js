@@ -614,9 +614,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (response.ok) {
                     contactForm.reset();
+                    if (data.requiresVerification) {
+                        successOverlay.innerHTML = `
+                            <div class="success-content">
+                                <i class="fas fa-envelope-circle-check success-icon"></i>
+                                <h2>Verification Email Sent!</h2>
+                                <p>Please check your inbox and click the verification link to send your message.</p>
+                            </div>
+                        `;
+                    } else {
+                        successOverlay.innerHTML = `
+                            <div class="success-content">
+                                <i class="fas fa-check-circle success-icon"></i>
+                                <h2>Message Sent!</h2>
+                                <p>Thank you for reaching out. I'll get back to you soon.</p>
+                            </div>
+                        `;
+                    }
                     successOverlay.classList.add('show');
                     setTimeout(() => {
                         successOverlay.classList.remove('show');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 300);
                     }, 5000);
                 } else {
                     throw new Error(data.error || 'Failed to send');

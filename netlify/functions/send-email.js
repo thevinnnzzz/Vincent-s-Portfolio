@@ -1,10 +1,47 @@
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'Content-Type',
   'Access-Control-Allow-Methods': 'POST, OPTIONS'
 };
+
+const ENCRYPTION_KEY = process.env.EMAIL_ENCRYPTION_KEY || crypto.randomBytes(32).toString('hex');
+const IV_LENGTH = 16;
+const TOKEN_EXPIRY = 24 * 60 * 60 * 1000;
+
+function encrypt(data) {
+  const iv = crypto.randomBytes(IV_LENGTH);
+  const cipher = crypto.createCipheriv('aes-256-gcm', Buffer.from(ENCRYPTION_KEY, 'hex'), iv);
+  let encrypted = cipher.update(JSON.stringify(data), 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  const authTag = cipher.getAuthTag().toString('hex');
+  return {
+    iv: iv.toString('hex'),
+    encryptedData: encrypted,
+    authTag: authTag,
+    timestamp: Date.now()
+  };
+}
+
+function decrypt(encryptedObj) {
+  const { iv, encryptedData, authTag, timestamp } = encryptedObj;
+  
+  if (Date.now() - timestamp > TOKEN_EXPIRY) {
+    throw new Error('Verification link expired');
+  }
+
+  const decipher = crypto.createDecipheriv(
+    'aes-256-gcm',
+    Buffer.from(ENCRYPTION_KEY, 'hex'),
+    Buffer.from(iv, 'hex')
+  );
+  decipher.setAuthTag(Buffer.from(authTag, 'hex'));
+  let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  return JSON.parse(decrypted);
+}
 
 function generateMessageId() {
   const timestamp = Date.now();
@@ -55,52 +92,14 @@ exports.handler = async (event, context) => {
 
     await transporter.verify();
 
-    const mailToVincent = {
-      from: {
-        name: 'Portfolio Contact Form',
-        address: process.env.GMAIL_USER
-      },
-      to: process.env.GMAIL_USER,
-      replyTo: {
-        name: name,
-        address: email
-      },
-      subject: `Portfolio Contact: ${subject}`,
-      messageId: generateMessageId(),
-      date: formatDate(),
-      headers: {
-        'X-Mailer': 'Portfolio Contact Form',
-        'X-Priority': '3',
-        'List-Unsubscribe': `<mailto:${process.env.GMAIL_USER}?subject=Unsubscribe>`
-      },
-      text: `New Contact Form Submission\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`,
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        </head>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h2 style="color: #1e6bff; border-bottom: 2px solid #1e6bff; padding-bottom: 10px;">New Contact Form Submission</h2>
-          <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-            <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold; width: 100px;">Name:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${name}</td></tr>
-            <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Email:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${email}</td></tr>
-            <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Subject:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${subject}</td></tr>
-          </table>
-          <h3 style="color: #555;">Message:</h3>
-          <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; border-left: 4px solid #1e6bff;">
-            ${message.replace(/\n/g, '<br>')}
-          </div>
-          <p style="margin-top: 20px; color: #888; font-size: 12px;">This email was sent from your portfolio contact form.</p>
-        </body>
-        </html>
-      `
-    };
+    const encryptedToken = encrypt({ name, email, subject, message });
+    const tokenString = Buffer.from(JSON.stringify(encryptedToken)).toString('base64url');
+    const siteUrl = process.env.SITE_URL || 'https://your-portfolio.netlify.app';
+    const verificationUrl = `${siteUrl}/.netlify/functions/verify-email?token=${tokenString}`;
 
-    const mailToVisitor = {
+    const verificationEmail = {
       from: {
-        name: 'Vincent Dela Cruz',
+        name: 'Vincent Dela Cruz Portfolio',
         address: process.env.GMAIL_USER
       },
       to: {
@@ -108,18 +107,14 @@ exports.handler = async (event, context) => {
         address: email
       },
       replyTo: process.env.GMAIL_USER,
-      subject: `Re: ${subject} - Thank you for contacting me`,
+      subject: 'Please verify your email to send your message',
       messageId: generateMessageId(),
       date: formatDate(),
-      inReplyTo: mailToVincent.messageId,
-      references: mailToVincent.messageId,
       headers: {
-        'X-Mailer': 'Portfolio Auto-Reply',
-        'Auto-Submitted': 'auto-replied',
-        'Precedence': 'bulk',
+        'X-Mailer': 'Portfolio Verification',
         'List-Unsubscribe': `<mailto:${process.env.GMAIL_USER}?subject=Unsubscribe>`
       },
-      text: `Hi ${name},\n\nThank you for your message! I've received your inquiry regarding "${subject}".\n\nI'll get back to you as soon as possible.\n\nBest regards,\nVincent Dela Cruz\n\n---\nThis is an automated response. Please do not reply to this email.`,
+      text: `Hi ${name},\n\nThank you for contacting me! To prevent spam, please verify your email by clicking the link below:\n\n${verificationUrl}\n\nThis link will expire in 24 hours.\n\nIf you didn't submit this form, please ignore this email.\n\nBest regards,\nVincent Dela Cruz`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -129,26 +124,29 @@ exports.handler = async (event, context) => {
         </head>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #1e6bff;">Hi ${name},</h2>
-          <p>Thank you for your message! I've received your inquiry regarding "<strong>${subject}</strong>".</p>
-          <p>I'll get back to you as soon as possible.</p>
-          <br>
-          <p>Best regards,<br><strong>Vincent Dela Cruz</strong></p>
+          <p>Thank you for contacting me! To prevent spam, please verify your email by clicking the button below:</p>
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${verificationUrl}" style="background: #1e6bff; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold;">Verify Email & Send Message</a>
+          </div>
+          <p style="color: #666; font-size: 14px;">Or copy and paste this link into your browser:</p>
+          <p style="background: #f8f9fa; padding: 10px; border-radius: 5px; word-break: break-all; font-size: 12px; color: #666;">${verificationUrl}</p>
+          <p style="color: #888; font-size: 12px; margin-top: 20px;">This link will expire in 24 hours. If you didn't submit this form, please ignore this email.</p>
           <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
-          <p style="color: #888; font-size: 12px;">This is an automated response from Vincent's Portfolio. Please do not reply to this email.</p>
+          <p style="color: #888; font-size: 12px;">Best regards,<br>Vincent Dela Cruz</p>
         </body>
         </html>
       `
     };
 
-    await Promise.all([
-      transporter.sendMail(mailToVincent),
-      transporter.sendMail(mailToVisitor)
-    ]);
+    await transporter.sendMail(verificationEmail);
 
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ message: 'Email sent successfully' })
+      body: JSON.stringify({ 
+        message: 'Verification email sent. Please check your inbox and click the verification link to send your message.',
+        requiresVerification: true
+      })
     };
   } catch (error) {
     console.error('Email error:', error.message);
