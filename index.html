@@ -2267,7 +2267,12 @@
                 btnOutlook.addEventListener('click', function(e) {
                     e.preventDefault();
                     if (isMobile) {
-                        window.location.href = `ms-outlook://mailto?to=${email}`;
+                        // Try to open Outlook app
+                        window.location.href = `ms-outlook://compose?to=${email}`;
+                        // Fallback: if app not installed, redirect to web after delay
+                        setTimeout(() => {
+                             window.location.href = `https://outlook.office.com/mail/deeplink/compose?to=${email}`;
+                        }, 2000);
                     } else {
                         window.open(`https://outlook.office.com/mail/deeplink/compose?to=${email}`, '_blank');
                     }
