@@ -2165,7 +2165,7 @@
                 
                 <div class="space-y-4">
                     <!-- Gmail Option -->
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=delacruzvincent085@gmail.com" target="_blank"
+                    <a href="#" id="btn-gmail"
                        class="group flex items-center gap-4 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-red-300 dark:hover:border-red-800 hover:shadow-lg hover:shadow-red-500/10 transition-all duration-300 transform hover:-translate-y-1">
                         <div class="w-12 h-12 rounded-lg bg-red-50 dark:bg-red-900/20 flex items-center justify-center group-hover:bg-red-100 dark:group-hover:bg-red-900/40 transition-colors">
                             <i class="fab fa-google text-2xl text-red-600 dark:text-red-400"></i>
@@ -2178,7 +2178,7 @@
                     </a>
 
                     <!-- Outlook Option -->
-                    <a href="https://outlook.office.com/mail/deeplink/compose?to=delacruzvincent085@gmail.com" target="_blank"
+                    <a href="#" id="btn-outlook"
                        class="group flex items-center gap-4 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-blue-300 dark:hover:border-blue-800 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 transform hover:-translate-y-1">
                         <div class="w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center group-hover:bg-blue-100 dark:group-hover:bg-blue-900/40 transition-colors">
                             <i class="fab fa-microsoft text-2xl text-blue-600 dark:text-blue-400"></i>
@@ -2238,6 +2238,41 @@
                     closeModal();
                 }
             });
+
+            // Device Detection & Redirection Logic
+            const email = 'delacruzvincent085@gmail.com';
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+            const isAndroid = /Android/i.test(navigator.userAgent);
+
+            const btnGmail = document.getElementById('btn-gmail');
+            const btnOutlook = document.getElementById('btn-outlook');
+
+            if (btnGmail) {
+                btnGmail.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (isMobile) {
+                        if (isIOS) {
+                            window.location.href = `googlegmail://co?to=${email}`;
+                        } else if (isAndroid) {
+                            window.location.href = `intent://co?to=${email}#Intent;scheme=googlegmail;package=com.google.android.gm;end`;
+                        }
+                    } else {
+                        window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, '_blank');
+                    }
+                });
+            }
+
+            if (btnOutlook) {
+                btnOutlook.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (isMobile) {
+                        window.location.href = `ms-outlook://mailto?to=${email}`;
+                    } else {
+                        window.open(`https://outlook.office.com/mail/deeplink/compose?to=${email}`, '_blank');
+                    }
+                });
+            }
         })();
     </script>
 
