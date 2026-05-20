@@ -2210,29 +2210,30 @@
             })();
         </script>
 
-        // Console Blocker
-        (function () {
-            const blockKeys = (e) => {
-                if (e.key === 'F12' || 
-                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
-                    (e.ctrlKey && e.key === 'U')) {
-                    e.preventDefault();
-                    return false;
-                }
-            };
-            document.addEventListener('keydown', blockKeys);
-            document.addEventListener('contextmenu', e => e.preventDefault());
-            
-            const detectDevTools = () => {
-                const threshold = 160;
-                if (window.outerHeight - window.innerHeight > threshold || 
-                    window.outerWidth - window.innerWidth > threshold) {
-                    document.body.innerHTML = '<h1 style="text-align:center; margin-top:50px;">Developer tools are disabled on this site.</h1>';
-                }
-            };
-            setInterval(detectDevTools, 1000);
-        })();
-    </script>
-</body>
+        <script>
+            // Console Blocker
+            (function () {
+                const blockKeys = (e) => {
+                    if (e.key === 'F12' || 
+                        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                        (e.ctrlKey && e.key === 'U')) {
+                        e.preventDefault();
+                        return false;
+                    }
+                };
+                document.addEventListener('keydown', blockKeys);
+                document.addEventListener('contextmenu', e => e.preventDefault());
+                
+                const detectDevTools = () => {
+                    const threshold = 160;
+                    if (window.outerHeight - window.innerHeight > threshold || 
+                        window.outerWidth - window.innerWidth > threshold) {
+                        document.body.innerHTML = '<h1 style="text-align:center; margin-top:50px;">Developer tools are disabled on this site.</h1>';
+                    }
+                };
+                setInterval(detectDevTools, 1000);
+            })();
+        </script>
+    </body>
 
 </html>
