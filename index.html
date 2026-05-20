@@ -2148,27 +2148,50 @@
         })();
     </script>
 
-    <!-- Direct Email Modal -->
-    <div id="email-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="email-modal-backdrop"></div>
-        <div class="relative bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-sm w-full shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="email-modal-content">
-            <button id="email-modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2 text-center">Choose Email Provider</h3>
-            <p class="text-gray-500 dark:text-gray-400 text-sm text-center mb-6">Select your preferred email client to compose a message directly.</p>
-            <div class="space-y-3">
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=delacruzvincent085@gmail.com" target="_blank"
-                   class="flex items-center justify-center gap-3 w-full px-6 py-3 rounded-xl bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 font-medium hover:bg-red-100 dark:hover:bg-red-900/40 transition-all duration-300 border border-red-200 dark:border-red-800">
-                    <i class="fab fa-google text-xl"></i>
-                    <span>Gmail</span>
-                </a>
-                    <a href="https://outlook.office.com/mail/deeplink/compose?to=delacruzvincent085@gmail.com" target="_blank"
-                       class="flex items-center justify-center gap-3 w-full px-6 py-3 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all duration-300 border border-blue-200 dark:border-blue-800">
-                        <i class="fab fa-microsoft text-xl"></i>
-                        <span>Outlook</span>
+        <!-- Direct Email Modal -->
+        <div id="email-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="email-modal-backdrop"></div>
+            <div class="relative bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-md w-full shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="email-modal-content">
+                <button id="email-modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-paper-plane text-2xl text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Choose Email Provider</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">Select your preferred client to compose a message directly.</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <!-- Gmail Option -->
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=delacruzvincent085@gmail.com" target="_blank"
+                       class="group flex items-center gap-4 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-red-300 dark:hover:border-red-800 hover:shadow-lg hover:shadow-red-500/10 transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-lg bg-red-50 dark:bg-red-900/20 flex items-center justify-center group-hover:bg-red-100 dark:group-hover:bg-red-900/40 transition-colors">
+                            <i class="fab fa-google text-2xl text-red-600 dark:text-red-400"></i>
+                        </div>
+                        <div class="flex-1 text-left">
+                            <h4 class="font-bold text-gray-800 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">Gmail</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Fast and secure email by Google</p>
+                        </div>
+                        <i class="fas fa-arrow-right text-gray-400 group-hover:text-red-500 group-hover:translate-x-1 transition-all"></i>
                     </a>
+
+                    <!-- Outlook Option -->
+                    <a href="https://outlook.office.com/mail/deeplink/compose?to=delacruzvincent085@gmail.com" target="_blank"
+                       class="group flex items-center gap-4 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-blue-300 dark:hover:border-blue-800 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center group-hover:bg-blue-100 dark:group-hover:bg-blue-900/40 transition-colors">
+                            <i class="fab fa-microsoft text-2xl text-blue-600 dark:text-blue-400"></i>
+                        </div>
+                        <div class="flex-1 text-left">
+                            <h4 class="font-bold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Outlook</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Professional email by Microsoft</p>
+                        </div>
+                        <i class="fas fa-arrow-right text-gray-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all"></i>
+                    </a>
+                </div>
             </div>
+        </div>
         </div>
     </div>
 
