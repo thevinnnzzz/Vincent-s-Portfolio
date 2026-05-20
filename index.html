@@ -2253,9 +2253,11 @@
                     e.preventDefault();
                     if (isMobile) {
                         if (isIOS) {
-                            window.location.href = `googlegmail://co?to=${email}`;
+                            // iOS Gmail App Scheme
+                            window.location.href = `googlegmail:///co?to=${email}`;
                         } else if (isAndroid) {
-                            window.location.href = `intent://co?to=${email}#Intent;scheme=googlegmail;package=com.google.android.gm;end`;
+                            // Android Gmail App Intent
+                            window.location.href = `intent://compose?to=${email}#Intent;scheme=mailto;package=com.google.android.gm;end`;
                         }
                     } else {
                         window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, '_blank');
