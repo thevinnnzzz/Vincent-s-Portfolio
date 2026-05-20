@@ -1079,6 +1079,7 @@
             -ms-overflow-style: none;
             cursor: grab;
             -webkit-overflow-scrolling: touch;
+            touch-action: pan-x;
         }
 
         .marquee-wrapper::-webkit-scrollbar {
@@ -1126,6 +1127,7 @@
             will-change: transform;
             user-select: none;
             -webkit-user-select: none;
+            pointer-events: auto;
         }
 
         /* Tool Info Panel */
@@ -2560,12 +2562,15 @@
                 let isDown = false;
                 let startX;
                 let scrollLeft;
-                let isDragging = false;
+                let hasDragged = false;
+                const dragThreshold = 5;
 
                 marquee.addEventListener('mousedown', (e) => {
                     isDown = true;
+                    hasDragged = false;
                     marquee.classList.add('is-dragging');
-                    startX = e.pageX - marquee.offsetLeft;
+                    const rect = marquee.getBoundingClientRect();
+                    startX = e.clientX - rect.left;
                     scrollLeft = marquee.scrollLeft;
                 });
 
@@ -2582,17 +2587,22 @@
                 marquee.addEventListener('mousemove', (e) => {
                     if (!isDown) return;
                     e.preventDefault();
-                    isDragging = true;
-                    const x = e.pageX - marquee.offsetLeft;
-                    const walk = (x - startX) * 2;
+                    const rect = marquee.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const walk = (x - startX) * 1.5;
+                    if (Math.abs(walk) > dragThreshold) {
+                        hasDragged = true;
+                    }
                     marquee.scrollLeft = scrollLeft - walk;
                 });
 
                 // Touch events for mobile
                 marquee.addEventListener('touchstart', (e) => {
                     isDown = true;
+                    hasDragged = false;
                     marquee.classList.add('is-dragging');
-                    startX = e.touches[0].pageX - marquee.offsetLeft;
+                    const rect = marquee.getBoundingClientRect();
+                    startX = e.touches[0].clientX - rect.left;
                     scrollLeft = marquee.scrollLeft;
                 }, { passive: true });
 
@@ -2603,10 +2613,22 @@
 
                 marquee.addEventListener('touchmove', (e) => {
                     if (!isDown) return;
-                    const x = e.touches[0].pageX - marquee.offsetLeft;
-                    const walk = (x - startX) * 2;
+                    const rect = marquee.getBoundingClientRect();
+                    const x = e.touches[0].clientX - rect.left;
+                    const walk = (x - startX) * 1.5;
+                    if (Math.abs(walk) > dragThreshold) {
+                        hasDragged = true;
+                    }
                     marquee.scrollLeft = scrollLeft - walk;
                 }, { passive: true });
+
+                // Prevent click if dragged
+                marquee.addEventListener('click', (e) => {
+                    if (hasDragged) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                }, true);
             });
         })();
     </script>
