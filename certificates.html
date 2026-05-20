@@ -270,6 +270,22 @@
     </footer>
 
     <script src="certificates.js"></script>
+
+    <script>
+        // Console Blocker
+        (function () {
+            const blockKeys = (e) => {
+                if (e.key === 'F12' || 
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                    (e.ctrlKey && e.key === 'U')) {
+                    e.preventDefault();
+                    return false;
+                }
+            };
+            document.addEventListener('keydown', blockKeys);
+            document.addEventListener('contextmenu', e => e.preventDefault());
+        })();
+    </script>
 </body>
 
 </html>
