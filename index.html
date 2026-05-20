@@ -1602,8 +1602,9 @@
                 
                 <!-- Dual Marquee Container -->
                 <div class="relative">
-                    <!-- Top Marquee: Right to Left -->
-                    <div class="marquee-wrapper relative overflow-hidden rounded-2xl mb-4">
+                <!-- Top Marquee: Right to Left -->
+                <div class="relative mb-4">
+                    <div class="marquee-wrapper overflow-x-auto rounded-2xl">
                         <div class="marquee-track flex items-center gap-8 animate-marquee-rtl">
                             <!-- Set 1 -->
                             <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group" data-tool="html5">
@@ -1672,11 +1673,12 @@
                                 <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Express</span>
                             </div>
                         </div>
-                        <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-gray-900 to-transparent pointer-events-none z-10"></div>
-                        <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-gray-900 to-transparent pointer-events-none z-10"></div>
                     </div>
+                    <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-gray-900 to-transparent pointer-events-none z-10"></div>
+                    <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-gray-900 to-transparent pointer-events-none z-10"></div>
+                </div>
 
-                    <!-- Central Info Panel -->
+                <!-- Central Info Panel -->
                     <div id="tool-info-panel" class="tool-info-panel hidden relative z-20 mx-auto max-w-2xl my-6 rounded-2xl backdrop-blur-xl bg-white/80 dark:bg-gray-800/80 border border-white/30 dark:border-gray-700/30 shadow-2xl p-6 transform transition-all duration-500">
                         <button id="close-tool-info" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
                             <i class="fas fa-times"></i>
@@ -1692,8 +1694,9 @@
                     </div>
 
                     <!-- Bottom Marquee: Left to Right -->
-                    <div class="marquee-wrapper relative overflow-hidden rounded-2xl">
-                        <div class="marquee-track flex items-center gap-8 animate-marquee-ltr">
+                    <div class="relative">
+                        <div class="marquee-wrapper overflow-x-auto rounded-2xl">
+                            <div class="marquee-track flex items-center gap-8 animate-marquee-ltr">
                             <!-- Set 1 -->
                             <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group" data-tool="vite">
                                 <i class="fas fa-bolt text-3xl text-purple-500 group-hover:text-purple-400 transition-colors"></i>
@@ -1761,9 +1764,9 @@
                                 <span class="text-xs font-medium text-gray-600 dark:text-gray-400">GitHub</span>
                             </div>
                         </div>
-                        <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-gray-900 to-transparent pointer-events-none z-10"></div>
-                        <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-gray-900 to-transparent pointer-events-none z-10"></div>
                     </div>
+                    <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-gray-900 to-transparent pointer-events-none z-10"></div>
+                    <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-gray-900 to-transparent pointer-events-none z-10"></div>
                 </div>
             </div>
         </div>
