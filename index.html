@@ -2146,102 +2146,93 @@
                 }
             });
         })();
+    </script>
 
-        <!-- Direct Email Modal -->
-        <div id="email-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4">
-            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="email-modal-backdrop"></div>
-            <div class="relative bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-sm w-full shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="email-modal-content">
-                <button id="email-modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
-                    <i class="fas fa-times text-xl"></i>
-                </button>
-                <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2 text-center">Choose Email Provider</h3>
-                <p class="text-gray-500 dark:text-gray-400 text-sm text-center mb-6">Select your preferred email client to compose a message directly.</p>
-                
-                <div class="space-y-3">
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=delacruzvincent085@gmail.com" target="_blank"
-                       class="flex items-center justify-center gap-3 w-full px-6 py-3 rounded-xl bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 font-medium hover:bg-red-100 dark:hover:bg-red-900/40 transition-all duration-300 border border-red-200 dark:border-red-800">
-                        <i class="fab fa-google text-xl"></i>
-                        <span>Gmail</span>
-                    </a>
-                    <a href="https://outlook.live.com/mail/0/deeplink/compose?to=delacruzvincent085@gmail.com" target="_blank"
+    <!-- Direct Email Modal -->
+    <div id="email-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="email-modal-backdrop"></div>
+        <div class="relative bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-sm w-full shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="email-modal-content">
+            <button id="email-modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2 text-center">Choose Email Provider</h3>
+            <p class="text-gray-500 dark:text-gray-400 text-sm text-center mb-6">Select your preferred email client to compose a message directly.</p>
+            <div class="space-y-3">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=delacruzvincent085@gmail.com" target="_blank"
+                   class="flex items-center justify-center gap-3 w-full px-6 py-3 rounded-xl bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 font-medium hover:bg-red-100 dark:hover:bg-red-900/40 transition-all duration-300 border border-red-200 dark:border-red-800">
+                    <i class="fab fa-google text-xl"></i>
+                    <span>Gmail</span>
+                </a>
+                    <a href="https://outlook.office.com/mail/deeplink/compose?to=delacruzvincent085@gmail.com" target="_blank"
                        class="flex items-center justify-center gap-3 w-full px-6 py-3 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all duration-300 border border-blue-200 dark:border-blue-800">
                         <i class="fab fa-microsoft text-xl"></i>
                         <span>Outlook</span>
                     </a>
-                </div>
             </div>
         </div>
+    </div>
 
-        <script>
-            // Direct Email Modal Logic
-            (function() {
-                const modal = document.getElementById('email-modal');
-                const openBtn = document.getElementById('direct-email-btn');
-                const closeBtn = document.getElementById('email-modal-close');
-                const backdrop = document.getElementById('email-modal-backdrop');
-                const content = document.getElementById('email-modal-content');
+    <script>
+        // Direct Email Modal Logic
+        (function() {
+            const modal = document.getElementById('email-modal');
+            const openBtn = document.getElementById('direct-email-btn');
+            const closeBtn = document.getElementById('email-modal-close');
+            const backdrop = document.getElementById('email-modal-backdrop');
+            const content = document.getElementById('email-modal-content');
 
-                if (!modal || !openBtn) return;
+            if (!modal || !openBtn) return;
 
-                function openModal() {
-                    modal.classList.remove('hidden');
-                    modal.classList.add('flex');
-                    // Force reflow
-                    void modal.offsetWidth;
-                    content.classList.remove('scale-95', 'opacity-0');
-                    content.classList.add('scale-100', 'opacity-100');
+            function openModal() {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                // Force reflow for transition
+                void modal.offsetWidth;
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }
+
+            function closeModal() {
+                content.classList.remove('scale-100', 'opacity-100');
+                content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }, 300);
+            }
+
+            openBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                openModal();
+            });
+
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            if (backdrop) backdrop.addEventListener('click', closeModal);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
                 }
+            });
+        })();
+    </script>
 
-                function closeModal() {
-                    content.classList.remove('scale-100', 'opacity-100');
-                    content.classList.add('scale-95', 'opacity-0');
-                    setTimeout(() => {
-                        modal.classList.add('hidden');
-                        modal.classList.remove('flex');
-                    }, 300);
-                }
-
-                openBtn.addEventListener('click', function(e) {
+    <script>
+        // Console Blocker
+        (function () {
+            const blockKeys = (e) => {
+                if (e.key === 'F12' || 
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                    (e.ctrlKey && e.key === 'U')) {
                     e.preventDefault();
-                    e.stopPropagation();
-                    openModal();
-                });
-                
-                if (closeBtn) closeBtn.addEventListener('click', closeModal);
-                if (backdrop) backdrop.addEventListener('click', closeModal);
-                
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-                        closeModal();
-                    }
-                });
-            })();
-        </script>
-
-        <script>
-            // Console Blocker
-            (function () {
-                const blockKeys = (e) => {
-                    if (e.key === 'F12' || 
-                        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
-                        (e.ctrlKey && e.key === 'U')) {
-                        e.preventDefault();
-                        return false;
-                    }
-                };
-                document.addEventListener('keydown', blockKeys);
-                document.addEventListener('contextmenu', e => e.preventDefault());
-                
-                const detectDevTools = () => {
-                    const threshold = 160;
-                    if (window.outerHeight - window.innerHeight > threshold || 
-                        window.outerWidth - window.innerWidth > threshold) {
-                        document.body.innerHTML = '<h1 style="text-align:center; margin-top:50px;">Developer tools are disabled on this site.</h1>';
-                    }
-                };
-                setInterval(detectDevTools, 1000);
-            })();
-        </script>
+                    return false;
+                }
+            };
+            document.addEventListener('keydown', blockKeys);
+            document.addEventListener('contextmenu', e => e.preventDefault());
+        })();
+    </script>
     </body>
 
 </html>
