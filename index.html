@@ -1868,7 +1868,7 @@
                 <div class="text-center md:text-left mb-4 md:mb-0">
                     <span class="text-xl font-bold gradient-text block mb-1">Portfolio</span>
                     <div class="text-gray-600 dark:text-gray-400 text-sm">
-                        © 2023–2026 Vincent Dela Cruz. All rights reserved.
+                        © 2023–<span id="footer-year"></span> Vincent Dela Cruz. All rights reserved.
                     </div>
                 </div>
 
@@ -2165,6 +2165,11 @@
                 });
             }
         })();
+    </script>
+
+    <script>
+        // Auto-update footer year
+        document.getElementById("footer-year").textContent = new Date().getFullYear();
     </script>
 
     <script>
