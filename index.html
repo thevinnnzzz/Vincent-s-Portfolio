@@ -1063,6 +1063,71 @@
         #email-modal-content {
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+
+        /* Infinite Marquee Animation */
+        .marquee-wrapper {
+            position: relative;
+            padding: 2rem 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 2rem;
+            will-change: transform;
+            animation: marquee-scroll 40s linear infinite;
+        }
+
+        .marquee-wrapper:hover .marquee-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee-scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .marquee-item {
+            will-change: transform;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .marquee-item {
+                width: 5rem !important;
+                height: 5rem !important;
+            }
+            .marquee-item i {
+                font-size: 1.5rem !important;
+            }
+            .marquee-item span {
+                font-size: 0.6rem !important;
+            }
+            .marquee-track {
+                gap: 1rem;
+            }
+            .marquee-wrapper {
+                padding: 1.5rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .marquee-item {
+                width: 4rem !important;
+                height: 4rem !important;
+            }
+            .marquee-item i {
+                font-size: 1.25rem !important;
+            }
+        }
     </style>
 </head>
 
@@ -1456,112 +1521,146 @@
 
             <div class="mt-16">
                 <h3 class="text-xl font-semibold mb-8 text-center">Tools & Technologies</h3>
-                <div class="tools-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fab fa-html5 text-4xl text-orange-500 mb-3"></i>
-                        <span>HTML5</span>
+                
+                <!-- Marquee Container -->
+                <div class="marquee-wrapper relative overflow-hidden rounded-2xl">
+                    <div class="marquee-track flex items-center gap-8 animate-marquee">
+                        <!-- Set 1: Original Icons -->
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group">
+                            <i class="fab fa-html5 text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">HTML5</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group">
+                            <i class="fab fa-css3-alt text-3xl text-blue-500 group-hover:text-blue-400 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">CSS3</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-yellow-500/20 hover:border-yellow-400/50 cursor-pointer group">
+                            <i class="fab fa-js text-3xl text-yellow-500 group-hover:text-yellow-400 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">JavaScript</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group">
+                            <i class="fas fa-code text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">TypeScript</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group">
+                            <i class="fab fa-react text-3xl text-cyan-400 group-hover:text-cyan-300 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">React</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-indigo-500/20 hover:border-indigo-400/50 cursor-pointer group">
+                            <i class="fab fa-php text-3xl text-indigo-600 group-hover:text-indigo-500 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">PHP</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group">
+                            <i class="fab fa-node-js text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Node.js</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group">
+                            <i class="fas fa-server text-3xl text-green-500 group-hover:text-green-400 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Express</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group">
+                            <i class="fas fa-bolt text-3xl text-purple-500 group-hover:text-purple-400 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Vite</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group">
+                            <i class="fas fa-wind text-3xl text-cyan-500 group-hover:text-cyan-400 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Tailwind</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group">
+                            <i class="fab fa-bootstrap text-3xl text-purple-600 group-hover:text-purple-500 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Bootstrap</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group">
+                            <i class="fas fa-database text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">MySQL</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-500/20 hover:border-orange-400/50 cursor-pointer group">
+                            <i class="fas fa-fire text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Firebase</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group">
+                            <i class="fas fa-database text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Supabase</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-600/20 hover:border-orange-500/50 cursor-pointer group">
+                            <i class="fab fa-git-alt text-3xl text-orange-600 group-hover:text-orange-500 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Git</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-gray-500/20 hover:border-gray-400/50 cursor-pointer group">
+                            <i class="fab fa-github text-3xl text-gray-700 dark:text-gray-300 group-hover:text-gray-500 dark:group-hover:text-gray-200 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">GitHub</span>
+                        </div>
+
+                        <!-- Set 2: Duplicate for seamless loop -->
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group">
+                            <i class="fab fa-html5 text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">HTML5</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group">
+                            <i class="fab fa-css3-alt text-3xl text-blue-500 group-hover:text-blue-400 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">CSS3</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-yellow-500/20 hover:border-yellow-400/50 cursor-pointer group">
+                            <i class="fab fa-js text-3xl text-yellow-500 group-hover:text-yellow-400 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">JavaScript</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group">
+                            <i class="fas fa-code text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">TypeScript</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group">
+                            <i class="fab fa-react text-3xl text-cyan-400 group-hover:text-cyan-300 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">React</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-indigo-500/20 hover:border-indigo-400/50 cursor-pointer group">
+                            <i class="fab fa-php text-3xl text-indigo-600 group-hover:text-indigo-500 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">PHP</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group">
+                            <i class="fab fa-node-js text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Node.js</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group">
+                            <i class="fas fa-server text-3xl text-green-500 group-hover:text-green-400 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Express</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group">
+                            <i class="fas fa-bolt text-3xl text-purple-500 group-hover:text-purple-400 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Vite</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group">
+                            <i class="fas fa-wind text-3xl text-cyan-500 group-hover:text-cyan-400 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Tailwind</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group">
+                            <i class="fab fa-bootstrap text-3xl text-purple-600 group-hover:text-purple-500 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Bootstrap</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group">
+                            <i class="fas fa-database text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">MySQL</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-500/20 hover:border-orange-400/50 cursor-pointer group">
+                            <i class="fas fa-fire text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Firebase</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group">
+                            <i class="fas fa-database text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Supabase</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-600/20 hover:border-orange-500/50 cursor-pointer group">
+                            <i class="fab fa-git-alt text-3xl text-orange-600 group-hover:text-orange-500 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Git</span>
+                        </div>
+                        <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-gray-500/20 hover:border-gray-400/50 cursor-pointer group">
+                            <i class="fab fa-github text-3xl text-gray-700 dark:text-gray-300 group-hover:text-gray-500 dark:group-hover:text-gray-200 transition-colors"></i>
+                            <span class="text-xs font-medium text-gray-600 dark:text-gray-400">GitHub</span>
+                        </div>
                     </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fab fa-css3-alt text-4xl text-blue-500 mb-3"></i>
-                        <span>CSS3</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fab fa-js text-4xl text-yellow-500 mb-3"></i>
-                        <span>JavaScript</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fas fa-code text-4xl text-blue-600 mb-3"></i>
-                        <span>TypeScript</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fab fa-react text-4xl text-blue-400 mb-3"></i>
-                        <span>React</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fab fa-php text-4xl text-indigo-600 mb-3"></i>
-                        <span>PHP</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fab fa-node-js text-4xl text-green-600 mb-3"></i>
-                        <span>Node.js</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fas fa-server text-4xl text-green-500 mb-3"></i>
-                        <span>Express</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fas fa-bolt text-4xl text-purple-500 mb-3"></i>
-                        <span>Vite</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fas fa-palette text-4xl text-blue-500 mb-3"></i>
-                        <span>Tailwind CSS</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fab fa-bootstrap text-4xl text-purple-600 mb-3"></i>
-                        <span>Bootstrap</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fas fa-code text-4xl text-blue-500 mb-3"></i>
-                        <span>jQuery</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fas fa-database text-4xl text-blue-600 mb-3"></i>
-                        <span>MySQL</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fas fa-fire text-4xl text-orange-500 mb-3"></i>
-                        <span>Firebase</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fas fa-database text-4xl text-green-600 mb-3"></i>
-                        <span>Supabase</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fas fa-chart-pie text-4xl text-purple-500 mb-3"></i>
-                        <span>Chart.js</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fas fa-database text-4xl text-green-500 mb-3"></i>
-                        <span>LocalStorage</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fas fa-keyboard text-4xl text-purple-500 mb-3"></i>
-                        <span>Typed.js</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fas fa-images text-4xl text-green-500 mb-3"></i>
-                        <span>Owl Carousel</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fab fa-git-alt text-4xl text-orange-600 mb-3"></i>
-                        <span>Git</span>
-                    </div>
-                    <div
-                        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-                        <i class="fab fa-github text-4xl text-gray-700 dark:text-gray-300 mb-3"></i>
-                        <span>GitHub</span>
-                    </div>
+                    
+                    <!-- Gradient fade edges -->
+                    <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-gray-900 to-transparent pointer-events-none z-10"></div>
+                    <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-gray-900 to-transparent pointer-events-none z-10"></div>
                 </div>
             </div>
         </div>
