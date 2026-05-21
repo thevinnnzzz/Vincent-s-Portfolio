@@ -415,7 +415,7 @@ function initStaggeredAnimations() {
     });
 
     // Add shimmer to buttons
-    const buttons = document.querySelectorAll('a[href="#contact"], a[href="#projects"], button[type="submit"]');
+    const buttons = document.querySelectorAll('a[href="#contact"]:not(.nav-link), a[href="#projects"]:not(.nav-link), button[type="submit"]');
     buttons.forEach(btn => {
         btn.classList.add('btn-shimmer', 'glow-on-hover', 'ripple');
     });
