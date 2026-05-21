@@ -1037,8 +1037,9 @@
             box-shadow: 0 6px 24px rgba(29, 78, 216, 0.7);
         }
 
-        /* Zoom cursor on the hero image */
-        .hero-profile-img {
+        /* Zoom cursor on clickable profile/about images */
+        .hero-profile-img,
+        .about-profile-img {
             cursor: zoom-in;
         }
 
@@ -1363,7 +1364,8 @@
                     <!-- Outer glow ring -->
                     <div class="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto relative hero-profile-frame">
                         <!-- Profile image -->
-                        <img src="images/profile.jpg" alt="Vincent Dela Cruz" class="hero-profile-img w-full h-full">
+                        <img src="images/profile.jpg" alt="Vincent Dela Cruz" class="hero-profile-img w-full h-full"
+                            data-lightbox-src="images/profile.jpg">
                         <!-- Floating availability badge -->
                         <div class="hero-badge">
                             <span style="margin-right:6px;">🟢</span> Available for Work
@@ -1409,7 +1411,8 @@
                     <div
                         class="w-full h-80 md:h-96 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-xl overflow-hidden">
                         <img src="images/aboutMe.jpeg" alt="About me"
-                            class="w-full h-full object-cover">
+                            class="w-full h-full object-cover about-profile-img"
+                            data-lightbox-src="images/aboutMe.jpeg">
                     </div>
                     <div
                         class="absolute -bottom-6 -left-6 w-32 h-32 rounded-2xl bg-blue-500/20 -z-10 animate-float hidden md:block">
@@ -2204,9 +2207,12 @@
         (function () {
             const overlay = document.getElementById('profileLightbox');
             const closeBtn = document.getElementById('profileLightboxClose');
-            const heroImg = document.querySelector('.hero-profile-img');
+            const lightboxImg = overlay.querySelector('.profile-lightbox-img');
+            const clickableImages = document.querySelectorAll('[data-lightbox-src]');
 
-            function openLightbox() {
+            function openLightbox(src, alt) {
+                lightboxImg.src = src;
+                lightboxImg.alt = alt;
                 overlay.classList.add('open');
                 document.body.style.overflow = 'hidden';
                 closeBtn.focus();
@@ -2217,8 +2223,12 @@
                 document.body.style.overflow = '';
             }
 
-            // Open on profile image click
-            heroImg.addEventListener('click', openLightbox);
+            // Open on any clickable image click
+            clickableImages.forEach(img => {
+                img.addEventListener('click', function () {
+                    openLightbox(this.dataset.lightboxSrc, this.alt);
+                });
+            });
 
             // Close on backdrop click (but not on image itself)
             overlay.addEventListener('click', function (e) {
