@@ -28,7 +28,7 @@ function displayProject(project) {
     document.getElementById('project-category').textContent = project.category;
     document.getElementById('project-name').textContent = project.name;
     document.getElementById('project-tagline').textContent = project.tagline;
-    document.getElementById('project-description').textContent = project.detailedDescription;
+    document.getElementById('project-description').innerHTML = project.detailedDescription;
     document.getElementById('project-image').src = project.image;
     document.getElementById('project-image').alt = project.name;
 

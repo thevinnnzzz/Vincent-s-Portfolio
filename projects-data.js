@@ -358,6 +358,57 @@ const projectsData = {
             ],
             basePath: 'images/Projects/Attendance_system_layout/'
         }
+    },
+    'bulkreplace': {
+        id: 'bulkreplace',
+        name: 'BulkReplace',
+        category: 'Utility Tool, JavaScript',
+        tagline: 'Advanced Bulk Text Replacement Tool',
+        image: 'images/Projects/BulkReplace/BulkReplace.png',
+        shortDescription: 'A web-based utility for replacing multiple lines of text or paragraphs simultaneously.',
+        detailedDescription: 'BulkReplace is a powerful, lightweight web utility designed to solve the limitations of standard "Find and Replace" tools. While typical text editors only allow replacing single words or single-line phrases, BulkReplace enables users to paste large blocks of text, multi-line paragraphs, or entire code snippets and replace them globally across a document in one click.<br><br><b>Real-World Scenario:</b> Imagine needing to update a massive configuration file, a complex legal document, or a repetitive code template where a specific multi-line block needs to be replaced entirely. Standard tools fail because they break at line breaks. BulkReplace was specifically developed to handle these exact multiline replacement scenarios effortlessly.<br><br>Built entirely with Vanilla HTML, CSS, and JavaScript, it features a modern, animated glassmorphism UI and seamless clipboard integration.',
+        features: [
+            {
+                icon: 'fas fa-exchange-alt',
+                title: 'Multi-line Replacement',
+                description: 'Replace entire paragraphs, code blocks, or multi-line text exactly as formatted'
+            },
+            {
+                icon: 'fas fa-clipboard-check',
+                title: 'Smart Clipboard Integration',
+                description: 'One-click copy to clipboard with fallback support for older browsers'
+            },
+            {
+                icon: 'fas fa-bolt',
+                title: 'Fast Processing',
+                description: 'Instantly processes large documents using optimized string manipulation'
+            },
+            {
+                icon: 'fas fa-paint-brush',
+                title: 'Modern Animated UI',
+                description: 'Features a glassmorphism design with floating particles and animated background'
+            },
+            {
+                icon: 'fas fa-shield-alt',
+                title: 'Privacy Focused',
+                description: '100% client-side processing ensuring your sensitive text never leaves your browser'
+            },
+            {
+                icon: 'fas fa-mobile-alt',
+                title: 'Responsive Layout',
+                description: 'Works seamlessly across desktop and mobile devices'
+            }
+        ],
+        techStack: [
+            { name: 'JavaScript', icon: 'fab fa-js', color: 'text-yellow-500' },
+            { name: 'HTML5', icon: 'fab fa-html5', color: 'text-orange-500' },
+            { name: 'CSS3', icon: 'fab fa-css3-alt', color: 'text-blue-500' }
+        ],
+        links: {
+            live: 'https://bulkreplace.netlify.app/',
+            github: null,
+            docs: null
+        }
     }
 };
 
