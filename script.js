@@ -154,7 +154,7 @@ function loadProjectCards() {
     projectsGrid.innerHTML = '';
 
     // Generate project cards from data
-    Object.values(projectsData).forEach(project => {
+    Object.values(projectsData).slice(0, 6).forEach(project => {
         const projectCard = document.createElement('div');
         projectCard.className = 'project-card h-80';
         projectCard.setAttribute('data-project-id', project.id);
