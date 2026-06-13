@@ -1,0 +1,2972 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<script>
+    // Early theme detection - runs before page renders to prevent flash
+    (function () {
+        const savedTheme = localStorage.getItem('color-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.documentElement.classList.add('dark');
+        }
+    })();
+</script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vicent Dela Cruz</title>
+
+    <!-- Favicon (using Font Awesome briefcase icon) -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/svgs/solid/briefcase.svg"
+        type="image/svg+xml">
+
+    <!-- Fallback for older browsers -->
+    <link rel="alternate icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4bc.png"
+        type="image/png">
+    <link rel="mask-icon"
+        href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/svgs/solid/briefcase.svg"
+        color="#000000">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
+    <script src="tailwind-config.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap');
+
+        /* ── Splash Screen ───────────────────────────────── */
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #0a0f1e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: opacity 0.7s ease, visibility 0.7s ease;
+        }
+
+        #splash-screen.splash-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Animated background grid */
+        .splash-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(59, 130, 246, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.07) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridDrift 20s linear infinite;
+        }
+
+        @keyframes gridDrift {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(40px, 40px);
+            }
+        }
+
+        /* Glowing orbs */
+        .splash-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.35;
+            animation: orbFloat 8s ease-in-out infinite alternate;
+        }
+
+        .splash-orb-1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #1d4ed8, #6366f1);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .splash-orb-2 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #6366f1, #8b5cf6);
+            bottom: -80px;
+            right: -80px;
+            animation-delay: -4s;
+        }
+
+        .splash-orb-3 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #3b82f6, #1d4ed8);
+            top: 50%;
+            left: 60%;
+            animation-delay: -2s;
+        }
+
+        @keyframes orbFloat {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(30px, 20px) scale(1.1);
+            }
+        }
+
+        /* Logo container */
+        .splash-logo-ring {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin-bottom: 32px;
+            animation: splashLogoIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes splashLogoIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5) rotate(-15deg);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .splash-logo-ring::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #1d4ed8, #3b82f6, #6366f1, #8b5cf6, #1d4ed8);
+            animation: spin-slow 3s linear infinite;
+        }
+
+        .splash-logo-inner {
+            position: absolute;
+            inset: 4px;
+            border-radius: 50%;
+            background: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .splash-logo-inner i {
+            font-size: 2.4rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Name */
+        .splash-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 900;
+            letter-spacing: -0.01em;
+            background: linear-gradient(90deg, #93c5fd, #ffffff, #c4b5fd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: splashTextIn 0.7s ease both;
+            animation-delay: 0.7s;
+            text-align: center;
+        }
+
+        /* Tagline */
+        .splash-tagline {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: rgba(148, 163, 184, 0.8);
+            margin-top: 8px;
+            animation: splashTextIn 0.7s ease both;
+            animation-delay: 0.95s;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        @keyframes splashTextIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loading bar */
+        .splash-loader-wrap {
+            margin-top: 48px;
+            width: 200px;
+            animation: splashTextIn 0.5s ease both;
+            animation-delay: 1.2s;
+        }
+
+        .splash-loader-track {
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 99px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .splash-loader-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 99px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #3b82f6);
+            background-size: 200% 100%;
+            animation: loaderFill 2s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+                shimmerBar 1.5s ease-in-out infinite;
+            animation-delay: 1.3s, 1.3s;
+        }
+
+        @keyframes loaderFill {
+            0% {
+                width: 0%;
+            }
+
+            60% {
+                width: 75%;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        @keyframes shimmerBar {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .splash-loader-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .splash-loader-label span {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.7rem;
+            color: rgba(148, 163, 184, 0.6);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .splash-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .splash-dots span {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.7);
+            animation: dotBlink 1.2s ease-in-out infinite;
+            letter-spacing: 0;
+        }
+
+        .splash-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .splash-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes dotBlink {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.4);
+            }
+        }
+
+        /* Particles */
+        .splash-particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.6);
+            animation: particleFly linear infinite;
+        }
+
+        @keyframes particleFly {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-20vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.5s ease;
+        }
+
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(45deg, #1d4ed8, #3b82f6, #6366f1, #8b5cf6);
+            background-size: 300% 300%;
+            animation: gradientShift 4s ease infinite;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* Hero profile frame */
+        .hero-profile-frame {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-profile-frame::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #1d4ed8, #3b82f6, #6366f1, #1e3a8a, #1d4ed8);
+            animation: spin-slow 8s linear infinite;
+            z-index: 0;
+        }
+
+        .hero-profile-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: rgba(30, 58, 138, 0.18);
+            backdrop-filter: blur(2px);
+            z-index: 0;
+        }
+
+        .hero-profile-img {
+            position: relative;
+            z-index: 1;
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            border: 4px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.18), 0 8px 40px rgba(30, 58, 138, 0.35), 0 2px 8px rgba(0, 0, 0, 0.18);
+            transition: box-shadow 0.4s ease;
+        }
+
+        .dark .hero-profile-img {
+            border-color: rgba(30, 58, 138, 0.8);
+            box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.25), 0 8px 50px rgba(59, 130, 246, 0.4), 0 2px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-profile-img:hover {
+            box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.3), 0 16px 60px rgba(30, 58, 138, 0.5), 0 2px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Navy glow badge */
+        .hero-badge {
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            background: linear-gradient(135deg, #1d4ed8, #6366f1);
+            color: white;
+            border-radius: 16px;
+            padding: 8px 16px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(29, 78, 216, 0.45);
+            z-index: 2;
+            white-space: nowrap;
+            animation: float 4s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .active-nav::after {
+            width: 100%;
+        }
+
+        .blob {
+            filter: blur(60px);
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .project-card {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .project-card img {
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.15);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            left: -10px;
+            top: 0;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 20px 10px rgba(139, 92, 246, 0);
+            }
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+        }
+
+        .skill-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            background-size: 200% 100%;
+            transition: width 1s ease-in-out;
+            min-width: 0;
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.6s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes float-reverse {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(20px);
+            }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-float-reverse {
+            animation: float-reverse 6s ease-in-out infinite;
+        }
+
+        .animate-float-slow {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        /* Bounce Animation */
+        @keyframes bounce-slow {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .animate-bounce-slow {
+            animation: bounce-slow 3s ease-in-out infinite;
+        }
+
+        /* Spin Animation */
+        @keyframes spin-slow {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .animate-spin-slow {
+            animation: spin-slow 20s linear infinite;
+        }
+
+        /* Glow Effect */
+        .glow-on-hover {
+            transition: all 0.3s ease;
+        }
+
+        .glow-on-hover:hover {
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.5), 0 0 60px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Button Shimmer Effect */
+        .btn-shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-shimmer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-shimmer:hover::before {
+            left: 100%;
+        }
+
+        /* Card 3D Tilt Effect */
+        .tilt-card {
+            transition: transform 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .tilt-card:hover {
+            transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.02);
+        }
+
+        /* Stagger Animation Delays */
+        .stagger-1 {
+            animation-delay: 0.1s;
+        }
+
+        .stagger-2 {
+            animation-delay: 0.2s;
+        }
+
+        .stagger-3 {
+            animation-delay: 0.3s;
+        }
+
+        .stagger-4 {
+            animation-delay: 0.4s;
+        }
+
+        .stagger-5 {
+            animation-delay: 0.5s;
+        }
+
+        .stagger-6 {
+            animation-delay: 0.6s;
+        }
+
+        /* Fade In Up Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Fade In Down Animation */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeInDown {
+            animation: fadeInDown 0.8s ease forwards;
+        }
+
+        /* Scale In Animation */
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-scaleIn {
+            animation: scaleIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* Rotate In Animation */
+        @keyframes rotateIn {
+            from {
+                opacity: 0;
+                transform: rotate(-180deg) scale(0.5);
+            }
+
+            to {
+                opacity: 1;
+                transform: rotate(0deg) scale(1);
+            }
+        }
+
+        .animate-rotateIn {
+            animation: rotateIn 0.8s ease forwards;
+        }
+
+        /* Typing Cursor Blink */
+        .typed-cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* Icon Hover Bounce */
+        .icon-bounce:hover {
+            animation: iconBounce 0.5s ease;
+        }
+
+        @keyframes iconBounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            25% {
+                transform: translateY(-8px);
+            }
+
+            50% {
+                transform: translateY(0);
+            }
+
+            75% {
+                transform: translateY(-4px);
+            }
+        }
+
+        /* Underline Animation */
+        .underline-animation {
+            position: relative;
+            display: inline-block;
+        }
+
+        .underline-animation::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .underline-animation:hover::after {
+            width: 100%;
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 10%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform 0.5s, opacity 1s;
+        }
+
+        .ripple:active::after {
+            transform: scale(0, 0);
+            opacity: 0.3;
+            transition: 0s;
+        }
+
+        /* Parallax Scroll Effect */
+        .parallax-slow {
+            will-change: transform;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Section Title Animation */
+        .section-title {
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 2px;
+            transition: width 0.6s ease;
+        }
+
+        .section-title.active::after {
+            width: 80px;
+        }
+
+        /* Navbar Scroll Effect */
+        .navbar-scrolled {
+            background: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark .navbar-scrolled {
+            background: rgba(17, 24, 39, 0.95) !important;
+        }
+
+        #mobile-menu-button {
+            margin-right: 0;
+        }
+
+        /* ── Global Responsive Fixes ─────────────────────── */
+
+        /* Prevent horizontal overflow on all devices */
+        html,
+        body {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+
+        /* Touch-friendly tap targets */
+        @media (max-width: 768px) {
+
+            /* Splash screen mobile */
+            .splash-orb-1 {
+                width: 220px;
+                height: 220px;
+            }
+
+            .splash-orb-2 {
+                width: 180px;
+                height: 180px;
+            }
+
+            .splash-orb-3 {
+                width: 120px;
+                height: 120px;
+            }
+
+            .splash-logo-ring {
+                width: 88px;
+                height: 88px;
+                margin-bottom: 24px;
+            }
+
+            .splash-logo-inner i {
+                font-size: 1.9rem;
+            }
+
+            .splash-loader-wrap {
+                width: 160px;
+                margin-top: 36px;
+            }
+
+            .splash-tagline {
+                font-size: 0.72rem;
+                letter-spacing: 0.15em;
+            }
+
+            /* Nav: logo truncation guard */
+            nav .flex-shrink-0 span {
+                font-size: 1rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 180px;
+            }
+
+            /* Hero section: tighter padding on small screens */
+            #home {
+                padding-top: 1rem;
+            }
+
+            #home .py-20 {
+                padding-top: 3rem;
+                padding-bottom: 3rem;
+            }
+
+            /* Profile image sizing */
+            .hero-profile-frame {
+                width: 220px !important;
+                height: 220px !important;
+            }
+
+            /* Hero badge — smaller on mobile */
+            .hero-badge {
+                font-size: 0.68rem;
+                padding: 5px 10px;
+                bottom: -8px;
+                right: -8px;
+            }
+
+            /* About image height */
+            #about .h-80 {
+                height: 260px;
+            }
+
+            /* Tools grid: 3 cols on mobile */
+            .tools-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 0.75rem !important;
+            }
+
+            .tools-grid>div {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .tools-grid i {
+                font-size: 1.75rem !important;
+            }
+
+            .tools-grid span {
+                font-size: 0.7rem;
+                text-align: center;
+            }
+
+            /* Certificate tabs: icon-only on mobile */
+            .cert-tab-btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.8rem;
+            }
+
+            .cert-tab-btn .cert-tab-label {
+                display: none;
+            }
+
+            /* Contact social icons: wrap */
+            #contact .contact-social {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+
+            #contact .contact-social>a {
+                margin-left: 0 !important;
+            }
+
+            /* Footer social: wrap */
+            footer .footer-social {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+                justify-content: center;
+            }
+
+            footer .footer-social>a {
+                margin-left: 0 !important;
+            }
+
+            /* Project cards: no scale transform on touch */
+            .project-card:hover {
+                transform: none;
+            }
+
+            .tilt-card:hover {
+                transform: none;
+            }
+
+            .card-hover:hover {
+                transform: translateY(-4px);
+            }
+        }
+
+        /* Very small phones (< 380px) */
+        @media (max-width: 380px) {
+            .splash-name {
+                font-size: 1.5rem;
+            }
+
+            nav .flex-shrink-0 span {
+                max-width: 140px;
+                font-size: 0.9rem;
+            }
+
+            .hero-profile-frame {
+                width: 180px !important;
+                height: 180px !important;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
+        /* Tablet (768–1024px) tweaks */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .hero-profile-frame {
+                width: 280px !important;
+                height: 280px !important;
+            }
+        }
+
+        /* Mobile menu: easy tap targets */
+        #mobile-menu a {
+            display: block;
+            padding: 0.75rem 1rem;
+            min-height: 44px;
+            line-height: 1.5;
+        }
+
+        /* Safe area insets for notched phones */
+        @supports (padding: env(safe-area-inset-bottom)) {
+            footer {
+                padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+            }
+
+            nav {
+                padding-top: env(safe-area-inset-top);
+            }
+        }
+
+        /* ── Profile Lightbox ───────────────────────────── */
+        .profile-lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(5, 10, 30, 0.82);
+            backdrop-filter: blur(12px) saturate(1.4);
+            -webkit-backdrop-filter: blur(12px) saturate(1.4);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .profile-lightbox-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .profile-lightbox-content {
+            position: relative;
+            transform: scale(0.55);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+        }
+
+        .profile-lightbox-overlay.open .profile-lightbox-content {
+            transform: scale(1);
+        }
+
+        .profile-lightbox-img {
+            max-width: min(90vw, 600px);
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            border-radius: 20px;
+            object-fit: contain;
+            border: 4px solid rgba(255, 255, 255, 0.88);
+            box-shadow:
+                0 0 0 6px rgba(59, 130, 246, 0.3),
+                0 0 60px rgba(29, 78, 216, 0.55),
+                0 30px 80px rgba(0, 0, 0, 0.65);
+            display: block;
+        }
+
+        .profile-lightbox-close {
+            position: absolute;
+            top: -16px;
+            right: -16px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1d4ed8, #6366f1);
+            color: #fff;
+            font-size: 1.2rem;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(29, 78, 216, 0.5);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            z-index: 1;
+        }
+
+        .profile-lightbox-close:hover {
+            transform: scale(1.15) rotate(90deg);
+            box-shadow: 0 6px 24px rgba(29, 78, 216, 0.7);
+        }
+
+        /* Zoom cursor on clickable profile/about images */
+        .hero-profile-img,
+        .about-profile-img {
+            cursor: zoom-in;
+        }
+
+        /* ── Contact Form Loading & Success Animations ── */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Direct Email Modal Styles */
+        #email-modal {
+            transition: opacity 0.3s ease;
+        }
+
+        #email-modal-content {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Infinite Marquee Animation */
+        .marquee-wrapper {
+            position: relative;
+            padding: 1.5rem 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            overflow-x: auto;
+            overflow-y: hidden;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            cursor: grab;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-x;
+        }
+
+        .marquee-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .marquee-wrapper:active {
+            cursor: grabbing;
+        }
+
+        .marquee-wrapper.is-dragging .marquee-track {
+            animation-play-state: paused !important;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 2rem;
+            will-change: transform;
+            min-width: max-content;
+        }
+
+        .animate-marquee-rtl {
+            animation: marquee-rtl 35s linear infinite;
+        }
+
+        .animate-marquee-ltr {
+            animation: marquee-ltr 35s linear infinite;
+        }
+
+        .marquee-wrapper:hover:not(.is-dragging) .marquee-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee-rtl {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes marquee-ltr {
+            0% {
+                transform: translateX(-50%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .marquee-item {
+            will-change: transform;
+            user-select: none;
+            -webkit-user-select: none;
+            pointer-events: auto;
+        }
+
+        /* Tool Info Panel */
+        .tool-info-panel {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .tool-info-panel.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .tool-info-panel .tool-info-icon {
+            animation: iconPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        @keyframes iconPop {
+            0% {
+                transform: scale(0) rotate(-10deg);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .tool-info-panel .tool-info-title {
+            animation: fadeSlideUp 0.4s 0.1s ease both;
+        }
+
+        .tool-info-panel .tool-info-desc {
+            animation: fadeSlideUp 0.4s 0.2s ease both;
+        }
+
+        .tool-info-panel .tool-info-features li {
+            animation: fadeSlideUp 0.3s ease both;
+        }
+
+        .tool-info-panel .tool-info-features li:nth-child(1) {
+            animation-delay: 0.3s;
+        }
+
+        .tool-info-panel .tool-info-features li:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .tool-info-panel .tool-info-features li:nth-child(3) {
+            animation-delay: 0.5s;
+        }
+
+        .tool-info-panel .tool-info-features li:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .marquee-item {
+                width: 5rem !important;
+                height: 5rem !important;
+            }
+
+            .marquee-item i {
+                font-size: 1.5rem !important;
+            }
+
+            .marquee-item span {
+                font-size: 0.6rem !important;
+            }
+
+            .marquee-track {
+                gap: 1rem;
+            }
+
+            .marquee-wrapper {
+                padding: 1rem 0;
+            }
+
+            .tool-info-panel {
+                margin: 1rem;
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .marquee-item {
+                width: 4rem !important;
+                height: 4rem !important;
+            }
+
+            .marquee-item i {
+                font-size: 1.25rem !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+
+    <!-- ══════════════ SPLASH SCREEN ══════════════ -->
+    <div id="splash-screen">
+        <!-- Animated background -->
+        <div class="splash-grid"></div>
+        <div class="splash-orb splash-orb-1"></div>
+        <div class="splash-orb splash-orb-2"></div>
+        <div class="splash-orb splash-orb-3"></div>
+
+        <!-- Floating particles (generated by JS) -->
+        <div id="splash-particles"></div>
+
+        <!-- Logo ring -->
+        <div class="splash-logo-ring">
+            <div class="splash-logo-inner">
+                <i class="fas fa-briefcase"></i>
+            </div>
+        </div>
+
+        <!-- Name -->
+        <h1 class="splash-name">Vincent Dela Cruz</h1>
+        <p class="splash-tagline">Portfolio &nbsp;·&nbsp; Developer &amp; Junior IT Support Engineer</p>
+
+        <!-- Loading bar -->
+        <div class="splash-loader-wrap">
+            <div class="splash-loader-track">
+                <div class="splash-loader-bar"></div>
+            </div>
+            <div class="splash-loader-label">
+                <span>Loading</span>
+                <div class="splash-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ══════════════ END SPLASH ══════════════════ -->
+
+    <!-- Floating blobs -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-700 blob animate-float"></div>
+        <div class="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-indigo-600 blob animate-float-reverse"></div>
+        <div class="absolute bottom-1/4 right-1/3 w-56 h-56 rounded-full bg-blue-500 blob animate-float"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center min-w-0">
+                    <span
+                        class="text-lg sm:text-xl font-bold gradient-text truncate max-w-[200px] sm:max-w-none">Vincent
+                        Dela Cruz</span>
+                </div>
+                <div class="hidden md:flex items-center">
+                    <div class="ml-10 flex items-center space-x-4 lg:space-x-8">
+                        <a href="#home" class="nav-link px-2 lg:px-3 py-2 text-sm font-medium active-nav">Home</a>
+                        <a href="#about" class="nav-link px-2 lg:px-3 py-2 text-sm font-medium">About</a>
+                        <a href="#skills" class="nav-link px-2 lg:px-3 py-2 text-sm font-medium">Skills</a>
+                        <a href="#projects" class="nav-link px-2 lg:px-3 py-2 text-sm font-medium">Projects</a>
+                        <a href="#experience" class="nav-link px-2 lg:px-3 py-2 text-sm font-medium">Experience</a>
+                        <a href="#certificates" class="nav-link px-2 lg:px-3 py-2 text-sm font-medium">Certificates</a>
+                        <a href="#contact" class="nav-link px-2 lg:px-3 py-2 text-sm font-medium">Contact</a>
+                        <button id="theme-toggle"
+                            class="p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 ml-2">
+                            <i class="fas fa-moon text-gray-700 dark:text-yellow-300"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="md:hidden flex items-center gap-2">
+                    <button id="theme-toggle-mobile-top"
+                        class="p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <i class="fas fa-moon text-gray-700 dark:text-yellow-300"></i>
+                    </button>
+                    <button id="mobile-menu-button"
+                        class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <i class="fas fa-bars text-gray-700 dark:text-gray-200 text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 shadow-lg rounded-b-lg">
+            <div class="px-2 pt-2 pb-4 space-y-1 sm:px-3">
+                <a href="#home"
+                    class="block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Home</a>
+                <a href="#about"
+                    class="block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">About</a>
+                <a href="#skills"
+                    class="block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Skills</a>
+                <a href="#projects"
+                    class="block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Projects</a>
+                <a href="#experience"
+                    class="block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Experience</a>
+                <a href="#certificates"
+                    class="block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Certificates</a>
+                <a href="#contact"
+                    class="block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Contact</a>
+                <div class="px-3 py-2">
+                    <button id="mobile-theme-toggle" class="p-2 rounded-full focus:outline-none">
+                        <i class="fas fa-moon text-gray-700 dark:text-yellow-300"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                        Hi, I'm <span class="gradient-text">Vincent</span>
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl font-semibold mb-6">
+                        I'm a <span class="typing gradient-text"></span><span
+                            class="typed-cursor text-purple-500">|</span>
+                    </h2>
+                    <p class="text-lg mb-8 max-w-lg mx-auto md:mx-0">
+                        I build full-stack web applications and manage enterprise IT infrastructure with modern
+                        technologies, automation, and reliable systems.
+                    </p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                        <a href="#contact"
+                            class="px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                            Contact Me
+                        </a>
+                        <a href="#projects"
+                            class="px-8 py-3 rounded-full border-2 border-gray-300 dark:border-gray-600 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 transform hover:scale-105">
+                            View Work
+                        </a>
+                    </div>
+                    <div class="mt-8 flex justify-center md:justify-start space-x-6">
+                        <a href="https://www.facebook.com/thevinnnzzz?mibextid=ZbWKwL" target="_blank"
+                            class="icon-bounce text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500 transition-colors duration-300">
+                            <i class="fab fa-facebook-f text-2xl"></i>
+                        </a>
+                        <a href="#"
+                            class="icon-bounce text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
+                            <i class="fab fa-github text-2xl"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/vincent-dela-cruz-028b0a408" target="_blank"
+                            class="icon-bounce text-gray-600 dark:text-gray-300 hover:text-blue-400 dark:hover:text-blue-400 transition-colors duration-300">
+                            <i class="fab fa-linkedin text-2xl"></i>
+                        </a>
+                        <a href="#"
+                            class="icon-bounce text-gray-600 dark:text-gray-300 hover:text-blue-400 dark:hover:text-blue-400 transition-colors duration-300">
+                            <i class="fab fa-twitter text-2xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="relative flex justify-center">
+                    <!-- Outer glow ring -->
+                    <div class="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto relative hero-profile-frame">
+                        <!-- Profile image -->
+                        <img src="images/profile.jpg" alt="Vincent Dela Cruz" class="hero-profile-img w-full h-full"
+                            data-lightbox-src="images/profile.jpg">
+                        <!-- Floating availability badge -->
+                        <div class="hero-badge">
+                            <span style="margin-right:6px;">🟢</span> Available for Work
+                        </div>
+                    </div>
+                    <!-- Decorative orbs -->
+                    <div
+                        class="absolute -bottom-8 -left-4 w-20 h-20 rounded-full bg-blue-600/25 animate-bounce-slow hidden md:block blur-sm">
+                    </div>
+                    <div
+                        class="absolute -top-8 -right-4 w-16 h-16 rounded-full bg-indigo-500/25 animate-bounce-slow hidden md:block blur-sm">
+                    </div>
+                    <!-- Dots accent -->
+                    <div class="absolute bottom-0 -right-8 hidden lg:grid grid-cols-3 gap-2 opacity-40">
+                        <span class="w-2 h-2 rounded-full bg-blue-400 block"></span>
+                        <span class="w-2 h-2 rounded-full bg-indigo-400 block"></span>
+                        <span class="w-2 h-2 rounded-full bg-blue-500 block"></span>
+                        <span class="w-2 h-2 rounded-full bg-indigo-500 block"></span>
+                        <span class="w-2 h-2 rounded-full bg-blue-600 block"></span>
+                        <span class="w-2 h-2 rounded-full bg-indigo-600 block"></span>
+                        <span class="w-2 h-2 rounded-full bg-blue-700 block"></span>
+                        <span class="w-2 h-2 rounded-full bg-indigo-700 block"></span>
+                        <span class="w-2 h-2 rounded-full bg-blue-800 block"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">About <span class="gradient-text">Me</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    Get to know more about who I am and what I do
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <div
+                        class="w-full h-80 md:h-96 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-xl overflow-hidden">
+                        <img src="images/aboutMe.jpeg" alt="About me"
+                            class="w-full h-full object-cover about-profile-img"
+                            data-lightbox-src="images/aboutMe.jpeg">
+                    </div>
+                    <div
+                        class="absolute -bottom-6 -left-6 w-32 h-32 rounded-2xl bg-blue-500/20 -z-10 animate-float hidden md:block">
+                    </div>
+                    <div
+                        class="absolute -top-6 -right-6 w-28 h-28 rounded-2xl bg-purple-500/20 -z-10 animate-float-reverse hidden md:block">
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">Who am I?</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">
+                        With 1 year of experience, I operate as a versatile Full-Stack Web Developer and IT Support
+                        Specialist, bridging the gap between robust system administration and scalable web applications.
+                        I specialize in building functional digital tools while managing cloud infrastructure,
+                        enterprise endpoints, and seamless technical operations.
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">
+                        My technical approach combines modern web development across contemporary <strong>front-end and
+                            back-end </strong> technologies with enterprise systems administration across
+                        <strong>Microsoft Azure, Intune, and Google Admin</strong>. I leverage the <strong>Jira
+                            ticketing system</strong> for efficient service delivery, while proactively building custom
+                        <strong>Google Apps Script automations</strong> to manage hardware lifecycles efficiently within
+                        <strong>Snipe-IT Asset Management</strong>.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center mr-4">
+                                <i class="fas fa-user text-blue-500"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">Name</p>
+                                <p class="text-gray-500 dark:text-gray-400">Vincent Dela Cruz</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div
+                                class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center mr-4 flex-shrink-0 mt-0.5">
+                                <i class="fas fa-envelope text-purple-500"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">Email</p>
+                                <p class="text-gray-500 dark:text-gray-400 break-all">delacruzvincent085@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-pink-500/10 flex items-center justify-center mr-4">
+                                <i class="fas fa-map-marker-alt text-pink-500"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">Location</p>
+                                <p class="text-gray-500 dark:text-gray-400">Manila, Philippines</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center mr-4">
+                                <i class="fas fa-briefcase text-indigo-500"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">Freelance</p>
+                                <p class="text-gray-500 dark:text-gray-400">Available</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-4">
+                        <a id="download-cv" href="CV/RESUME-DELACRUZ.pdf" target="_blank" rel="noopener noreferrer"
+                            class="px-6 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300">
+                            Download CV
+                        </a>
+                        <a href="#contact"
+                            class="px-6 py-2 rounded-full border-2 border-gray-300 dark:border-gray-600 font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
+                            Hire Me
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">My <span class="gradient-text">Skills</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    The technologies and tools I use to bring ideas to life
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">Frontend Development</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>HTML/CSS</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>JavaScript</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>React</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>TypeScript</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Tailwind CSS</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">Backend & Other Skills</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>PHP</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>MySQL</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Node.js</span>
+                                <span>70%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Firebase</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Git</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16">
+                <h3 class="text-xl font-semibold mb-8 text-center">Tools & Technologies</h3>
+
+                <!-- Dual Marquee Container -->
+                <div class="relative">
+                    <!-- Top Marquee: Right to Left -->
+                    <div class="relative mb-4">
+                        <div class="marquee-wrapper overflow-x-auto rounded-2xl">
+                            <div class="marquee-track flex items-center gap-8 animate-marquee-rtl">
+                                <!-- Set 1 -->
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                    data-tool="html5">
+                                    <i
+                                        class="fab fa-html5 text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">HTML5</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                    data-tool="css3">
+                                    <i
+                                        class="fab fa-css3-alt text-3xl text-blue-500 group-hover:text-blue-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">CSS3</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-yellow-500/20 hover:border-yellow-400/50 cursor-pointer group"
+                                    data-tool="javascript">
+                                    <i
+                                        class="fab fa-js text-3xl text-yellow-500 group-hover:text-yellow-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">JavaScript</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                    data-tool="typescript">
+                                    <i
+                                        class="fas fa-code text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">TypeScript</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group"
+                                    data-tool="react">
+                                    <i
+                                        class="fab fa-react text-3xl text-cyan-400 group-hover:text-cyan-300 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">React</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-indigo-500/20 hover:border-indigo-400/50 cursor-pointer group"
+                                    data-tool="php">
+                                    <i
+                                        class="fab fa-php text-3xl text-indigo-600 group-hover:text-indigo-500 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">PHP</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
+                                    data-tool="nodejs">
+                                    <i
+                                        class="fab fa-node-js text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Node.js</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
+                                    data-tool="express">
+                                    <i
+                                        class="fas fa-server text-3xl text-green-500 group-hover:text-green-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Express</span>
+                                </div>
+                                <!-- Set 2 (Duplicate) -->
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                    data-tool="html5">
+                                    <i
+                                        class="fab fa-html5 text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">HTML5</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                    data-tool="css3">
+                                    <i
+                                        class="fab fa-css3-alt text-3xl text-blue-500 group-hover:text-blue-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">CSS3</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-yellow-500/20 hover:border-yellow-400/50 cursor-pointer group"
+                                    data-tool="javascript">
+                                    <i
+                                        class="fab fa-js text-3xl text-yellow-500 group-hover:text-yellow-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">JavaScript</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                    data-tool="typescript">
+                                    <i
+                                        class="fas fa-code text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">TypeScript</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group"
+                                    data-tool="react">
+                                    <i
+                                        class="fab fa-react text-3xl text-cyan-400 group-hover:text-cyan-300 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">React</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-indigo-500/20 hover:border-indigo-400/50 cursor-pointer group"
+                                    data-tool="php">
+                                    <i
+                                        class="fab fa-php text-3xl text-indigo-600 group-hover:text-indigo-500 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">PHP</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
+                                    data-tool="nodejs">
+                                    <i
+                                        class="fab fa-node-js text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Node.js</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
+                                    data-tool="express">
+                                    <i
+                                        class="fas fa-server text-3xl text-green-500 group-hover:text-green-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Express</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-gray-900 to-transparent pointer-events-none z-10">
+                        </div>
+                        <div
+                            class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-gray-900 to-transparent pointer-events-none z-10">
+                        </div>
+                    </div>
+
+                    <!-- Central Info Panel -->
+                    <div id="tool-info-panel"
+                        class="tool-info-panel hidden relative z-20 mx-auto max-w-2xl my-6 rounded-2xl backdrop-blur-xl bg-white/80 dark:bg-gray-800/80 border border-white/30 dark:border-gray-700/30 shadow-2xl p-6 transform transition-all duration-500">
+                        <button id="close-tool-info"
+                            class="absolute top-3 right-3 w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="flex items-start gap-4">
+                            <div id="tool-info-icon"
+                                class="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0"></div>
+                            <div class="flex-1">
+                                <h4 id="tool-info-title" class="text-xl font-bold text-gray-800 dark:text-white mb-2">
+                                </h4>
+                                <p id="tool-info-desc" class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                                </p>
+                                <ul id="tool-info-features"
+                                    class="mt-3 space-y-1 text-sm text-gray-500 dark:text-gray-400"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Marquee: Left to Right -->
+                    <div class="relative">
+                        <div class="marquee-wrapper overflow-x-auto rounded-2xl">
+                            <div class="marquee-track flex items-center gap-8 animate-marquee-ltr">
+                                <!-- Set 1 -->
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group"
+                                    data-tool="vite">
+                                    <i
+                                        class="fas fa-bolt text-3xl text-purple-500 group-hover:text-purple-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Vite</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group"
+                                    data-tool="tailwind">
+                                    <i
+                                        class="fas fa-wind text-3xl text-cyan-500 group-hover:text-cyan-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Tailwind</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group"
+                                    data-tool="bootstrap">
+                                    <i
+                                        class="fab fa-bootstrap text-3xl text-purple-600 group-hover:text-purple-500 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Bootstrap</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                    data-tool="mysql">
+                                    <i
+                                        class="fas fa-database text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">MySQL</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-500/20 hover:border-orange-400/50 cursor-pointer group"
+                                    data-tool="firebase">
+                                    <i
+                                        class="fas fa-fire text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Firebase</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
+                                    data-tool="supabase">
+                                    <i
+                                        class="fas fa-database text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Supabase</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-600/20 hover:border-orange-500/50 cursor-pointer group"
+                                    data-tool="git">
+                                    <i
+                                        class="fab fa-git-alt text-3xl text-orange-600 group-hover:text-orange-500 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Git</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-gray-500/20 hover:border-gray-400/50 cursor-pointer group"
+                                    data-tool="github">
+                                    <i
+                                        class="fab fa-github text-3xl text-gray-700 dark:text-gray-300 group-hover:text-gray-500 dark:group-hover:text-gray-200 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">GitHub</span>
+                                </div>
+                                <!-- Set 2 (Duplicate) -->
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group"
+                                    data-tool="vite">
+                                    <i
+                                        class="fas fa-bolt text-3xl text-purple-500 group-hover:text-purple-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Vite</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group"
+                                    data-tool="tailwind">
+                                    <i
+                                        class="fas fa-wind text-3xl text-cyan-500 group-hover:text-cyan-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Tailwind</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group"
+                                    data-tool="bootstrap">
+                                    <i
+                                        class="fab fa-bootstrap text-3xl text-purple-600 group-hover:text-purple-500 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Bootstrap</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                    data-tool="mysql">
+                                    <i
+                                        class="fas fa-database text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">MySQL</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-500/20 hover:border-orange-400/50 cursor-pointer group"
+                                    data-tool="firebase">
+                                    <i
+                                        class="fas fa-fire text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Firebase</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
+                                    data-tool="supabase">
+                                    <i
+                                        class="fas fa-database text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Supabase</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-600/20 hover:border-orange-500/50 cursor-pointer group"
+                                    data-tool="git">
+                                    <i
+                                        class="fab fa-git-alt text-3xl text-orange-600 group-hover:text-orange-500 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Git</span>
+                                </div>
+                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-gray-500/20 hover:border-gray-400/50 cursor-pointer group"
+                                    data-tool="github">
+                                    <i
+                                        class="fab fa-github text-3xl text-gray-700 dark:text-gray-300 group-hover:text-gray-500 dark:group-hover:text-gray-200 transition-colors"></i>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">GitHub</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-gray-900 to-transparent pointer-events-none z-10">
+                        </div>
+                        <div
+                            class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-gray-900 to-transparent pointer-events-none z-10">
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">My <span class="gradient-text">Projects</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    Some of my recent work and personal projects
+                </p>
+            </div>
+
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Projects will be dynamically loaded here -->
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="projects.html"
+                    class="px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center">
+                    View All Projects
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">My <span class="gradient-text">Experience</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    My professional journey and education
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-8 text-center">Work Experience</h3>
+                    <div class="relative pl-8 timeline">
+                        <!-- HelloConnect Inc. IT Support Internship -->
+                        <div class="mb-8 timeline-item relative pl-8">
+                            <div
+                                class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold">IT Support</h4>
+                                    <span
+                                        class="text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 px-3 py-1 rounded-full">Internship</span>
+                                </div>
+                                <h5 class="text-blue-500 dark:text-blue-400 mb-2">HelloConnect Inc.</h5>
+                                <p class="text-gray-600 dark:text-gray-300">
+                                    Provided comprehensive IT support at HelloConnect Inc., ensuring smooth technical
+                                    operations and service delivery.
+                                    Assisted in managing internal IT infrastructure, resolving hardware and software
+                                    issues, and supporting the technical needs of a fast-paced customer care and
+                                    operational environment.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-semibold mb-8 text-center">Education</h3>
+                    <div class="relative pl-8 timeline">
+                        <!-- BS Information Technology -->
+                        <div class="mb-8 timeline-item relative pl-8">
+                            <div
+                                class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold">Bachelor of Science in Information Technology</h4>
+                                    <span
+                                        class="text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 px-3 py-1 rounded-full whitespace-nowrap">2022
+                                        - 2026</span>
+                                </div>
+                                <h5 class="text-blue-500 dark:text-blue-400 mb-2">Lyceum of the Philippines University –
+                                    Batangas</h5>
+                                <p class="text-gray-600 dark:text-gray-300 mb-3">
+                                    Specialization in Multimedia Technology. Graduated with Latin honors as
+                                    <span class="font-semibold text-purple-500 dark:text-purple-400">Cum Laude</span>.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span
+                                        class="text-xs bg-gradient-to-r from-blue-500 to-purple-600 text-white px-3 py-1 rounded-full">
+                                        <i class="fas fa-award mr-1"></i>Cum Laude
+                                    </span>
+                                    <span
+                                        class="text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-full">
+                                        <i class="fas fa-star mr-1"></i>Dean's Lister (2022–2026)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section id="certificates" class="py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Certificates & <span class="gradient-text">Awards</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    Professional certifications and achievements across various technology domains
+                </p>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
+                <button data-category="networking"
+                    class="cert-tab-btn active px-6 py-3 rounded-full font-medium flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg transition-all duration-300">
+                    <i class="fas fa-network-wired"></i>
+                    <span class="cert-tab-label">Networking</span>
+                </button>
+                <button data-category="cybersecurity"
+                    class="cert-tab-btn px-6 py-3 rounded-full font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
+                    <i class="fas fa-shield-alt"></i>
+                    <span class="cert-tab-label">Cybersecurity</span>
+                </button>
+                <button data-category="ai"
+                    class="cert-tab-btn px-6 py-3 rounded-full font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
+                    <i class="fas fa-brain"></i>
+                    <span class="cert-tab-label">AI</span>
+                </button>
+                <button data-category="multimedia"
+                    class="cert-tab-btn px-6 py-3 rounded-full font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
+                    <i class="fas fa-photo-video"></i>
+                    <span class="cert-tab-label">Multimedia</span>
+                </button>
+                <button data-category="microsoft"
+                    class="cert-tab-btn px-6 py-3 rounded-full font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
+                    <i class="fab fa-microsoft"></i>
+                    <span class="cert-tab-label">Microsoft</span>
+                </button>
+                <button data-category="web"
+                    class="cert-tab-btn px-6 py-3 rounded-full font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
+                    <i class="fas fa-code"></i>
+                    <span class="cert-tab-label">Web Development</span>
+                </button>
+            </div>
+
+            <!-- Certificate Count -->
+            <div class="text-center mb-8">
+                <span id="index-cert-count"
+                    class="inline-block px-4 py-2 bg-white dark:bg-gray-900 rounded-full text-sm font-medium text-gray-600 dark:text-gray-400 shadow-sm">
+                    9 Certificates
+                </span>
+            </div>
+
+            <!-- Certificates Grid -->
+            <div id="index-certificates-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Certificates will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Get In <span class="gradient-text">Touch</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    Feel free to reach out for collaborations or just a friendly hello
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-8">
+                        I'm always open to discussing new projects, creative ideas or opportunities to be part of your
+                        vision. Don't hesitate to reach out.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mr-4">
+                                <i class="fas fa-map-marker-alt text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Location</h4>
+                                <p class="text-gray-600 dark:text-gray-400">Manila, Philippines</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-purple-500"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium">Email</h4>
+                                <p class="text-gray-600 dark:text-gray-400 mb-2">delacruzvincent085@gmail.com</p>
+                                <button type="button" id="direct-email-btn"
+                                    class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm font-medium hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-all duration-300 border border-blue-200 dark:border-blue-800">
+                                    <i class="fas fa-paper-plane"></i>
+                                    <span>Direct Email</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-pink-500/10 flex items-center justify-center mr-4">
+                                <i class="fas fa-phone-alt text-pink-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Phone</h4>
+                                <p class="text-gray-600 dark:text-gray-400">+63 994 982 4524</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-social mt-8 flex space-x-6">
+                        <a href="https://www.facebook.com/thevinnnzzz?mibextid=ZbWKwL" target="_blank"
+                            class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/vincent-dela-cruz-028b0a408" target="_blank"
+                            class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center hover:bg-blue-400 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="bg-white dark:bg-gray-700 p-8 rounded-xl shadow-lg h-full flex flex-col justify-center">
+                        <div class="text-center mb-8">
+                            <div
+                                class="w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-handshake text-3xl text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Let's Work Together</h3>
+                            <p class="text-gray-600 dark:text-gray-300">
+                                I'm currently available for freelance projects and full-time opportunities.
+                            </p>
+                        </div>
+
+                        <div class="space-y-4 mb-8">
+                            <div
+                                class="flex items-center justify-center gap-3 p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+                                <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                                <span class="text-gray-700 dark:text-gray-300 font-medium">Open to new
+                                    opportunities</span>
+                            </div>
+                            <div
+                                class="flex items-center justify-center gap-3 p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+                                <i class="fas fa-clock text-blue-500 text-xl"></i>
+                                <span class="text-gray-700 dark:text-gray-300 font-medium">Typically responds within 24
+                                    hours</span>
+                            </div>
+                            <div
+                                class="flex items-center justify-center gap-3 p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+                                <i class="fas fa-globe text-purple-500 text-xl"></i>
+                                <span class="text-gray-700 dark:text-gray-300 font-medium">Available for remote work
+                                    worldwide</span>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Connect with me on social media</p>
+                            <div class="flex justify-center space-x-4">
+                                <a href="https://www.facebook.com/thevinnnzzz?mibextid=ZbWKwL" target="_blank"
+                                    class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-110">
+                                    <i class="fab fa-facebook-f text-lg"></i>
+                                </a>
+                                <a href="#"
+                                    class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-gray-800 hover:text-white transition-all duration-300 transform hover:scale-110">
+                                    <i class="fab fa-github text-lg"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/in/vincent-dela-cruz-028b0a408" target="_blank"
+                                    class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-110">
+                                    <i class="fab fa-linkedin-in text-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-gray-100 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <!-- Logo & Copyright -->
+                <div class="text-center md:text-left mb-4 md:mb-0">
+                    <span class="text-xl font-bold gradient-text block mb-1">Portfolio</span>
+                    <div class="text-gray-600 dark:text-gray-400 text-sm">
+                        © 2023–<span id="footer-year"></span> Vincent Dela Cruz. All rights reserved.
+                    </div>
+                </div>
+
+                <!-- Social Media Links -->
+                <div class="footer-social flex items-center space-x-6">
+                    <a href="https://www.facebook.com/thevinnnzzz?mibextid=ZbWKwL" target="_blank"
+                        class="icon-bounce text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500 transition-colors duration-300">
+                        <i class="fab fa-facebook-f text-xl"></i>
+                    </a>
+                    <a href="#"
+                        class="icon-bounce text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 transition-colors duration-300">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/vincent-dela-cruz-028b0a408" target="_blank"
+                        class="icon-bounce text-gray-500 hover:text-blue-400 dark:text-gray-400 dark:hover:text-blue-400 transition-colors duration-300">
+                        <i class="fab fa-linkedin-in text-xl"></i>
+                    </a>
+                </div>
+
+                <!-- Back to Top -->
+                <div class="mt-4 md:mt-0">
+                    <a href="#home"
+                        class="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300 inline-flex items-center">
+                        Back to Top
+                        <i class="fas fa-arrow-up ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Profile Lightbox Modal -->
+    <div id="profileLightbox" class="profile-lightbox-overlay" role="dialog" aria-modal="true"
+        aria-label="Profile photo expanded view">
+        <div class="profile-lightbox-content">
+            <button class="profile-lightbox-close" id="profileLightboxClose" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+            <img src="images/profile.jpg" alt="Vincent Dela Cruz" class="profile-lightbox-img">
+        </div>
+    </div>
+
+    <!-- Splash Screen Logic -->
+    <script>
+        // Wire the extra mobile top-bar theme toggle to match the existing ones
+        (function () {
+            const topMobileToggle = document.getElementById('theme-toggle-mobile-top');
+            if (topMobileToggle) {
+                topMobileToggle.addEventListener('click', function () {
+                    document.documentElement.classList.toggle('dark');
+                    const isDark = document.documentElement.classList.contains('dark');
+                    localStorage.setItem('color-theme', isDark ? 'dark' : 'light');
+                    // Sync icons across all theme toggles
+                    document.querySelectorAll('#theme-toggle i, #mobile-theme-toggle i, #theme-toggle-mobile-top i').forEach(icon => {
+                        icon.className = isDark ? 'fas fa-sun text-yellow-300' : 'fas fa-moon text-gray-700 dark:text-yellow-300';
+                    });
+                });
+            }
+
+            // Auto-close mobile menu when any nav link is tapped
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', function () {
+                    const menu = document.getElementById('mobile-menu');
+                    if (menu) menu.classList.add('hidden');
+                });
+            });
+        })();
+    </script>
+    <script>
+        (function () {
+            // Generate floating particles
+            const container = document.getElementById('splash-particles');
+            for (let i = 0; i < 18; i++) {
+                const p = document.createElement('div');
+                p.className = 'splash-particle';
+                p.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    width: ${Math.random() * 3 + 1}px;
+                    height: ${Math.random() * 3 + 1}px;
+                    animation-duration: ${Math.random() * 8 + 6}s;
+                    animation-delay: ${Math.random() * 5}s;
+                    opacity: ${Math.random() * 0.5 + 0.3};
+                `;
+                container.appendChild(p);
+            }
+
+            // Hide splash after load bar finishes (~3.5s total)
+            function dismissSplash() {
+                const splash = document.getElementById('splash-screen');
+                splash.classList.add('splash-hidden');
+                // Allow scroll and interaction on main page
+                document.body.style.overflow = '';
+                // Remove from DOM after transition
+                setTimeout(() => splash.remove(), 750);
+            }
+
+            // Lock scroll while splash is visible
+            document.body.style.overflow = 'hidden';
+
+            // Wait for page assets + artificial loading bar duration
+            const minDuration = 3200; // ms — matches loaderFill animation (2s delay + 2s duration + buffer)
+            const start = Date.now();
+
+            window.addEventListener('load', function () {
+                const elapsed = Date.now() - start;
+                const remaining = Math.max(0, minDuration - elapsed);
+                setTimeout(dismissSplash, remaining);
+            });
+
+            // Failsafe: always dismiss after 5s even if load event is slow
+            setTimeout(dismissSplash, 5000);
+        })();
+    </script>
+
+    <script src="projects-data.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // ── Profile Lightbox Logic ───────────────────────
+        (function () {
+            const overlay = document.getElementById('profileLightbox');
+            const closeBtn = document.getElementById('profileLightboxClose');
+            const lightboxImg = overlay.querySelector('.profile-lightbox-img');
+            const clickableImages = document.querySelectorAll('[data-lightbox-src]');
+
+            function openLightbox(src, alt) {
+                lightboxImg.src = src;
+                lightboxImg.alt = alt;
+                overlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+                closeBtn.focus();
+            }
+
+            function closeLightbox() {
+                overlay.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+
+            // Open on any clickable image click
+            clickableImages.forEach(img => {
+                img.addEventListener('click', function () {
+                    openLightbox(this.dataset.lightboxSrc, this.alt);
+                });
+            });
+
+            // Close on backdrop click (but not on image itself)
+            overlay.addEventListener('click', function (e) {
+                if (e.target === overlay) closeLightbox();
+            });
+
+            // Close button
+            closeBtn.addEventListener('click', closeLightbox);
+
+            // Close on Escape key
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && overlay.classList.contains('open')) {
+                    closeLightbox();
+                }
+            });
+        })();
+    </script>
+
+    <!-- Direct Email Modal -->
+    <div id="email-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="email-modal-backdrop"></div>
+        <div class="relative bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-md w-full shadow-2xl transform transition-all duration-300 scale-95 opacity-0"
+            id="email-modal-content">
+            <button id="email-modal-close"
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div
+                    class="w-16 h-16 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-paper-plane text-2xl text-blue-600 dark:text-blue-400"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Choose Email Provider</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Select your preferred client to compose a message
+                    directly.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Gmail Option -->
+                <a href="#" id="btn-gmail"
+                    class="group flex items-center gap-4 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-red-300 dark:hover:border-red-800 hover:shadow-lg hover:shadow-red-500/10 transition-all duration-300 transform hover:-translate-y-1">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-red-50 dark:bg-red-900/20 flex items-center justify-center group-hover:bg-red-100 dark:group-hover:bg-red-900/40 transition-colors">
+                        <i class="fab fa-google text-2xl text-red-600 dark:text-red-400"></i>
+                    </div>
+                    <div class="flex-1 text-left">
+                        <h4
+                            class="font-bold text-gray-800 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">
+                            Gmail</h4>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Fast and secure email by Google</p>
+                    </div>
+                    <i
+                        class="fas fa-arrow-right text-gray-400 group-hover:text-red-500 group-hover:translate-x-1 transition-all"></i>
+                </a>
+
+                <!-- Outlook Option -->
+                <a href="#" id="btn-outlook"
+                    class="group flex items-center gap-4 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-blue-300 dark:hover:border-blue-800 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 transform hover:-translate-y-1">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center group-hover:bg-blue-100 dark:group-hover:bg-blue-900/40 transition-colors">
+                        <i class="fab fa-microsoft text-2xl text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <div class="flex-1 text-left">
+                        <h4
+                            class="font-bold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            Outlook</h4>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Professional email by Microsoft</p>
+                    </div>
+                    <i
+                        class="fas fa-arrow-right text-gray-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <script>
+        // Direct Email Modal Logic
+        (function () {
+            const modal = document.getElementById('email-modal');
+            const openBtn = document.getElementById('direct-email-btn');
+            const closeBtn = document.getElementById('email-modal-close');
+            const backdrop = document.getElementById('email-modal-backdrop');
+            const content = document.getElementById('email-modal-content');
+
+            if (!modal || !openBtn) return;
+
+            function openModal() {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                // Force reflow for transition
+                void modal.offsetWidth;
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }
+
+            function closeModal() {
+                content.classList.remove('scale-100', 'opacity-100');
+                content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }, 300);
+            }
+
+            openBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                openModal();
+            });
+
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            if (backdrop) backdrop.addEventListener('click', closeModal);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+
+            // Device Detection & Redirection Logic
+            const email = 'delacruzvincent085@gmail.com';
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+            const isAndroid = /Android/i.test(navigator.userAgent);
+
+            const btnGmail = document.getElementById('btn-gmail');
+            const btnOutlook = document.getElementById('btn-outlook');
+
+            if (btnGmail) {
+                btnGmail.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (isMobile) {
+                        if (isIOS) {
+                            // iOS Gmail App Scheme
+                            window.location.href = `googlegmail:///co?to=${email}`;
+                        } else if (isAndroid) {
+                            // Android Gmail App Intent
+                            window.location.href = `intent://compose?to=${email}#Intent;scheme=mailto;package=com.google.android.gm;end`;
+                        }
+                    } else {
+                        window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, '_blank');
+                    }
+                });
+            }
+
+            if (btnOutlook) {
+                btnOutlook.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (isMobile) {
+                        // Try to open Outlook app
+                        window.location.href = `ms-outlook://compose?to=${email}`;
+                        // Fallback: if app not installed, redirect to web after delay
+                        setTimeout(() => {
+                            window.location.href = `https://outlook.office.com/mail/deeplink/compose?to=${email}`;
+                        }, 2000);
+                    } else {
+                        window.open(`https://outlook.office.com/mail/deeplink/compose?to=${email}`, '_blank');
+                    }
+                });
+            }
+        })();
+    </script>
+
+    <script>
+        // Tool Info Panel Logic
+        (function () {
+            const toolData = {
+                html5: {
+                    title: 'HTML5',
+                    icon: '<i class="fab fa-html5 text-3xl text-orange-500"></i>',
+                    iconBg: 'bg-orange-100 dark:bg-orange-900/30',
+                    desc: 'The standard markup language for creating web pages and web applications.',
+                    features: ['Semantic elements for better structure', 'Canvas and SVG for graphics', 'Local storage and session storage', 'Drag and drop API support']
+                },
+                css3: {
+                    title: 'CSS3',
+                    icon: '<i class="fab fa-css3-alt text-3xl text-blue-500"></i>',
+                    iconBg: 'bg-blue-100 dark:bg-blue-900/30',
+                    desc: 'The latest version of Cascading Style Sheets for styling web pages.',
+                    features: ['Flexbox and Grid layouts', 'Animations and transitions', 'Media queries for responsiveness', 'Custom properties (variables)']
+                },
+                javascript: {
+                    title: 'JavaScript',
+                    icon: '<i class="fab fa-js text-3xl text-yellow-500"></i>',
+                    iconBg: 'bg-yellow-100 dark:bg-yellow-900/30',
+                    desc: 'The programming language of the web, enabling interactive and dynamic content.',
+                    features: ['ES6+ modern syntax support', 'Async/await for asynchronous code', 'DOM manipulation and events', 'Fetch API for network requests']
+                },
+                typescript: {
+                    title: 'TypeScript',
+                    icon: '<i class="fas fa-code text-3xl text-blue-600"></i>',
+                    iconBg: 'bg-blue-100 dark:bg-blue-900/30',
+                    desc: 'A strongly typed superset of JavaScript that compiles to plain JavaScript.',
+                    features: ['Static type checking', 'Interface and type definitions', 'Better IDE support and autocomplete', 'Enhanced code maintainability']
+                },
+                react: {
+                    title: 'React',
+                    icon: '<i class="fab fa-react text-3xl text-cyan-400"></i>',
+                    iconBg: 'bg-cyan-100 dark:bg-cyan-900/30',
+                    desc: 'A JavaScript library for building user interfaces with reusable components.',
+                    features: ['Component-based architecture', 'Virtual DOM for performance', 'Hooks for state management', 'Rich ecosystem and community']
+                },
+                php: {
+                    title: 'PHP',
+                    icon: '<i class="fab fa-php text-3xl text-indigo-600"></i>',
+                    iconBg: 'bg-indigo-100 dark:bg-indigo-900/30',
+                    desc: 'A popular server-side scripting language for web development.',
+                    features: ['Server-side processing', 'Database integration', 'Session management', 'Large framework ecosystem']
+                },
+                nodejs: {
+                    title: 'Node.js',
+                    icon: '<i class="fab fa-node-js text-3xl text-green-600"></i>',
+                    iconBg: 'bg-green-100 dark:bg-green-900/30',
+                    desc: 'A JavaScript runtime built on Chrome\'s V8 engine for server-side development.',
+                    features: ['Non-blocking I/O operations', 'NPM package ecosystem', 'Real-time applications', 'Microservices architecture']
+                },
+                express: {
+                    title: 'Express.js',
+                    icon: '<i class="fas fa-server text-3xl text-green-500"></i>',
+                    iconBg: 'bg-green-100 dark:bg-green-900/30',
+                    desc: 'A minimal and flexible Node.js web application framework.',
+                    features: ['Middleware support', 'Routing system', 'REST API development', 'Template engine integration']
+                },
+                vite: {
+                    title: 'Vite',
+                    icon: '<i class="fas fa-bolt text-3xl text-purple-500"></i>',
+                    iconBg: 'bg-purple-100 dark:bg-purple-900/30',
+                    desc: 'A next-generation frontend build tool with fast Hot Module Replacement.',
+                    features: ['Instant server start', 'Lightning-fast HMR', 'Optimized production builds', 'Plugin ecosystem']
+                },
+                tailwind: {
+                    title: 'Tailwind CSS',
+                    icon: '<i class="fas fa-wind text-3xl text-cyan-500"></i>',
+                    iconBg: 'bg-cyan-100 dark:bg-cyan-900/30',
+                    desc: 'A utility-first CSS framework for rapid UI development.',
+                    features: ['Utility classes for styling', 'Responsive design built-in', 'Dark mode support', 'Customizable design system']
+                },
+                bootstrap: {
+                    title: 'Bootstrap',
+                    icon: '<i class="fab fa-bootstrap text-3xl text-purple-600"></i>',
+                    iconBg: 'bg-purple-100 dark:bg-purple-900/30',
+                    desc: 'The most popular CSS framework for building responsive, mobile-first websites.',
+                    features: ['Pre-built components', 'Grid system', 'Responsive utilities', 'JavaScript plugins']
+                },
+                mysql: {
+                    title: 'MySQL',
+                    icon: '<i class="fas fa-database text-3xl text-blue-600"></i>',
+                    iconBg: 'bg-blue-100 dark:bg-blue-900/30',
+                    desc: 'A reliable relational database management system for web applications.',
+                    features: ['ACID compliance', 'SQL query optimization', 'Replication and clustering', 'Strong community support']
+                },
+                firebase: {
+                    title: 'Firebase',
+                    icon: '<i class="fas fa-fire text-3xl text-orange-500"></i>',
+                    iconBg: 'bg-orange-100 dark:bg-orange-900/30',
+                    desc: 'Google\'s platform for building web and mobile applications.',
+                    features: ['Real-time database', 'Authentication services', 'Cloud functions', 'Hosting and storage']
+                },
+                supabase: {
+                    title: 'Supabase',
+                    icon: '<i class="fas fa-database text-3xl text-green-600"></i>',
+                    iconBg: 'bg-green-100 dark:bg-green-900/30',
+                    desc: 'An open-source Firebase alternative built on PostgreSQL.',
+                    features: ['PostgreSQL database', 'Real-time subscriptions', 'Built-in authentication', 'Auto-generated APIs']
+                },
+                git: {
+                    title: 'Git',
+                    icon: '<i class="fab fa-git-alt text-3xl text-orange-600"></i>',
+                    iconBg: 'bg-orange-100 dark:bg-orange-900/30',
+                    desc: 'A distributed version control system for tracking code changes.',
+                    features: ['Branching and merging', 'Version history tracking', 'Collaborative workflows', 'Staging area for commits']
+                },
+                github: {
+                    title: 'GitHub',
+                    icon: '<i class="fab fa-github text-3xl text-gray-700 dark:text-gray-300"></i>',
+                    iconBg: 'bg-gray-100 dark:bg-gray-800',
+                    desc: 'A platform for hosting, reviewing, and managing code repositories.',
+                    features: ['Repository hosting', 'Pull request workflows', 'GitHub Actions CI/CD', 'Issue tracking and projects']
+                }
+            };
+
+            const infoPanel = document.getElementById('tool-info-panel');
+            const closeBtn = document.getElementById('close-tool-info');
+            const iconEl = document.getElementById('tool-info-icon');
+            const titleEl = document.getElementById('tool-info-title');
+            const descEl = document.getElementById('tool-info-desc');
+            const featuresEl = document.getElementById('tool-info-features');
+
+            function showToolInfo(toolKey) {
+                const tool = toolData[toolKey];
+                if (!tool) return;
+
+                // Reset animations
+                infoPanel.classList.remove('show');
+
+                // Update content
+                iconEl.className = `w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 ${tool.iconBg}`;
+                iconEl.innerHTML = tool.icon;
+                titleEl.textContent = tool.title;
+                descEl.textContent = tool.desc;
+
+                // Build features list
+                featuresEl.innerHTML = tool.features.map(f => `<li class="flex items-start gap-2"><i class="fas fa-check text-green-500 mt-1 text-xs"></i><span>${f}</span></li>`).join('');
+
+                // Show panel with animation
+                requestAnimationFrame(() => {
+                    infoPanel.classList.remove('hidden');
+                    requestAnimationFrame(() => {
+                        infoPanel.classList.add('show');
+                    });
+                });
+            }
+
+            function hideToolInfo() {
+                infoPanel.classList.remove('show');
+                setTimeout(() => {
+                    infoPanel.classList.add('hidden');
+                }, 500);
+            }
+
+            // Add click handlers to all marquee items
+            document.querySelectorAll('.marquee-item').forEach(item => {
+                item.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const toolKey = this.getAttribute('data-tool');
+                    if (toolKey) {
+                        showToolInfo(toolKey);
+                    }
+                });
+            });
+
+            // Close button handler
+            if (closeBtn) {
+                closeBtn.addEventListener('click', hideToolInfo);
+            }
+
+            // Close on backdrop click
+            if (infoPanel) {
+                infoPanel.addEventListener('click', function (e) {
+                    if (e.target === infoPanel) {
+                        hideToolInfo();
+                    }
+                });
+            }
+        })();
+    </script>
+
+    <script>
+        // Marquee Drag/Touch Scrolling
+        (function () {
+            const marquees = document.querySelectorAll('.marquee-wrapper');
+
+            marquees.forEach(marquee => {
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+                let hasDragged = false;
+                const dragThreshold = 5;
+
+                marquee.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    hasDragged = false;
+                    marquee.classList.add('is-dragging');
+                    const rect = marquee.getBoundingClientRect();
+                    startX = e.clientX - rect.left;
+                    scrollLeft = marquee.scrollLeft;
+                });
+
+                marquee.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    marquee.classList.remove('is-dragging');
+                });
+
+                marquee.addEventListener('mouseup', () => {
+                    isDown = false;
+                    marquee.classList.remove('is-dragging');
+                });
+
+                marquee.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const rect = marquee.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const walk = (x - startX) * 1.5;
+                    if (Math.abs(walk) > dragThreshold) {
+                        hasDragged = true;
+                    }
+                    marquee.scrollLeft = scrollLeft - walk;
+                });
+
+                // Touch events for mobile
+                marquee.addEventListener('touchstart', (e) => {
+                    isDown = true;
+                    hasDragged = false;
+                    marquee.classList.add('is-dragging');
+                    const rect = marquee.getBoundingClientRect();
+                    startX = e.touches[0].clientX - rect.left;
+                    scrollLeft = marquee.scrollLeft;
+                }, { passive: true });
+
+                marquee.addEventListener('touchend', () => {
+                    isDown = false;
+                    marquee.classList.remove('is-dragging');
+                });
+
+                marquee.addEventListener('touchmove', (e) => {
+                    if (!isDown) return;
+                    const rect = marquee.getBoundingClientRect();
+                    const x = e.touches[0].clientX - rect.left;
+                    const walk = (x - startX) * 1.5;
+                    if (Math.abs(walk) > dragThreshold) {
+                        hasDragged = true;
+                    }
+                    marquee.scrollLeft = scrollLeft - walk;
+                }, { passive: true });
+
+                // Prevent click if dragged
+                marquee.addEventListener('click', (e) => {
+                    if (hasDragged) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                }, true);
+            });
+        })();
+    </script>
+
+    <script>
+        // Auto-update footer year
+        document.getElementById("footer-year").textContent = new Date().getFullYear();
+    </script>
+
+    <script>
+        // Console Blocker
+        (function () {
+            const blockKeys = (e) => {
+                if (e.key === 'F12' ||
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+                    (e.ctrlKey && e.key === 'U')) {
+                    e.preventDefault();
+                    return false;
+                }
+            };
+            document.addEventListener('keydown', blockKeys);
+            document.addEventListener('contextmenu', e => e.preventDefault());
+        })();
+    </script>
+</body>
+
+</html>
