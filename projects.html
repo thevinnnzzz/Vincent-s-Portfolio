@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<script>
+    (function () {
+        const savedTheme = localStorage.getItem('color-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.documentElement.classList.add('dark');
+        }
+    })();
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Projects — Vincent Dela Cruz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+        .gradient-text {
+            background-clip: text; -webkit-background-clip: text; color: transparent;
+            background-image: linear-gradient(45deg, #1d4ed8, #3b82f6, #6366f1, #8b5cf6);
+            background-size: 300% 300%; animation: gradientShift 4s ease infinite;
+        }
+        @keyframes gradientShift { 0%,100%{background-position:0% 50%;} 50%{background-position:100% 50%;} }
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content:''; position:absolute; width:0; height:2px; bottom:-2px; left:0;
+            background:linear-gradient(90deg,#3b82f6,#8b5cf6); transition:width .3s ease;
+        }
+        .nav-link:hover::after, .active-nav::after { width:100%; }
+        .navbar-scrolled { background:rgba(255,255,255,0.95)!important; box-shadow:0 4px 20px rgba(0,0,0,0.1); }
+        .dark .navbar-scrolled { background:rgba(17,24,39,0.95)!important; }
+    <style>
+        :root {
+            --bg:        #ffffff;
+            --bg2:       #f8f9fa;
+            --bg3:       #f1f3f5;
+            --white:     #1a1a2e;
+            --white2:    #4a4a5a;
+            --white3:    #6a6a7a;
+            --blue:      #1e6bff;
+            --blue-dim:  rgba(30,107,255,0.12);
+            --blue-glow: rgba(30,107,255,0.06);
+            --border:    rgba(0,0,0,0.08);
+            --border2:   rgba(0,0,0,0.12);
+            --glass-bg:  rgba(255,255,255,0.8);
+        }
+
+        .dark {
+            --bg:        #080809;
+            --bg2:       #0f0f11;
+            --bg3:       #161618;
+            --white:     #f0ede8;
+            --white2:    #8a8680;
+            --white3:    #3a3835;
+            --blue:      #1e6bff;
+            --blue-dim:  rgba(30,107,255,0.18);
+            --blue-glow: rgba(30,107,255,0.08);
+            --border:    rgba(255,255,255,0.07);
+            --border2:   rgba(255,255,255,0.12);
+            --glass-bg:  rgba(12,12,14,0.72);
+        }
+
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--white);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* ── GRAIN OVERLAY ─────────────────────────────── */
+        body::before {
+            content:'';
+            position:fixed; inset:0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+            opacity:0.028; pointer-events:none; z-index:9997;
+        }
+
+        /* ── MAGNETIC CURSOR ───────────────────────────── */
+        #mag-cursor {
+            position:fixed;
+            width:16px; height:16px;
+            border-radius:50%;
+            background:var(--blue);
+            pointer-events:none;
+            z-index:9999;
+            transform:translate(-50%,-50%);
+            transition: width .35s cubic-bezier(.23,1,.32,1),
+                        height .35s cubic-bezier(.23,1,.32,1),
+                        background .35s ease,
+                        opacity .2s ease;
+            mix-blend-mode: normal;
+            box-shadow: 0 0 8px rgba(30,107,255,0.6);
+        }
+        #mag-cursor.card-hover {
+            width:110px; height:110px;
+            background:transparent;
+            border:1.5px solid rgba(255,255,255,0.35);
+            backdrop-filter:blur(6px);
+            mix-blend-mode:normal;
+        }
+        #mag-cursor-label {
+            position:fixed;
+            font-size:9px;
+            font-weight:600;
+            letter-spacing:3px;
+            color:#fff;
+            pointer-events:none;
+            z-index:10000;
+            transform:translate(-50%,-50%);
+            opacity:0;
+            transition:opacity .3s ease;
+        }
+        #mag-cursor.card-hover + #mag-cursor-label { opacity:1; }
+
+        /* ── SCROLLBAR ─────────────────────────────────── */
+        ::-webkit-scrollbar { width:5px; }
+        ::-webkit-scrollbar-track { background:var(--bg); }
+        ::-webkit-scrollbar-thumb { background:var(--white3); border-radius:3px; }
+        ::-webkit-scrollbar-thumb:hover { background:var(--blue); }
+
+        /* ── PAGE HEADER ───────────────────────────────── */
+        .page-header {
+            padding:6rem 3rem 2.5rem;
+            max-width:1680px;
+            margin:0 auto;
+            display:flex;
+            align-items:flex-end;
+            justify-content:space-between;
+            gap:2rem;
+        }
+        .header-left { flex:1; }
+        .header-eyebrow {
+            font-size:10px;
+            font-weight:600;
+            letter-spacing:4px;
+            text-transform:uppercase;
+            color:var(--blue);
+            margin-bottom:1.2rem;
+            display:flex; align-items:center; gap:12px;
+        }
+        .header-eyebrow::before { content:''; width:32px; height:1px; background:var(--blue); }
+        .header-title {
+            font-family:'Cormorant Garamond', serif;
+            font-size:clamp(3.2rem, 7vw, 6.5rem);
+            font-weight:600;
+            line-height:1.0;
+            letter-spacing:-2px;
+            color:var(--white);
+        }
+        .header-title em { font-style:italic; color:var(--blue); }
+        .header-right {
+            display:flex;
+            gap:3rem;
+            padding-bottom:0.5rem;
+        }
+        .stat {
+            display:flex; flex-direction:column; align-items:flex-end; gap:2px;
+        }
+        .stat-n {
+            font-family:'Cormorant Garamond', serif;
+            font-size:2.8rem;
+            font-weight:700;
+            color:var(--white);
+            line-height:1;
+        }
+        .stat-l {
+            font-size:10px;
+            letter-spacing:2.5px;
+            text-transform:uppercase;
+            color:var(--white2);
+        }
+
+        /* ── THIN RULE ─────────────────────────────────── */
+        .rule {
+            max-width:1680px;
+            margin:0 auto;
+            padding:0 3rem;
+        }
+        .rule hr { border:none; border-top:1px solid var(--border); }
+
+        /* ── MAIN LAYOUT ───────────────────────────────── */
+        .main-wrap {
+            display:grid;
+            grid-template-columns:200px 1fr;
+            gap:0;
+            max-width:1680px;
+            margin:0 auto;
+            padding:3rem 3rem 8rem;
+        }
+
+        /* ── SIDEBAR ───────────────────────────────────── */
+        .sidebar {
+            position:sticky;
+            top:28px;
+            height:fit-content;
+            padding-right:2.5rem;
+            border-right:1px solid var(--border);
+        }
+        .sidebar-label {
+            font-size:9px;
+            font-weight:600;
+            letter-spacing:3.5px;
+            text-transform:uppercase;
+            color:var(--white3);
+            margin-bottom:2rem;
+            margin-top:0.5rem;
+        }
+        .filter-list { list-style:none; display:flex; flex-direction:column; gap:2px; }
+        .filter-item {
+            position:relative;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:9px 12px;
+            border-radius:6px;
+            cursor:pointer;
+            font-size:12.5px;
+            font-weight:400;
+            color:var(--white2);
+            transition:all .25s ease;
+            overflow:hidden;
+        }
+        .filter-item::before {
+            content:'';
+            position:absolute;
+            left:0; top:0; bottom:0;
+            width:0;
+            background:var(--blue);
+            border-radius:0 3px 3px 0;
+            transition:width .25s ease;
+        }
+        .filter-item:hover { color:var(--white); background:rgba(255,255,255,0.04); }
+        .filter-item.active { color:var(--white); background:var(--blue-dim); }
+        .filter-item.active::before { width:2px; }
+        .filter-count {
+            font-size:10px;
+            font-weight:500;
+            color:var(--white3);
+            background:rgba(255,255,255,0.06);
+            padding:2px 6px;
+            border-radius:10px;
+            transition:all .25s ease;
+        }
+        .filter-item.active .filter-count { background:var(--blue); color:#fff; }
+
+        .sidebar-divider {
+            border:none;
+            border-top:1px solid var(--border);
+            margin:1.5rem 0;
+        }
+        .sidebar-meta {
+            font-size:10.5px;
+            color:var(--white3);
+            line-height:1.8;
+        }
+        .sidebar-meta strong { color:var(--white2); font-weight:500; }
+
+        /* ── PROJECTS AREA ─────────────────────────────── */
+        .projects-area {
+            padding-left:3rem;
+        }
+
+        /* ── MASONRY-STYLE GRID ────────────────────────── */
+        .grid-section { margin-bottom:1.5rem; }
+
+        /* Row A: 60/40 split - two large cinematic */
+        .row-a {
+            display:grid;
+            grid-template-columns:3fr 2fr;
+            gap:1.5rem;
+        }
+        /* Row B: three equal cards */
+        .row-b {
+            display:grid;
+            grid-template-columns:1fr 1fr 1fr;
+            gap:1.5rem;
+        }
+        /* Row C: 40/60 split */
+        .row-c {
+            display:grid;
+            grid-template-columns:2fr 3fr;
+            gap:1.5rem;
+        }
+
+        /* ── PROJECT CARD ──────────────────────────────── */
+        .pcard {
+            position:relative;
+            border-radius:14px;
+            overflow:hidden;
+            background:var(--bg3);
+            border:1px solid var(--border);
+            cursor:pointer;
+            transition:border-color .4s ease, box-shadow .4s ease, transform .5s cubic-bezier(.23,1,.32,1);
+        }
+        .pcard:hover {
+            border-color:rgba(30,107,255,0.4);
+            box-shadow:0 24px 60px -8px rgba(0,0,0,0.7), 0 0 0 1px rgba(30,107,255,0.15);
+            transform:translateY(-5px);
+        }
+
+        /* Image wrapper */
+        .card-img-wrap {
+            position:relative;
+            width:100%;
+            overflow:hidden;
+        }
+        .aspect-cinema { aspect-ratio:16/9; }
+        .aspect-portrait { aspect-ratio:4/5; }
+        .aspect-wide { aspect-ratio:16/7; }
+
+        .card-img {
+            width:100%; height:100%;
+            object-fit:cover;
+            transition:transform .75s cubic-bezier(.23,1,.32,1), filter .4s ease;
+            filter:brightness(0.88) saturate(0.85);
+        }
+        .pcard:hover .card-img {
+            transform:scale(1.07);
+            filter:brightness(0.72) saturate(0.7);
+        }
+
+        /* Glass overlay on hover */
+        .card-glass {
+            position:absolute; inset:0;
+            background:linear-gradient(160deg,
+                rgba(30,107,255,0.06) 0%,
+                rgba(8,8,9,0.0) 40%,
+                rgba(8,8,9,0.82) 100%
+            );
+            opacity:0;
+            transition:opacity .4s ease;
+        }
+        .pcard:hover .card-glass { opacity:1; }
+
+        /* Gradient fade for content */
+        .card-fade {
+            position:absolute; inset:0;
+            background:linear-gradient(to top,
+                rgba(8,8,9,0.97) 0%,
+                rgba(8,8,9,0.5) 45%,
+                transparent 100%
+            );
+            opacity:0;
+            transition:opacity .4s ease;
+        }
+        .pcard:hover .card-fade { opacity:1; }
+
+        /* 3D Glass badge on featured hover */
+        .pcard.featured .card-glass {
+            background:linear-gradient(135deg,
+                rgba(30,107,255,0.12) 0%,
+                rgba(30,107,255,0.03) 50%,
+                rgba(8,8,9,0.0) 60%,
+                rgba(8,8,9,0.86) 100%
+            );
+        }
+
+        /* Hover content */
+        .card-body {
+            position:absolute;
+            bottom:0; left:0; right:0;
+            padding:2rem 1.8rem 1.8rem;
+            z-index:3;
+            transform:translateY(10px);
+            opacity:0;
+            transition:all .45s cubic-bezier(.23,1,.32,1);
+        }
+        .pcard:hover .card-body { transform:translateY(0); opacity:1; }
+
+        .card-cat {
+            font-size:9px;
+            font-weight:600;
+            letter-spacing:3px;
+            text-transform:uppercase;
+            color:var(--blue);
+            margin-bottom:7px;
+        }
+        .card-name {
+            font-family:'Cormorant Garamond', serif;
+            font-size:2rem;
+            font-weight:600;
+            line-height:1.1;
+            letter-spacing:-0.5px;
+            color:var(--white);
+            margin-bottom:8px;
+        }
+        .pcard.sm .card-name { font-size:1.5rem; }
+        .card-desc {
+            font-size:12px;
+            color:rgba(240,237,232,0.65);
+            line-height:1.6;
+            margin-bottom:12px;
+            display:-webkit-box;
+            -webkit-line-clamp:2;
+            -webkit-box-orient:vertical;
+            overflow:hidden;
+        }
+        .card-meta-row {
+            display:flex; align-items:center; gap:1.2rem;
+            flex-wrap:wrap;
+        }
+        .card-meta-item {
+            display:flex; align-items:center; gap:5px;
+            font-size:10px;
+            color:var(--white2);
+        }
+        .card-meta-item i { color:var(--blue); font-size:9px; }
+        .card-tags {
+            display:flex; flex-wrap:wrap; gap:5px;
+            margin-top:10px;
+        }
+        .tag {
+            font-size:9px;
+            font-weight:500;
+            letter-spacing:1px;
+            padding:3px 9px;
+            border-radius:20px;
+            border:1px solid rgba(30,107,255,0.3);
+            color:rgba(30,107,255,0.9);
+            background:rgba(30,107,255,0.08);
+        }
+
+        /* Still-visible card number */
+        .card-num {
+            position:absolute;
+            top:18px; right:18px;
+            font-family:'Cormorant Garamond', serif;
+            font-size:11px;
+            color:rgba(255,255,255,0.25);
+            letter-spacing:1px;
+            z-index:4;
+            transition:opacity .3s ease;
+        }
+        .pcard:hover .card-num { opacity:0; }
+
+        /* EXPLORE circle */
+        .explore-ring {
+            position:absolute;
+            top:50%; left:50%;
+            transform:translate(-50%,-50%) scale(0.7);
+            width:96px; height:96px;
+            border-radius:50%;
+            border:1px solid rgba(255,255,255,0.3);
+            background:rgba(8,8,9,0.35);
+            backdrop-filter:blur(12px);
+            display:flex; align-items:center; justify-content:center;
+            opacity:0;
+            transition:all .45s cubic-bezier(.23,1,.32,1);
+            z-index:5;
+            pointer-events:none;
+        }
+        .explore-ring span {
+            font-size:8.5px;
+            font-weight:600;
+            letter-spacing:3px;
+            color:#fff;
+        }
+        .pcard.featured:hover .explore-ring,
+        .pcard:hover .explore-ring {
+            opacity:1;
+            transform:translate(-50%,-50%) scale(1);
+        }
+
+        /* Blue accent line at card top on hover */
+        .pcard::after {
+            content:'';
+            position:absolute;
+            top:0; left:0; right:0;
+            height:2px;
+            background:var(--blue);
+            transform:scaleX(0);
+            transform-origin:left;
+            transition:transform .4s cubic-bezier(.23,1,.32,1);
+            z-index:6;
+        }
+        .pcard:hover::after { transform:scaleX(1); }
+
+        /* "More coming soon" decorative card */
+        .pcard-soon {
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            gap:1rem;
+            min-height:260px;
+            background: repeating-linear-gradient(
+                -45deg,
+                var(--bg3) 0,
+                var(--bg3) 10px,
+                rgba(255,255,255,0.015) 10px,
+                rgba(255,255,255,0.015) 20px
+            );
+        }
+        .pcard-soon .soon-icon {
+            width:52px; height:52px;
+            border-radius:50%;
+            background:var(--blue-dim);
+            border:1px solid rgba(30,107,255,0.35);
+            display:flex; align-items:center; justify-content:center;
+        }
+        .pcard-soon .soon-icon i { color:var(--blue); font-size:1.1rem; }
+        .pcard-soon h3 {
+            font-family:'Cormorant Garamond', serif;
+            font-size:1.3rem; font-weight:600;
+            color:var(--white2);
+        }
+        .pcard-soon p { font-size:11px; color:var(--white3); letter-spacing:0.3px; }
+
+        /* ── ANIMATIONS ────────────────────────────────── */
+        @keyframes riseUp {
+            from { opacity:0; transform:translateY(32px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+        .ani { animation:riseUp .8s cubic-bezier(.23,1,.32,1) both; }
+        .d1 { animation-delay:.05s; }
+        .d2 { animation-delay:.12s; }
+        .d3 { animation-delay:.19s; }
+        .d4 { animation-delay:.26s; }
+        .d5 { animation-delay:.33s; }
+        .d6 { animation-delay:.40s; }
+        .d7 { animation-delay:.47s; }
+        .d8 { animation-delay:.54s; }
+
+        /* ── RESPONSIVE ────────────────────────────────── */
+        @media (max-width:1280px) {
+            .row-a { grid-template-columns:1fr 1fr; }
+            .main-wrap { grid-template-columns:160px 1fr; padding:2.5rem 2rem 6rem; }
+        }
+        @media (max-width:1024px) {
+            .main-wrap { grid-template-columns:1fr; padding:2rem 1.5rem 6rem; }
+            .sidebar { position:relative; top:0; border-right:none; border-bottom:1px solid var(--border); padding-right:0; padding-bottom:1.5rem; margin-bottom:2rem; }
+            .filter-list { flex-direction:row; flex-wrap:wrap; gap:6px; }
+            .filter-item { padding:7px 14px; border-radius:30px; }
+            .filter-item::before { display:none; }
+            .projects-area { padding-left:0; }
+            .row-b { grid-template-columns:1fr 1fr; }
+        }
+        @media (max-width:768px) {
+            .page-header { flex-direction:column; align-items:flex-start; padding:5rem 1.5rem 2rem; }
+            .header-right { align-self:flex-start; }
+            .rule { padding:0 1.5rem; }
+            .row-a, .row-b, .row-c { grid-template-columns:1fr; }
+            body { cursor:auto; }
+            #mag-cursor, #mag-cursor-label { display:none; }
+        }
+
+        /* ── SUBTLE BLUE RADIAL GLOW ───────────────────── */
+        .page-glow {
+            position:fixed;
+            top:0; right:0;
+            width:700px; height:700px;
+            background:radial-gradient(ellipse, rgba(30,107,255,0.07) 0%, transparent 70%);
+            pointer-events:none;
+            z-index:0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Glow -->
+<div class="page-glow"></div>
+
+<!-- Magnetic Cursor -->
+<div id="mag-cursor"></div>
+<div id="mag-cursor-label">EXPLORE</div>
+
+<!-- Navigation -->
+<nav class="fixed w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+            <div class="flex-shrink-0 flex items-center min-w-0">
+    <a href="index.html" class="text-lg sm:text-xl font-bold gradient-text truncate max-w-[200px] sm:max-w-none">Vincent Dela Cruz</a>
+</div>
+            <div class="hidden md:block">
+                <div class="ml-10 flex items-center space-x-8">
+                    <a href="index.html#home" class="nav-link px-3 py-2 text-sm font-bold">Home</a>
+                    <a href="index.html#about" class="nav-link px-3 py-2 text-sm font-bold">About</a>
+                    <a href="index.html#skills" class="nav-link px-3 py-2 text-sm font-bold">Skills</a>
+                    <a href="index.html#projects" class="nav-link px-3 py-2 text-sm font-bold active-nav">Projects</a>
+                    <a href="index.html#experience" class="nav-link px-3 py-2 text-sm font-bold">Experience</a>
+                    <a href="index.html#certificates" class="nav-link px-3 py-2 text-sm font-bold">Certificates</a>
+                    <a href="index.html#contact" class="nav-link px-3 py-2 text-sm font-bold">Contact</a>
+                    <button id="theme-toggle" class="p-2 rounded-full focus:outline-none">
+                        <i class="fas fa-moon text-gray-700 dark:text-yellow-300"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="p-2 rounded-md focus:outline-none">
+                    <i class="fas fa-bars text-gray-700 dark:text-gray-200"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 shadow-lg rounded-b-lg">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <a href="index.html#home" class="block px-3 py-2 rounded-md text-base font-bold">Home</a>
+            <a href="index.html#about" class="block px-3 py-2 rounded-md text-base font-bold">About</a>
+            <a href="index.html#skills" class="block px-3 py-2 rounded-md text-base font-bold">Skills</a>
+            <a href="index.html#projects" class="block px-3 py-2 rounded-md text-base font-bold">Projects</a>
+            <a href="index.html#experience" class="block px-3 py-2 rounded-md text-base font-bold">Experience</a>
+            <a href="index.html#certificates" class="block px-3 py-2 rounded-md text-base font-bold">Certificates</a>
+            <a href="index.html#contact" class="block px-3 py-2 rounded-md text-base font-bold">Contact</a>
+            <div class="px-3 py-2">
+                <button id="mobile-theme-toggle" class="p-2 rounded-full focus:outline-none">
+                    <i class="fas fa-moon text-gray-700 dark:text-yellow-300"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Header -->
+<header class="page-header ani d1">
+    <div class="header-left">
+        <div class="header-eyebrow">Selected Works</div>
+        <h1 class="header-title">All <em>Projects</em></h1>
+    </div>
+    <div class="header-right">
+        <div class="stat">
+            <span class="stat-n">6</span>
+            <span class="stat-l">Projects</span>
+        </div>
+        <div class="stat">
+            <span class="stat-n">12+</span>
+            <span class="stat-l">Technologies</span>
+        </div>
+        <div class="stat">
+            <span class="stat-n">2025</span>
+            <span class="stat-l">Latest Work</span>
+        </div>
+    </div>
+</header>
+
+<div class="rule"><hr></div>
+
+<!-- Main Layout -->
+<div class="main-wrap">
+
+    <!-- Sidebar -->
+    <aside class="sidebar ani d2">
+        <div class="sidebar-label">Filter by</div>
+        <ul class="filter-list" id="filterList">
+            <li class="filter-item active" data-filter="all">
+                <span>All Projects</span>
+                <span class="filter-count">6</span>
+            </li>
+            <li class="filter-item" data-filter="react">
+                <span>React</span>
+                <span class="filter-count">2</span>
+            </li>
+            <li class="filter-item" data-filter="php">
+                <span>PHP</span>
+                <span class="filter-count">2</span>
+            </li>
+            <li class="filter-item" data-filter="javascript">
+                <span>JavaScript</span>
+                <span class="filter-count">2</span>
+            </li>
+            <li class="filter-item" data-filter="fullstack">
+                <span>Full Stack</span>
+                <span class="filter-count">3</span>
+            </li>
+        </ul>
+
+        <hr class="sidebar-divider">
+
+        <div class="sidebar-meta">
+            <strong>Role</strong><br>Developer &amp; Designer<br><br>
+            <strong>Status</strong><br>Open to work<br><br>
+            <strong>Based in</strong><br>Philippines
+        </div>
+    </aside>
+
+    <!-- Projects Grid -->
+    <div class="projects-area" id="projectsArea">
+
+        <!-- ROW A: 60/40 large cinematic pair -->
+        <div class="grid-section row-a" id="rowA">
+
+            <!-- EduTrack — FEATURED -->
+            <div class="pcard featured ani d3"
+                 data-project-id="attendance-system"
+                 data-tags="react,fullstack">
+                <div class="card-img-wrap aspect-cinema">
+                    <img src="images/Projects/Attendance_system_layout/login_form.png"
+                         alt="EduTrack" class="card-img" loading="lazy">
+                    <div class="card-glass"></div>
+                    <div class="card-fade"></div>
+                    <div class="explore-ring"><span>EXPLORE</span></div>
+                    <div class="card-body">
+                        <span class="card-cat">School Attendance Management</span>
+                        <h3 class="card-name">EduTrack</h3>
+                        <p class="card-desc">Smart attendance tracking &amp; analytics platform with real-time dashboards, email notifications, and comprehensive reporting tools.</p>
+                        <div class="card-meta-row">
+                            <span class="card-meta-item"><i class="fas fa-calendar-alt"></i>2025</span>
+                            <span class="card-meta-item"><i class="fas fa-user-circle"></i>Full Stack Dev</span>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">Firebase</span>
+                            <span class="tag">Tailwind</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="card-num">01</span>
+            </div>
+
+            <!-- LyceumVault -->
+            <div class="pcard ani d4"
+                 data-project-id="lyceumvault"
+                 data-tags="react,fullstack">
+                <div class="card-img-wrap aspect-cinema">
+                    <img src="images/Projects/LyceumVault.png"
+                         alt="LyceumVault" class="card-img" loading="lazy">
+                    <div class="card-glass"></div>
+                    <div class="card-fade"></div>
+                    <div class="explore-ring"><span>EXPLORE</span></div>
+                    <div class="card-body">
+                        <span class="card-cat">Thesis Archive System</span>
+                        <h3 class="card-name">LyceumVault</h3>
+                        <p class="card-desc">Modern thesis document management &amp; archive platform with cloud storage and advanced search.</p>
+                        <div class="card-meta-row">
+                            <span class="card-meta-item"><i class="fas fa-calendar-alt"></i>2025</span>
+                            <span class="card-meta-item"><i class="fas fa-user-circle"></i>Full Stack Dev</span>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">Supabase</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="card-num">02</span>
+            </div>
+        </div>
+
+        <!-- ROW B: three-column editorial -->
+        <div class="grid-section row-b" id="rowB">
+
+            <!-- iDENTify -->
+            <div class="pcard sm ani d5"
+                 data-project-id="identify"
+                 data-tags="php,fullstack">
+                <div class="card-img-wrap aspect-cinema">
+                    <img src="images/Projects/iDENTify_layout/admin/admin-dashboard.png"
+                         alt="iDENTify" class="card-img" loading="lazy">
+                    <div class="card-glass"></div>
+                    <div class="card-fade"></div>
+                    <div class="explore-ring"><span>EXPLORE</span></div>
+                    <div class="card-body">
+                        <span class="card-cat">Dental Patient Mgmt</span>
+                        <h3 class="card-name">iDENTify</h3>
+                        <p class="card-desc">Professional clinical management platform for dental clinics and schools.</p>
+                        <div class="card-meta-row">
+                            <span class="card-meta-item"><i class="fas fa-calendar-alt"></i>2025</span>
+                            <span class="card-meta-item"><i class="fas fa-user-circle"></i>Full Stack</span>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag">PHP</span>
+                            <span class="tag">MySQL</span>
+                            <span class="tag">Tailwind</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="card-num">03</span>
+            </div>
+
+            <!-- Ace Resto -->
+            <div class="pcard sm ani d6"
+                 data-project-id="aceresto"
+                 data-tags="php,fullstack">
+                <div class="card-img-wrap aspect-cinema">
+                    <img src="images/Projects/Aceresto.png"
+                         alt="Ace Resto" class="card-img" loading="lazy">
+                    <div class="card-glass"></div>
+                    <div class="card-fade"></div>
+                    <div class="explore-ring"><span>EXPLORE</span></div>
+                    <div class="card-body">
+                        <span class="card-cat">Event &amp; Reservation</span>
+                        <h3 class="card-name">Ace Resto</h3>
+                        <p class="card-desc">Event booking &amp; management platform for venues and catering businesses.</p>
+                        <div class="card-meta-row">
+                            <span class="card-meta-item"><i class="fas fa-calendar-alt"></i>2024</span>
+                            <span class="card-meta-item"><i class="fas fa-user-circle"></i>Full Stack</span>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag">PHP</span>
+                            <span class="tag">MySQL</span>
+                            <span class="tag">Bootstrap</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="card-num">04</span>
+            </div>
+
+            <!-- Vincent Triluxe Shop -->
+            <div class="pcard sm ani d7"
+                 data-project-id="vincent-triluxe-shop"
+                 data-tags="javascript">
+                <div class="card-img-wrap aspect-cinema">
+                    <img src="BSIT3A_IT8-Final-Lab_Delacruz/img/Screenshot 2025-12-13 153254.png"
+                         alt="Vincent Triluxe Shop" class="card-img" loading="lazy">
+                    <div class="card-glass"></div>
+                    <div class="card-fade"></div>
+                    <div class="explore-ring"><span>EXPLORE</span></div>
+                    <div class="card-body">
+                        <span class="card-cat">E-commerce Platform</span>
+                        <h3 class="card-name">Triluxe Shop</h3>
+                        <p class="card-desc">Premium fashion e-commerce with product catalog, cart, and admin panel.</p>
+                        <div class="card-meta-row">
+                            <span class="card-meta-item"><i class="fas fa-calendar-alt"></i>2025</span>
+                            <span class="card-meta-item"><i class="fas fa-user-circle"></i>Developer</span>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="card-num">05</span>
+            </div>
+        </div>
+
+        <!-- ROW C: 40/60 mixed -->
+        <div class="grid-section row-c" id="rowC">
+
+            <!-- "More Coming" decorative -->
+            <div class="pcard pcard-soon ani d8">
+                <div class="soon-icon"><i class="fas fa-layer-group"></i></div>
+                <h3>More Coming Soon</h3>
+                <p>New projects always in development</p>
+            </div>
+
+            <!-- Vincent Portfolio -->
+            <div class="pcard ani d8"
+                 data-project-id="portfolio-template"
+                 data-tags="javascript">
+                <div class="card-img-wrap aspect-cinema">
+                    <img src="BSIT3A_IT8-Final-Lab_Delacruz/img/Screenshot 2025-12-13 152942.png"
+                         alt="Vincent Portfolio" class="card-img" loading="lazy">
+                    <div class="card-glass"></div>
+                    <div class="card-fade"></div>
+                    <div class="explore-ring"><span>EXPLORE</span></div>
+                    <div class="card-body">
+                        <span class="card-cat">Personal Portfolio</span>
+                        <h3 class="card-name">Vincent Portfolio</h3>
+                        <p class="card-desc">Personal portfolio website with animated effects, skills showcase, and integrated e-commerce project.</p>
+                        <div class="card-meta-row">
+                            <span class="card-meta-item"><i class="fas fa-calendar-alt"></i>2025</span>
+                            <span class="card-meta-item"><i class="fas fa-user-circle"></i>Designer &amp; Dev</span>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">jQuery</span>
+                            <span class="tag">Typed.js</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="card-num">06</span>
+            </div>
+        </div>
+
+    </div><!-- /projects-area -->
+</div><!-- /main-wrap -->
+
+<script src="projects-data.js" onerror="void(0)"></script>
+<script src="script.js"></script>
+<script>
+(function() {
+    /* ── MAGNETIC CURSOR ──────────────────── */
+    const cur = document.getElementById('mag-cursor');
+    const curL = document.getElementById('mag-cursor-label');
+    let mx = 0, my = 0, cx = 0, cy = 0;
+
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+    (function raf() {
+        cx += (mx - cx) * 0.14;
+        cy += (my - cy) * 0.14;
+        cur.style.left = cx + 'px';
+        cur.style.top  = cy + 'px';
+        curL.style.left = cx + 'px';
+        curL.style.top  = cy + 'px';
+        requestAnimationFrame(raf);
+    })();
+
+    document.querySelectorAll('.pcard').forEach(card => {
+        if (card.classList.contains('pcard-soon')) return;
+        card.addEventListener('mouseenter', () => { cur.classList.add('card-hover'); });
+        card.addEventListener('mouseleave', () => { cur.classList.remove('card-hover'); });
+    });
+
+    /* ── FILTER ───────────────────────────── */
+    const filterItems = document.querySelectorAll('.filter-item');
+    const allCards = document.querySelectorAll('.pcard[data-project-id]');
+
+    filterItems.forEach(item => {
+        item.addEventListener('click', () => {
+            filterItems.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+            const f = item.dataset.filter;
+
+            allCards.forEach(card => {
+                const tags = card.dataset.tags || '';
+                const show = f === 'all' || tags.includes(f);
+                if (show) {
+                    card.style.transition = 'opacity .35s ease, transform .35s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = '';
+                    card.style.display = '';
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(12px)';
+                    setTimeout(() => { card.style.display = 'none'; }, 350);
+                }
+            });
+        });
+    });
+
+    /* ── CARD CLICK NAVIGATION ────────────── */
+    allCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const id = card.dataset.projectId;
+            if (id) window.location.href = `project-overview.html?id=${id}`;
+        });
+    });
+
+    /* ── SCROLL REVEAL ────────────────────── */
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.style.opacity = '1';
+                e.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.pcard').forEach(c => io.observe(c));
+
+    /* ── NAVBAR SCROLL EFFECT ─────────────── */
+    const navbar = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+        if (navbar) {
+            if (window.scrollY > 50) navbar.classList.add('navbar-scrolled');
+            else navbar.classList.remove('navbar-scrolled');
+        }
+    });
+
+})();
+</script>
+
+<script>
+    // Console Blocker
+    (function () {
+        const blockKeys = (e) => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
+                return false;
+            }
+        };
+        document.addEventListener('keydown', blockKeys);
+        document.addEventListener('contextmenu', e => e.preventDefault());
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 30px;
+}
+
+.checkout-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.checkout-form,
+.order-summary {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.checkout-form {
+    background-color: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.checkout-form h2 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-section {
+    margin-bottom: 30px;
+}
+
+label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: #5c8dff;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #5c8dff;
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #4a77d9;
+}
+
+.order-summary {
+    background-color: #f8f9fa;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+h3 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.checkout-product-list {
+    margin-bottom: 30px;
+}
+
+.checkout-product {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.checkout-product-info {
+    display: flex;
+    align-items: center;
+}
+
+.checkout-product-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    margin-right: 20px;
+    object-fit: cover;
+}
+
+.checkout-product-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.checkout-product-details div {
+    font-size: 1rem;
+    color: #555;
+}
+
+.summary-total {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 20px;
+    color: #333;
+}
+
+.checkout-total-price {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #5c8dff;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 1024px) {
+    .checkout-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .checkout-form {
+        width: 90%;
+        margin-bottom: 20px;
+    }
+
+    .order-summary {
+        width: 90%;
+    }
+
+    .checkout-form h2 {
+        font-size: 2rem;
+    }
+
+    .summary-total {
+        font-size: 1.3rem;
+    }
+
+    .checkout-total-price {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .checkout-form h2 {
+        font-size: 1.8rem;
+    }
+
+    .form-section label {
+        font-size: 0.9rem;
+    }
+
+    input {
+        font-size: 0.9rem;
+    }
+
+    button {
+        font-size: 1rem;
+    }
+
+    .checkout-product {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .summary-total {
+        font-size: 1.2rem;
+    }
+
+    .checkout-total-price {
+        font-size: 1.3rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .checkout-form h2 {
+        font-size: 1.6rem;
+    }
+
+    .form-section label {
+        font-size: 0.8rem;
+    }
+
+    input {
+        font-size: 0.8rem;
+    }
+
+    button {
+        font-size: 1rem;
+    }
+
+    .checkout-product {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+
+    .summary-total {
+        font-size: 1rem;
+    }
+
+    .checkout-total-price {
+        font-size: 1.2rem;
+    }
+}
+
+/* Back Button Styles */
+.btn-back {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.btn-back:hover {
+    background-color: #2980b9;
+}
+
+/* Additional responsive design to ensure it's well-positioned on mobile and desktop */
+@media (max-width: 768px) {
+    .btn-back {
+        width: 100%;
+        font-size: 18px;
+    }
+}
+
