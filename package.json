@@ -1,0 +1,9 @@
+{
+  "name": "vincent-portfolio",
+  "version": "1.0.0",
+  "description": "Vincent Dela Cruz Portfolio",
+  "dependencies": {
+    "nodemailer": "^6.9.0",
+    "@netlify/blobs": "^8.1.0"
+  }
+}

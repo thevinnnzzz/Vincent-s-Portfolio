@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "vincentportfolio-8beca"
+  },
+  "targets": {
+    "vincentportfolio-8beca": {
+      "hosting": {
+        "vincentdelacruz": [
+          "vincentdelacruz"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard for sales, ect / Admin Dashboard </title>
+  <link rel="stylesheet" href="admin-css.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<html lang="en" class="dark-theme">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vincent Triluxe Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+<body>
+    <div id="notification-container"></div>
+
+    <div class="dashboard">
+        <nav class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="img/logo-black-removebg-preview.png" alt="logo">
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-section="dashboard" data-content="dashboard-content">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                    <div class="nav-indicator"></div>
+                </li>
+                <li data-section="analytics" data-content="analytics-content">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                    <div class="nav-indicator"></div>
+                </li>
+		<li data-section="best-users" data-content="best-users-content">
+                    <i class="fas fa-star"></i>
+                    <span>Users</span>
+                    <div class="nav-indicator"></div>
+                </li>
+		<li data-section="products" data-content="products-content">
+        <i class="fas fa-cogs"></i>
+        <span>Products</span>
+        <div class="nav-indicator"></div>
+    </li>
+                            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header>
+                <div class="header-left">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search anything...">
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="notifications">
+                        <div class="notification-trigger">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </div>
+                        <div class="notifications-dropdown">
+                            <div class="notifications-header">
+                                <div class="header-left">
+                                    <h3 class="notifications-title">Notifications</h3>
+                                    <span class="mark-all">Mark all read</span>
+                                </div>
+                                <button class="settings-btn">
+                                    <i class="fas fa-cog"></i>
+                                    Settings
+                                </button>
+                            </div>
+                            <div class="filter-pills">
+                                <span class="filter-pill active">All</span>
+                                <span class="filter-pill">Unread</span>
+                                <span class="filter-pill">Important</span>
+                            </div>
+                            <div class="notification-list">
+                            </div>
+                            <div class="dropdown-footer">
+                                <button class="filter-button">
+                                    <i class="fas fa-clock"></i>
+                                    Last 7 days
+                                </button>
+                                <button class="filter-button">
+                                    <i class="fas fa-filter"></i>
+                                    Filter
+                                </button>
+                                <a href="#" class="view-all">View All</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile">
+                        <div class="profile-trigger">
+                            <div class="profile-avatar">
+                                <span class="avatar-text">JD</span>
+                            </div>
+                            <div class="profile-info">
+                                <span class="profile-name">Unidentified Unidentified</span>
+                                <span class="profile-role">Administrator</span>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="profile-dropdown">
+                            <div class="dropdown-header">
+                                <div class="header-avatar">
+                                    <span class="avatar-text">U</span>
+                                </div>
+                                <div class="header-info">
+                                    <h4>Unidentified Unidentified</h4>
+                                    <span>Unidentified@gmail.com</span>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <i class="fas fa-user"></i>
+                                    <span>My Profile</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-cog"></i>
+                                    <span>Settings</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-palette"></i>
+                                    <span>Theme</span>
+                                    <label class="theme-switch">
+                                        <input type="checkbox" id="theme-toggle">
+                                        <span class="switch-slider"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <i class="fas fa-bell"></i>
+                                    <span>Notifications</span>
+                                </li>
+                            </ul>
+                            <div class="dropdown-divider"></div>
+                            <ul class="dropdown-menu">
+    <li class="logout" id="logout-btn">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+    </li>
+</ul>
+
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div id="dashboard-content" class="content-section active">
+                <div class="dashboard-grid">
+                    <div class="stats-container">
+                        <div class="stat-card glow">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Total Users</h3>
+                                <p class="counter" data-target="15423">0</p>
+                                <span class="trend positive">+12.5%</span>
+                            </div>
+                        </div>
+                        <div class="stat-card glow">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Revenue</h3>
+                                <p class="counter" data-target="84591">0</p>
+                                <span class="trend positive">+8.2%</span>
+                            </div>
+                        </div>
+                        <div class="stat-card glow">
+                            <div class="stat-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Sales</h3>
+                                <p class="counter" data-target="24895">0</p>
+                                <span class="trend negative">-2.4%</span>
+                            </div>
+                        </div>
+                        <div class="stat-card glow">
+                            <div class="stat-icon">
+                                <i class="fas fa-ticket-alt"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Tickets</h3>
+                                <p class="counter" data-target="1287">0</p>
+                                <span class="trend positive">+5.7%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-container">
+                        <div class="chart-card glow">
+                            <div class="revenue-header">
+                                <h2>Revenue Analytics</h2>
+                                <select class="revenue-filter">
+                                    <option value="1">Last 24 Hours</option>
+                                    <option value="7" selected>Last 7 Days</option>
+                                    <option value="30">Last 30 Days</option>
+                                    <option value="90">Last 90 Days</option>
+                                    <option value="365">Last Year</option>
+                                </select>
+                            </div>
+                            <div id="revenueChart"></div>
+                        </div>
+                        <div class="chart-card glow">
+                            <div class="chart-header">
+                                <h3>User Activity</h3>
+                                <div class="chart-actions">
+                                    <div class="legend">
+                                        <span class="legend-item">
+                                            <span class="dot new"></span> New Users
+                                        </span>
+                                        <span class="legend-item">
+                                            <span class="dot returning"></span> Returning
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="userActivityChart"></div>
+                        </div>
+                    </div>
+
+                    <div class="activity-card glow">
+                        <div class="activity-header">
+                            <h2>Recent Activity</h2>
+                            <button class="filter-button">
+                                <i class="fas fa-filter"></i>
+                                Filter
+                            </button>
+                        </div>
+                        <div class="activity-list" id="activityList"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="analytics-content" class="content-section">
+                <div class="section-header">
+                    <h2>Analytics Overview</h2>
+                    <p>Track your business performance and growth</p>
+                </div>
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <div id="salesTrendChart"></div>
+                    </div>
+                    <div class="analytics-card">
+                        <div id="conversionChart"></div>
+                    </div>
+                    <div class="analytics-metrics">
+                        <div class="metric-card">
+                            <i class="fas fa-users"></i>
+                            <div class="metric-info">
+                                <h3>Total Users</h3>
+                                <span class="counter" data-target="15423">0</span>
+                                <p class="trend positive">+12.5% <span>vs last month</span></p>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <i class="fas fa-shopping-cart"></i>
+                            <div class="metric-info">
+                                <h3>Sales</h3>
+                                <span class="counter" data-target="8745">0</span>
+                                <p class="trend positive">+8.2% <span>vs last month</span></p>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <i class="fas fa-chart-line"></i>
+                            <div class="metric-info">
+                                <h3>Revenue</h3>
+                                <span class="counter" data-target="452680">$0</span>
+                                <p class="trend positive">+15.8% <span>vs last month</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!-- Best Users Section -->
+    <div id="best-users-content" class="content-section">
+        <div class="section-header">
+            <h2>Users</h2>
+            <p>Manage users who are logged in to the system.</p>
+        </div>
+
+        <!-- Buttons for Add, Edit, and Delete Users -->
+        <div class="user-management-buttons">
+            <button id="add-user-btn" class="btn btn-primary">Add User</button>
+        </div>
+
+        <div id="best-users-list" class="users-container">
+            <!-- Dynamically populated users will appear here -->
+        </div>
+    </div>
+
+    <!-- Modal for Adding or Editing User -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modal-title">Add User</h2>
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" placeholder="Enter first name">
+
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" placeholder="Enter last name">
+
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter email">
+
+            <label for="role">Role</label>
+            <select id="role">
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+
+            <div class="modal-actions">
+                <button id="save-user-btn" class="btn btn-success">Save</button>
+                <button id="cancel-user-btn" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Products Section -->
+<div id="products-content" class="content-section">
+   
+    <!-- Example of Product Management -->
+
+    <div id="product-list" class="products-container">
+        <div class="app-content">
+            <div class="app-content-header">
+                <h1 class="app-content-headerText">Products</h1>
+                <p>Manage your product inventory here.</p>
+
+                <div class="add-product-button-container">
+                    <button class="app-content-headerButton add-product">Add Product</button>
+                </div>
+            </div>
+
+    <!-- Add Product Form (Initially hidden) -->
+            <div id="add-product-form" class="add-product-form" style="display: none;">
+                <h2>Add New Product</h2>
+                <form id="product-form">
+                    <label>Product Name:</label>
+                    <input type="text" id="product-name" required><br>
+
+                    <label>Category:</label>
+                    <select id="product-category" required>
+                        <option value="Shirt">Shirt</option>
+                        <option value="Watch">Watch</option>
+                        <option value="Jacket">Jacket</option>
+                        <option value="Trouser">Trouser</option>
+                        <option value="Cap">Cap</option>
+                    </select><br>
+
+                    <label>Sales:</label>
+                    <input type="number" id="product-sales" required><br>
+
+                    <label>Stock:</label>
+                    <input type="number" id="product-stock" required><br>
+
+                    <label>Price:</label>
+                    <input type="number" id="product-price" required><br>
+
+                    <label>Product Image:</label>
+                    <input type="file" id="product-image" accept="image/*"><br>
+                    <div id="image-preview" style="margin-top: 10px; display: none;">
+                        <h4>Image Preview:</h4>
+                        <img id="preview-img" src="" alt="Product Image" style="max-width: 200px; max-height: 200px;">
+                    </div>
+
+                    <button type="submit">Add Product</button>
+                </form>
+            </div>
+
+            <div class="app-content-actions">
+                <input class="search-bar" placeholder="Search..." type="text">
+                <div class="app-content-actions-wrapper">
+                    <div class="filter-button-wrapper">
+                        <div class="filter-menu">
+                            <label>Category</label>
+                            <select>
+                                <option>All Categories</option>
+                                <option>Furniture</option>
+                                <option>Decoration</option>
+                                <option>Kitchen</option>
+                                <option>Bathroom</option>
+                            </select>
+                            <label>Status</label>
+                            <select>
+                                <option>All Status</option>
+                                <option>Active</option>
+                                <option>Disabled</option>
+                            </select>
+                            <div class="filter-menu-buttons">
+                                <button class="filter-button reset">Reset</button>
+                                <button class="filter-button apply">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="action-button list active" title="List View"></button>
+                    <button class="action-button grid" title="Grid View"></button>
+                </div>
+            </div>
+            <div class="products-area-wrapper tableView">
+                <div class="products-header">
+                    <div class="product-cell image">Items<button class="sort-button"></button></div>
+                    <div class="product-cell category">Category<button class="sort-button"></button></div>
+                    <div class="product-cell sales">Sales<button class="sort-button"></button></div>
+                    <div class="product-cell stock">Stock<button class="sort-button"></button></div>
+                    <div class="product-cell price">Price<button class="sort-button"></button></div>
+                    <div class="product-cell actions">Actions</div> <!-- Added for Edit and Delete buttons -->
+                </div>
+
+                <!-- Product Row 1 -->
+                <div class="products-row">
+                    <div class="product-cell image">
+                        <img src="img/shirt/Breeze Linen Shirt-₱1,595.00.png" alt="product">
+                        <span>Breeze Linen Shirt</span>
+                    </div>
+                    <div class="product-cell category">Shirt</div>
+                    <div class="product-cell sales">11</div>
+                    <div class="product-cell stock">36</div>
+                    <div class="product-cell price">$27.28</div>
+                    <div class="product-cell actions">
+                        <button class="edit-button">Edit</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+
+                <!-- Product Row 2 -->
+                <div class="products-row">
+                    <div class="product-cell image">
+                        <img src="img/watch/AeroClassic Aviator 1945-₱7,750.00.png" alt="product">
+                        <span>AeroClassic Aviator</span>
+                    </div>
+                    <div class="product-cell category">Watch</div>
+                    <div class="product-cell sales">6</div>
+                    <div class="product-cell stock">46</div>
+                    <div class="product-cell price">$132.56</div>
+                    <div class="product-cell actions">
+                        <button class="edit-button">Edit</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+
+                <!-- Product Row 3 -->
+                <div class="products-row">
+                    <div class="product-cell image">
+                        <img src="img/jacket/Heritage Distressed Denim Jacket fir Women-₱3,250.00.png" alt="product">
+                        <span>Heritage Distressed Denim</span>
+                    </div>
+                    <div class="product-cell category">Jacket</div>
+                    <div class="product-cell sales">61</div>
+                    <div class="product-cell stock">56</div>
+                    <div class="product-cell price">$55.59</div>
+                    <div class="product-cell actions">
+                        <button class="edit-button">Edit</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+
+                <!-- Product Row 4 -->
+                <div class="products-row">
+                    <div class="product-cell image">
+                        <img src="img/trouser/Breezy Linen Relaxed Pants-₱1,295.00.png" alt="product">
+                        <span>Breezy Linen Relaxed Pants</span>
+                    </div>
+                    <div class="product-cell category">Trouser</div>
+                    <div class="product-cell sales">41</div>
+                    <div class="product-cell stock">66</div>
+                    <div class="product-cell price">$22.15</div>
+                    <div class="product-cell actions">
+                        <button class="edit-button">Edit</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+
+                <!-- Product Row 5 -->
+                <div class="products-row">
+                    <div class="product-cell image">
+                        <img src="img/cap/Frontier Classic Cowboy Hat-₱1,895.00.png" alt="product">
+                        <span>Frontier Classic Cowboy Hat</span>
+                    </div>
+                    <div class="product-cell category">Cap</div>
+                    <div class="product-cell sales">32</div>
+                    <div class="product-cell stock">40</div>
+                    <div class="product-cell price">$32.41</div>
+                    <div class="product-cell actions">
+                        <button class="edit-button">Edit</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+
+                <!-- Product Row 6 -->
+                <div class="products-row">
+                    <div class="product-cell image">
+                        <img src="img/shirt/Skyline Graphic Crop Tee-₱695.00.png" alt="product">
+                        <span>Skyline Graphic Crop Tee</span>
+                    </div>
+                    <div class="product-cell category">Shirt</div>
+                    <div class="product-cell sales">45</div>
+                    <div class="product-cell stock">120</div>
+                    <div class="product-cell price">$11.88</div>
+                    <div class="product-cell actions">
+                        <button class="edit-button">Edit</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+
+                <!-- Product Row 7 -->
+                <div class="products-row">
+                    <div class="product-cell image">
+                        <img src="img/watch/AquaMaster Diver 300-₱12,950.00.png" alt="product">
+                        <span>AquaMaster Diver</span>
+                    </div>
+                    <div class="product-cell category">Watch</div>
+                    <div class="product-cell sales">30</div>
+                    <div class="product-cell stock">50</div>
+                    <div class="product-cell price">$221.50</div>
+                    <div class="product-cell actions">
+                        <button class="edit-button">Edit</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+
+                <!-- Product Row 8 -->
+                <div class="products-row">
+                    <div class="product-cell image">
+                        <img src="img/jacket/Urban Aviator Bomber Jacket-₱3,999.00.png" alt="product">
+                        <span>Urban Aviator Bomber Jacket</span>
+                    </div>
+                    <div class="product-cell category">Jacket</div>
+                    <div class="product-cell sales">50</div>
+                    <div class="product-cell stock">80</div>
+                    <div class="product-cell price">$68.40</div>
+                    <div class="product-cell actions">
+                        <button class="edit-button">Edit</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+
+                <!-- Product Row 9 -->
+                <div class="products-row">
+                    <div class="product-cell image">
+                        <img src="img/trouser/DurablePro Utility Work Pants-₱1,895.00.png" alt="product">
+                        <span>DurablePro Utility Work Pants</span>
+                    </div>
+                    <div class="product-cell category">Trouser</div>
+                    <div class="product-cell sales">60</div>
+                    <div class="product-cell stock">200</div>
+                    <div class="product-cell price">$32.41</div>
+                    <div class="product-cell actions">
+                        <button class="edit-button">Edit</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+
+                <!-- Product Row 10 -->
+                <div class="products-row">
+                    <div class="product-cell image">
+                        <img src="img/cap/Heritage Curve Baseball Cap-₱645.00.png" alt="product">
+                        <span>Heritage Curve Baseball Cap</span>
+                    </div>
+                    <div class="product-cell category">Cap</div>
+                    <div class="product-cell sales">75</div>
+                    <div class="product-cell stock">150</div>
+                    <div class="product-cell price">$11.03</div>
+                    <div class="product-cell actions">
+                        <button class="edit-button">Edit</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+
+                <!-- Product Row 11 -->
+                <div class="products-row">
+                    <div class="product-cell image">
+                        <img src="img/shirt/Tropicana Resort Hawaiian Shirt-₱1,295.00.png" alt="product">
+                        <span>Tropicana Resort Hawaiian Shirt</span>
+                    </div>
+                    <div class="product-cell category">Shirt</div>
+                    <div class="product-cell sales">25</div>
+                    <div class="product-cell stock">75</div>
+                    <div class="product-cell price">$22.15</div>
+                    <div class="product-cell actions">
+                        <button class="edit-button">Edit</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+
+                <!-- Product Row 12 -->
+                <div class="products-row">
+                    <div class="product-cell image">
+                        <img src="img/watch/Skyline Aviator Chrono Watch- ₱15,799.00.png" alt="product">
+                        <span>Skyline Aviator Chrono</span>
+                    </div>
+                    <div class="product-cell category">Watch</div>
+                    <div class="product-cell sales">40</div>
+                    <div class="product-cell stock">60</div>
+                    <div class="product-cell price">$270.23</div>
+                    <div class="product-cell actions">
+                        <button class="edit-button">Edit</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+
+                <!-- Product Row 13 -->
+                <div class="products-row">
+                    <div class="product-cell image">
+                        <img src="img/jacket/Victory Collegiate Varsity Jacket-₱4,499.00.png" alt="product">
+                        <span>Victory Collegiate Varsity Jacket</span>
+                    </div>
+                    <div class="product-cell category">Jacket</div>
+                    <div class="product-cell sales">18</div>
+                    <div class="product-cell stock">36</div>
+                    <div class="product-cell price">$48.50</div>
+                    <div class="product-cell actions">
+                        <button class="edit-button">Edit</button>
+                        <button class="delete-button">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+            
+        </main>
+    </div>
+</body>
+</html>
+<!-- partial -->
+  <script  src="admin-js.js"></script>
+
+</body>
+</html>
