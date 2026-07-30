@@ -346,10 +346,65 @@
             }
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            transition: background-color 0.5s ease;
-        }
+        /* ── Splash Screen Light Mode ─────────────── */
+:root:not(.dark) #splash-screen {
+    background: #f1f5f9;
+}
+
+:root:not(.dark) .splash-grid {
+    background-image:
+        linear-gradient(rgba(59, 130, 246, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.06) 1px, transparent 1px);
+}
+
+:root:not(.dark) .splash-orb-1 {
+    background: radial-gradient(circle, #93c5fd, #c4b5fd);
+}
+
+:root:not(.dark) .splash-orb-2 {
+    background: radial-gradient(circle, #c4b5fd, #ddd6fe);
+}
+
+:root:not(.dark) .splash-orb-3 {
+    background: radial-gradient(circle, #93c5fd, #bfdbfe);
+}
+
+:root:not(.dark) .splash-logo-inner {
+    background: #ffffff;
+}
+
+:root:not(.dark) .splash-logo-inner i {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+:root:not(.dark) .splash-name {
+    font-weight: 700;
+    background: linear-gradient(90deg, #1e3a8a, #1e40af, #3b82f6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+:root:not(.dark) .splash-tagline {
+    font-weight: 600;
+    color: rgba(71, 85, 105, 0.8);
+}
+
+:root:not(.dark) .splash-loader-label span {
+    font-weight: 600;
+    color: rgba(71, 85, 105, 0.6);
+}
+
+:root:not(.dark) .splash-dots span {
+    background: rgba(59, 130, 246, 0.5);
+}
+
+:root:not(.dark) .splash-particle {
+    background: rgba(59, 130, 246, 0.5);
+}
 
         .gradient-text {
             background-clip: text;

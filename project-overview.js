@@ -169,6 +169,14 @@ function displayProject(project) {
         }
     }
 
+    // For WattWatch, constrain hero image to be more compact
+    if (project.id === 'wattwatch') {
+        const imageCols = document.querySelectorAll('#project-content .grid.gap-12 > div');
+        if (imageCols.length >= 2) {
+            imageCols[1].classList.add('max-w-sm', 'mx-auto', 'lg:mx-0');
+        }
+    }
+
     // Add fade-in animation to feature cards
     setTimeout(() => {
         document.querySelectorAll('.feature-card, .tech-badge').forEach((el, index) => {
