@@ -1617,7 +1617,7 @@
             background: #ffffff;
             border: 1px solid rgba(15, 23, 42, 0.08);
             border-radius: 16px;
-            padding: 28px;
+            padding: 0 28px 28px;
             box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 10px 24px -14px rgba(15, 23, 42, 0.18);
             transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
@@ -1645,25 +1645,26 @@
             margin-top: 0;
         }
 
-        .exp-date {
+        .exp-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px 18px;
+            margin-top: 4px;
+        }
+
+        .exp-period {
             display: inline-flex;
             align-items: center;
             gap: 7px;
-            font-size: 0.78rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            color: #2563eb;
-            background: rgba(59, 130, 246, 0.09);
-            border: 1px solid rgba(59, 130, 246, 0.22);
-            padding: 5px 12px;
-            border-radius: 999px;
-            margin-bottom: 14px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            font-variant-numeric: tabular-nums;
+            color: #64748b;
         }
 
-        .dark .exp-date {
-            color: #93c5fd;
-            background: rgba(59, 130, 246, 0.14);
-            border-color: rgba(59, 130, 246, 0.32);
+        .dark .exp-period {
+            color: #94a3b8;
         }
 
         .exp-company {
@@ -1681,7 +1682,6 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            margin-top: 4px;
             font-size: 0.85rem;
             color: #64748b;
         }
@@ -1877,14 +1877,19 @@
             }
         }
 
-        /* Expandable responsibilities */
-        .exp-details {
-            margin-top: 22px;
+        /* Expandable responsibilities — side panel on desktop, below-card on mobile */
+        .exp-details-wrap {
+            margin-top: 18px;
             border-top: 1px dashed rgba(15, 23, 42, 0.14);
+            padding-top: 14px;
         }
 
-        .dark .exp-details {
+        .dark .exp-details-wrap {
             border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .exp-details {
+            margin: 0;
         }
 
         .exp-details summary {
@@ -1894,7 +1899,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            padding: 14px 0 8px;
+            padding: 0 0 8px;
             font-size: 0.9rem;
             font-weight: 600;
             color: #2563eb;
@@ -2033,19 +2038,36 @@
             .exp-row {
                 padding-left: 0;
                 display: flex;
-                margin-bottom: 64px;
+                align-items: flex-start;
+                justify-content: space-between;
+                margin-bottom: 72px;
             }
 
             .exp-row:nth-child(odd) {
-                justify-content: flex-end;
+                flex-direction: row-reverse;
             }
 
             .exp-row:nth-child(even) {
-                justify-content: flex-start;
+                flex-direction: row;
             }
 
-            .exp-row .exp-card-wrap {
+            .exp-row .exp-card-wrap,
+            .exp-row .exp-details-wrap {
                 width: calc(50% - 60px);
+            }
+
+            /* Side details panel fills the opposite-side whitespace */
+            .exp-row .exp-details-wrap {
+                margin-top: 0;
+                background: rgba(59, 130, 246, 0.045);
+                border: 1px solid rgba(59, 130, 246, 0.16);
+                border-radius: 16px;
+                padding: 24px;
+            }
+
+            .dark .exp-row .exp-details-wrap {
+                background: rgba(59, 130, 246, 0.08);
+                border-color: rgba(59, 130, 246, 0.28);
             }
 
             .exp-node-wrap {
@@ -2054,24 +2076,32 @@
                 transform: translateX(-50%);
             }
 
-            /* horizontal connectors toward the card */
+            /* Symmetric connectors: card on one side, details panel on the other */
             .exp-row::before {
                 content: '';
                 position: absolute;
                 top: 34px;
-                width: 52px;
+                width: 48px;
                 height: 2px;
-                background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.35), rgba(139, 92, 246, 0.35));
+                background: rgba(59, 130, 246, 0.3);
+                left: calc(50% + 12px);
                 z-index: 1;
             }
 
-            .exp-row:nth-child(odd)::before {
-                left: calc(50% + 12px);
+            .exp-row::after {
+                content: '';
+                position: absolute;
+                top: 34px;
+                width: 48px;
+                height: 2px;
+                background: rgba(59, 130, 246, 0.3);
+                right: calc(50% + 12px);
+                z-index: 1;
             }
 
-            .exp-row:nth-child(even)::before {
-                right: calc(50% + 12px);
-                background: linear-gradient(270deg, transparent, rgba(59, 130, 246, 0.35), rgba(139, 92, 246, 0.35));
+            /* Education card has no side panel — keep connector toward card only */
+            .exp-row:nth-child(3)::after {
+                display: none;
             }
         }
 
@@ -2808,9 +2838,11 @@
                     <div class="exp-card-wrap">
                         <article class="exp-card">
                             <div class="exp-block exp-head">
-                                <span class="exp-date"><i class="fas fa-calendar-alt"></i>Jan 2026 – Jun 2026</span>
                                 <h3 class="exp-company">HelloConnect Inc.</h3>
-                                <p class="exp-location"><i class="fas fa-map-marker-alt"></i>BGC, Taguig</p>
+                                <div class="exp-meta">
+                                    <span class="exp-location"><i class="fas fa-map-marker-alt"></i>BGC, Taguig</span>
+                                    <span class="exp-period"><i class="fas fa-calendar-alt"></i>Jan 2026 – Jun 2026</span>
+                                </div>
                                 <h4 class="exp-role">Customer &amp; Technical Support / IT Service Desk Specialist
                                     (Intern)</h4>
                                 <p class="exp-summary">Primary Level 1 point of contact for 200+ internal and external
@@ -2875,8 +2907,11 @@
                                     <span class="exp-chip">Technical Troubleshooting</span>
                                 </div>
                             </div>
+                        </article>
+                    </div>
 
-                            <details class="exp-details exp-block exp-delay-5">
+                    <div class="exp-details-wrap exp-block exp-delay-5">
+                        <details class="exp-details" open>
                                 <summary aria-label="Toggle detailed responsibilities">
                                     <span>
                                         <span class="exp-details-label-show">View detailed responsibilities</span>
@@ -2901,8 +2936,7 @@
                                         </ol>
                                     </div>
                                 </div>
-                            </details>
-                        </article>
+                        </details>
                     </div>
                 </div>
 
@@ -2912,9 +2946,11 @@
                     <div class="exp-card-wrap">
                         <article class="exp-card">
                             <div class="exp-block exp-head">
-                                <span class="exp-date"><i class="fas fa-calendar-alt"></i>Jun 2025 – Dec 2025</span>
                                 <h3 class="exp-company">University Dental Clinic</h3>
-                                <p class="exp-location"><i class="fas fa-map-marker-alt"></i>Batangas City</p>
+                                <div class="exp-meta">
+                                    <span class="exp-location"><i class="fas fa-map-marker-alt"></i>Batangas City</span>
+                                    <span class="exp-period"><i class="fas fa-calendar-alt"></i>Jun 2025 – Dec 2025</span>
+                                </div>
                                 <h4 class="exp-role">Clinic Operations and Systems Assistant</h4>
                                 <p class="exp-summary">Owned day-to-day IT operations for a healthcare facility —
                                     hardware, networks, databases, and endpoints — keeping systems reliable while
@@ -2978,8 +3014,11 @@
                                     <span class="exp-chip">User Training</span>
                                 </div>
                             </div>
+                        </article>
+                    </div>
 
-                            <details class="exp-details exp-block exp-delay-5">
+                    <div class="exp-details-wrap exp-block exp-delay-5">
+                        <details class="exp-details" open>
                                 <summary aria-label="Toggle detailed responsibilities">
                                     <span>
                                         <span class="exp-details-label-show">View detailed responsibilities</span>
@@ -3004,8 +3043,7 @@
                                         </ol>
                                     </div>
                                 </div>
-                            </details>
-                        </article>
+                        </details>
                     </div>
                 </div>
 
@@ -3015,9 +3053,11 @@
                     <div class="exp-card-wrap">
                         <article class="exp-card">
                             <div class="exp-block exp-head">
-                                <span class="exp-date"><i class="fas fa-graduation-cap"></i>2022 – 2026</span>
                                 <h3 class="exp-company">Lyceum of the Philippines University – Batangas</h3>
-                                <p class="exp-location"><i class="fas fa-map-marker-alt"></i>Batangas City</p>
+                                <div class="exp-meta">
+                                    <span class="exp-location"><i class="fas fa-map-marker-alt"></i>Batangas City</span>
+                                    <span class="exp-period"><i class="fas fa-graduation-cap"></i>2022 – 2026</span>
+                                </div>
                                 <h4 class="exp-role">Bachelor of Science in Information Technology – Multimedia
                                     Technology</h4>
                                 <p class="exp-summary">Graduated with Latin honors at a general weighted average of
@@ -3935,6 +3975,28 @@
                 rows.forEach(function (r) { activeIO.observe(r); });
             } else {
                 rows.forEach(function (r) { r.classList.add('is-active'); });
+            }
+
+            // Responsive details: auto-expanded on desktop, tap-to-open on mobile
+            const detailsEls = section.querySelectorAll('.exp-details');
+            const largeScreen = window.matchMedia('(min-width: 1024px)');
+            const touchedDetails = new Set();
+
+            function applyResponsiveDetails() {
+                detailsEls.forEach(function (d) {
+                    if (touchedDetails.has(d)) return;
+                    d.open = largeScreen.matches;
+                });
+            }
+
+            detailsEls.forEach(function (d) {
+                const s = d.querySelector('summary');
+                if (s) s.addEventListener('click', function () { touchedDetails.add(d); });
+            });
+
+            applyResponsiveDetails();
+            if (largeScreen.addEventListener) {
+                largeScreen.addEventListener('change', applyResponsiveDetails);
             }
         })();
     </script>
