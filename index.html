@@ -1478,6 +1478,631 @@
             }
         }
     </style>
+
+    <style>
+        /* ══════════════ EXPERIENCE SECTION — CAREER TIMELINE ══════════════ */
+
+        .exp-track {
+            position: relative;
+        }
+
+        /* Timeline line */
+        .exp-line {
+            position: absolute;
+            top: 8px;
+            bottom: 8px;
+            left: 15px;
+            width: 2px;
+            border-radius: 999px;
+            background: rgba(59, 130, 246, 0.14);
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .dark .exp-line {
+            background: rgba(59, 130, 246, 0.22);
+        }
+
+        .exp-line-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+            transform: scaleY(0);
+            transform-origin: top;
+            will-change: transform;
+        }
+
+        /* Row */
+        .exp-row {
+            position: relative;
+            padding-left: 52px;
+            margin-bottom: 40px;
+        }
+
+        .exp-row:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Timeline node */
+        .exp-node-wrap {
+            position: absolute;
+            top: 24px;
+            left: 7px;
+            width: 18px;
+            height: 18px;
+            z-index: 2;
+        }
+
+        #experience.exp-ready .exp-node-wrap {
+            opacity: 0;
+            transition: opacity 0.45s ease 0.05s;
+        }
+
+        #experience.exp-ready .exp-row.is-visible .exp-node-wrap {
+            opacity: 1;
+        }
+
+        .exp-node {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 3px solid #c7d2fe;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9);
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .dark .exp-node {
+            background: #111827;
+            border-color: #475569;
+            box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.9);
+        }
+
+        .exp-row.is-active .exp-node,
+        .exp-row:hover .exp-node {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-color: transparent;
+            transform: scale(1.18);
+            box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.18), 0 0 18px rgba(99, 102, 241, 0.45);
+        }
+
+        /* Card entrance (scoped behind .exp-ready so no-JS keeps content visible) */
+        #experience.exp-ready .exp-card-wrap {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.5s cubic-bezier(0.33, 0, 0.16, 1), transform 0.5s cubic-bezier(0.33, 0, 0.16, 1);
+        }
+
+        #experience.exp-ready .exp-row.is-visible .exp-card-wrap {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #experience.exp-ready .exp-block {
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.45s cubic-bezier(0.33, 0, 0.16, 1), transform 0.45s cubic-bezier(0.33, 0, 0.16, 1);
+        }
+
+        #experience.exp-ready .exp-row.is-visible .exp-block {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .exp-delay-1 {
+            transition-delay: 0.08s;
+        }
+
+        .exp-delay-2 {
+            transition-delay: 0.16s;
+        }
+
+        .exp-delay-3 {
+            transition-delay: 0.24s;
+        }
+
+        .exp-delay-4 {
+            transition-delay: 0.32s;
+        }
+
+        .exp-delay-5 {
+            transition-delay: 0.38s;
+        }
+
+        /* Card */
+        .exp-card {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 10px 24px -14px rgba(15, 23, 42, 0.18);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dark .exp-card {
+            background: #111827;
+            border-color: rgba(148, 163, 184, 0.14);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 16px 40px -20px rgba(0, 0, 0, 0.7);
+        }
+
+        @media (hover: hover) {
+            .exp-card:hover {
+                transform: translateY(-5px);
+                border-color: rgba(59, 130, 246, 0.5);
+                box-shadow: 0 6px 14px -6px rgba(15, 23, 42, 0.1), 0 22px 44px -20px rgba(59, 130, 246, 0.35);
+            }
+
+            .exp-card:hover .exp-metric {
+                border-color: rgba(59, 130, 246, 0.4);
+            }
+        }
+
+        /* Card header */
+        .exp-head {
+            margin-top: 0;
+        }
+
+        .exp-date {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: #2563eb;
+            background: rgba(59, 130, 246, 0.09);
+            border: 1px solid rgba(59, 130, 246, 0.22);
+            padding: 5px 12px;
+            border-radius: 999px;
+            margin-bottom: 14px;
+        }
+
+        .dark .exp-date {
+            color: #93c5fd;
+            background: rgba(59, 130, 246, 0.14);
+            border-color: rgba(59, 130, 246, 0.32);
+        }
+
+        .exp-company {
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.25;
+            color: #0f172a;
+        }
+
+        .dark .exp-company {
+            color: #f8fafc;
+        }
+
+        .exp-location {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .dark .exp-location {
+            color: #94a3b8;
+        }
+
+        .exp-role {
+            margin-top: 10px;
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: #2563eb;
+        }
+
+        .dark .exp-role {
+            color: #60a5fa;
+        }
+
+        .exp-summary {
+            margin-top: 12px;
+            font-size: 0.92rem;
+            line-height: 1.65;
+            color: #475569;
+        }
+
+        .dark .exp-summary {
+            color: #cbd5e1;
+        }
+
+        .exp-summary strong {
+            color: #1e293b;
+        }
+
+        .dark .exp-summary strong {
+            color: #e2e8f0;
+        }
+
+        /* Content blocks */
+        .exp-block {
+            margin-top: 20px;
+        }
+
+        .exp-block-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .exp-block-label::before {
+            content: '';
+            flex-shrink: 0;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        }
+
+        .exp-block-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(15, 23, 42, 0.1);
+        }
+
+        .dark .exp-block-label {
+            color: #94a3b8;
+        }
+
+        .dark .exp-block-label::after {
+            background: rgba(255, 255, 255, 0.09);
+        }
+
+        /* Impact metrics */
+        .exp-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .exp-metric {
+            background: rgba(15, 23, 42, 0.028);
+            border: 1px solid rgba(15, 23, 42, 0.07);
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .dark .exp-metric {
+            background: rgba(255, 255, 255, 0.035);
+            border-color: rgba(255, 255, 255, 0.09);
+        }
+
+        .exp-metric-num {
+            display: block;
+            font-weight: 700;
+            font-size: clamp(1.5rem, 1.1rem + 1vw, 1.9rem);
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+            font-variant-numeric: tabular-nums;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .exp-metric-label {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            color: #64748b;
+        }
+
+        .dark .exp-metric-label {
+            color: #94a3b8;
+        }
+
+        /* Key contributions */
+        .exp-contrib {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .exp-contrib li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.88rem;
+            line-height: 1.55;
+            color: #475569;
+        }
+
+        .dark .exp-contrib li {
+            color: #cbd5e1;
+        }
+
+        .exp-contrib li::before {
+            content: '';
+            flex-shrink: 0;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-top: 8px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        }
+
+        /* Technologies */
+        .exp-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .exp-chip {
+            font-size: 0.72rem;
+            font-weight: 500;
+            padding: 4px 11px;
+            border-radius: 999px;
+            color: #475569;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            transition: color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+        }
+
+        .dark .exp-chip {
+            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(148, 163, 184, 0.2);
+        }
+
+        @media (hover: hover) {
+            .exp-chip:hover {
+                color: #2563eb;
+                background: #eff6ff;
+                border-color: rgba(59, 130, 246, 0.4);
+            }
+
+            .dark .exp-chip:hover {
+                color: #93c5fd;
+                background: rgba(59, 130, 246, 0.12);
+                border-color: rgba(59, 130, 246, 0.35);
+            }
+        }
+
+        /* Expandable responsibilities */
+        .exp-details {
+            margin-top: 22px;
+            border-top: 1px dashed rgba(15, 23, 42, 0.14);
+        }
+
+        .dark .exp-details {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .exp-details summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 0 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #2563eb;
+            transition: color 0.25s ease;
+            user-select: none;
+        }
+
+        .exp-details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .exp-details summary:focus-visible {
+            outline: 2px solid rgba(59, 130, 246, 0.6);
+            outline-offset: 4px;
+            border-radius: 6px;
+        }
+
+        .dark .exp-details summary {
+            color: #60a5fa;
+        }
+
+        @media (hover: hover) {
+            .exp-details summary:hover {
+                color: #1d4ed8;
+            }
+
+            .dark .exp-details summary:hover {
+                color: #93c5fd;
+            }
+        }
+
+        .exp-details-chevron {
+            margin-left: auto;
+            font-size: 0.78rem;
+            flex-shrink: 0;
+            transition: transform 0.35s ease;
+        }
+
+        .exp-details[open] .exp-details-chevron {
+            transform: rotate(180deg);
+        }
+
+        .exp-details-count {
+            font-weight: 500;
+            opacity: 0.75;
+        }
+
+        .exp-details-label-hide {
+            display: none;
+        }
+
+        .exp-details[open] .exp-details-label-hide {
+            display: inline;
+        }
+
+        .exp-details[open] .exp-details-label-show {
+            display: none;
+        }
+
+        .exp-details-body {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .exp-details[open] .exp-details-body {
+            grid-template-rows: 1fr;
+        }
+
+        .exp-details-body-inner {
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .exp-req-list {
+            counter-reset: req;
+            list-style: none;
+            margin: 2px 0 4px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .exp-req-list li {
+            counter-increment: req;
+            display: flex;
+            gap: 12px;
+            font-size: 0.86rem;
+            line-height: 1.6;
+            color: #475569;
+        }
+
+        .dark .exp-req-list li {
+            color: #cbd5e1;
+        }
+
+        .exp-req-list li::before {
+            content: counter(req, decimal-leading-zero);
+            flex-shrink: 0;
+            font-weight: 700;
+            font-size: 0.74rem;
+            color: #3b82f6;
+            font-variant-numeric: tabular-nums;
+            margin-top: 3px;
+        }
+
+        /* Education badges */
+        .exp-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 999px;
+            color: #7c3aed;
+            background: rgba(139, 92, 246, 0.09);
+            border: 1px solid rgba(139, 92, 246, 0.22);
+            transition: border-color 0.25s ease, background-color 0.25s ease;
+        }
+
+        .dark .exp-badge {
+            color: #c4b5fd;
+            background: rgba(139, 92, 246, 0.14);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        /* Desktop: centered alternating timeline */
+        @media (min-width: 1024px) {
+            .exp-line {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .exp-row {
+                padding-left: 0;
+                display: flex;
+                margin-bottom: 64px;
+            }
+
+            .exp-row:nth-child(odd) {
+                justify-content: flex-end;
+            }
+
+            .exp-row:nth-child(even) {
+                justify-content: flex-start;
+            }
+
+            .exp-row .exp-card-wrap {
+                width: calc(50% - 60px);
+            }
+
+            .exp-node-wrap {
+                top: 26px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            /* horizontal connectors toward the card */
+            .exp-row::before {
+                content: '';
+                position: absolute;
+                top: 34px;
+                width: 52px;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.35), rgba(139, 92, 246, 0.35));
+                z-index: 1;
+            }
+
+            .exp-row:nth-child(odd)::before {
+                left: calc(50% + 12px);
+            }
+
+            .exp-row:nth-child(even)::before {
+                right: calc(50% + 12px);
+                background: linear-gradient(270deg, transparent, rgba(59, 130, 246, 0.35), rgba(139, 92, 246, 0.35));
+            }
+        }
+
+        /* Reduced motion: static, accessible */
+        @media (prefers-reduced-motion: reduce) {
+            #experience.exp-ready .exp-card-wrap,
+            #experience.exp-ready .exp-block,
+            #experience.exp-ready .exp-node-wrap,
+            .exp-line-fill,
+            .exp-node,
+            .exp-details-chevron,
+            .exp-details-body {
+                transition: none !important;
+                animation: none !important;
+            }
+
+            #experience.exp-ready .exp-card-wrap,
+            #experience.exp-ready .exp-block {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+
+            #experience.exp-ready .exp-node-wrap {
+                opacity: 1 !important;
+            }
+
+            .exp-line-fill {
+                transform: scaleY(1) !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
@@ -2165,69 +2790,258 @@
                 <h2 class="text-3xl font-bold mb-4">My <span class="gradient-text">Experience</span></h2>
                 <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
                 <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
-                    My professional journey and education
+                    Real-world experience solving technical problems, supporting users, and maintaining reliable IT
+                    operations.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div>
-                    <h3 class="text-2xl font-semibold mb-8 text-center">Work Experience</h3>
-                    <div class="relative pl-8 timeline">
-                        <!-- HelloConnect Inc. IT Support Internship -->
-                        <div class="mb-8 timeline-item relative pl-8">
-                            <div
-                                class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
-                                <div class="flex justify-between items-start mb-2">
-                                    <h4 class="font-bold">IT Support</h4>
-                                    <span
-                                        class="text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 px-3 py-1 rounded-full">Internship</span>
-                                </div>
-                                <h5 class="text-blue-500 dark:text-blue-400 mb-2">HelloConnect Inc.</h5>
-                                <p class="text-gray-600 dark:text-gray-300">
-                                    Provided comprehensive IT support at HelloConnect Inc., ensuring smooth technical
-                                    operations and service delivery.
-                                    Assisted in managing internal IT infrastructure, resolving hardware and software
-                                    issues, and supporting the technical needs of a fast-paced customer care and
-                                    operational environment.
-                                </p>
+            <div class="exp-track relative">
+
+                <!-- Timeline line -->
+                <div class="exp-line" aria-hidden="true">
+                    <span class="exp-line-fill"></span>
+                </div>
+
+                <!-- ── HelloConnect Inc. ───────────────────────── -->
+                <div class="exp-row">
+                    <span class="exp-node-wrap" aria-hidden="true"><span class="exp-node"></span></span>
+                    <div class="exp-card-wrap">
+                        <article class="exp-card">
+                            <div class="exp-block exp-head">
+                                <span class="exp-date"><i class="fas fa-calendar-alt"></i>Jan 2026 – Jun 2026</span>
+                                <h3 class="exp-company">HelloConnect Inc.</h3>
+                                <p class="exp-location"><i class="fas fa-map-marker-alt"></i>BGC, Taguig</p>
+                                <h4 class="exp-role">Customer &amp; Technical Support / IT Service Desk Specialist
+                                    (Intern)</h4>
+                                <p class="exp-summary">Primary Level 1 point of contact for 200+ internal and external
+                                    end-users, resolving incidents across phone, email, and ticketing channels while
+                                    keeping enterprise service delivery reliable and SLAs met.</p>
                             </div>
-                        </div>
+
+                            <div class="exp-block exp-delay-2">
+                                <div class="exp-block-label">Impact</div>
+                                <div class="exp-metrics">
+                                    <div class="exp-metric">
+                                        <span class="exp-metric-num" data-value="200" data-suffix="+"
+                                            data-decimals="0">200+</span>
+                                        <span class="exp-metric-label">Internal &amp; external end-users supported</span>
+                                    </div>
+                                    <div class="exp-metric">
+                                        <span class="exp-metric-num" data-value="99.2" data-suffix="%"
+                                            data-decimals="1">99.2%</span>
+                                        <span class="exp-metric-label">Customer Satisfaction (CSAT)</span>
+                                    </div>
+                                    <div class="exp-metric">
+                                        <span class="exp-metric-num" data-value="20" data-suffix="%"
+                                            data-decimals="0">20%</span>
+                                        <span class="exp-metric-label">Reduction in repeat support tickets</span>
+                                    </div>
+                                    <div class="exp-metric">
+                                        <span class="exp-metric-num">Level 1</span>
+                                        <span class="exp-metric-label">Technical support ownership</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="exp-block exp-delay-3">
+                                <div class="exp-block-label">Key Contributions</div>
+                                <ul class="exp-contrib">
+                                    <li>Level 1 incident handling across phone, email &amp; ticketing</li>
+                                    <li>High-volume queue &amp; SLA response management</li>
+                                    <li>Remote diagnostics &amp; Windows troubleshooting</li>
+                                    <li>Identity &amp; access management (Entra ID / Microsoft 365)</li>
+                                    <li>Network connectivity &amp; IP troubleshooting</li>
+                                    <li>Knowledge Base &amp; documentation authoring</li>
+                                    <li>Endpoint security controls &amp; escalation pathways</li>
+                                </ul>
+                            </div>
+
+                            <div class="exp-block exp-delay-4">
+                                <div class="exp-block-label">Technologies</div>
+                                <div class="exp-tech">
+                                    <span class="exp-chip">IT Service Desk</span>
+                                    <span class="exp-chip">Level 1 Support</span>
+                                    <span class="exp-chip">Jira Service Desk</span>
+                                    <span class="exp-chip">TeamViewer</span>
+                                    <span class="exp-chip">Microsoft Entra ID</span>
+                                    <span class="exp-chip">Microsoft 365</span>
+                                    <span class="exp-chip">Windows</span>
+                                    <span class="exp-chip">Networking</span>
+                                    <span class="exp-chip">IP Troubleshooting</span>
+                                    <span class="exp-chip">Endpoint Security</span>
+                                    <span class="exp-chip">SLA Management</span>
+                                    <span class="exp-chip">FCR</span>
+                                    <span class="exp-chip">Knowledge Base</span>
+                                    <span class="exp-chip">Technical Troubleshooting</span>
+                                </div>
+                            </div>
+
+                            <details class="exp-details exp-block exp-delay-5">
+                                <summary aria-label="Toggle detailed responsibilities">
+                                    <span>
+                                        <span class="exp-details-label-show">View detailed responsibilities</span>
+                                        <span class="exp-details-label-hide">Hide detailed responsibilities</span>
+                                        <span class="exp-details-count">(10)</span>
+                                    </span>
+                                    <i class="fas fa-chevron-down exp-details-chevron" aria-hidden="true"></i>
+                                </summary>
+                                <div class="exp-details-body">
+                                    <div class="exp-details-body-inner">
+                                        <ol class="exp-req-list">
+                                            <li>Served as the primary Level 1 technical support point of contact for over 200 internal and external end-users across phone, email, and ticketing channels.</li>
+                                            <li>Managed high-volume incident queues in Jira Service Desk, categorizing, prioritizing, and assigning fault tickets based on business impact and strict SLA response targets.</li>
+                                            <li>Executed remote infrastructure diagnostics and troubleshooting using TeamViewer to resolve Windows OS errors, software installation failures, and host firewall blocks.</li>
+                                            <li>Maintained a 99.2% Customer Satisfaction (CSAT) score while consistently achieving high First-Call Resolution (FCR) rates across daily helpdesk interactions.</li>
+                                            <li>Administered user account creation, identity credentials, and software license allocations within Microsoft Entra ID (Azure AD) and Microsoft 365 environments.</li>
+                                            <li>Investigated recurring network connectivity faults, IP configuration conflicts, and local switch port issues to maintain continuous network availability and endpoint stability.</li>
+                                            <li>Monitored ticket aging metrics and escalation pathways, transferring unresolved complex technical issues to second-line support and Subject Matter Experts (SMEs).</li>
+                                            <li>Authored comprehensive Knowledge Base (KB) articles and standard troubleshooting guides, contributing to a 20% reduction in repeat support tickets.</li>
+                                            <li>Enforced endpoint security controls, role-based access policies, and data privacy protocols to protect enterprise network boundaries against unauthorized access.</li>
+                                            <li>Conducted technical cross-training sessions and product walkthroughs for incoming team members, accelerating onboarding time and reducing handoff delays across shift transitions.</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </details>
+                        </article>
                     </div>
                 </div>
 
-                <div>
-                    <h3 class="text-2xl font-semibold mb-8 text-center">Education</h3>
-                    <div class="relative pl-8 timeline">
-                        <!-- BS Information Technology -->
-                        <div class="mb-8 timeline-item relative pl-8">
-                            <div
-                                class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
-                                <div class="flex justify-between items-start mb-2">
-                                    <h4 class="font-bold">Bachelor of Science in Information Technology</h4>
-                                    <span
-                                        class="text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 px-3 py-1 rounded-full whitespace-nowrap">2022
-                                        - 2026</span>
-                                </div>
-                                <h5 class="text-blue-500 dark:text-blue-400 mb-2">Lyceum of the Philippines University –
-                                    Batangas</h5>
-                                <p class="text-gray-600 dark:text-gray-300 mb-3">
-                                    Specialization in Multimedia Technology. Graduated with Latin honors as
-                                    <span class="font-semibold text-purple-500 dark:text-purple-400">Cum Laude</span>.
-                                </p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span
-                                        class="text-xs bg-gradient-to-r from-blue-500 to-purple-600 text-white px-3 py-1 rounded-full">
-                                        <i class="fas fa-award mr-1"></i>Cum Laude
-                                    </span>
-                                    <span
-                                        class="text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-full">
-                                        <i class="fas fa-star mr-1"></i>Dean's Lister (2022–2026)
-                                    </span>
+                <!-- ── University Dental Clinic ────────────────── -->
+                <div class="exp-row">
+                    <span class="exp-node-wrap" aria-hidden="true"><span class="exp-node"></span></span>
+                    <div class="exp-card-wrap">
+                        <article class="exp-card">
+                            <div class="exp-block exp-head">
+                                <span class="exp-date"><i class="fas fa-calendar-alt"></i>Jun 2025 – Dec 2025</span>
+                                <h3 class="exp-company">University Dental Clinic</h3>
+                                <p class="exp-location"><i class="fas fa-map-marker-alt"></i>Batangas City</p>
+                                <h4 class="exp-role">Clinic Operations and Systems Assistant</h4>
+                                <p class="exp-summary">Owned day-to-day IT operations for a healthcare facility —
+                                    hardware, networks, databases, and endpoints — keeping systems reliable while
+                                    protecting patient data with strict access controls and DPA-compliant backup
+                                    monitoring.</p>
+                            </div>
+
+                            <div class="exp-block exp-delay-2">
+                                <div class="exp-block-label">Impact</div>
+                                <div class="exp-metrics">
+                                    <div class="exp-metric">
+                                        <span class="exp-metric-num" data-value="99" data-suffix="%"
+                                            data-decimals="0">99%</span>
+                                        <span class="exp-metric-label">IT infrastructure uptime</span>
+                                    </div>
+                                    <div class="exp-metric">
+                                        <span class="exp-metric-num" data-value="30" data-suffix="%"
+                                            data-decimals="0">30%</span>
+                                        <span class="exp-metric-label">Reduction in internal support requests</span>
+                                    </div>
+                                    <div class="exp-metric">
+                                        <span class="exp-metric-num" data-value="100" data-suffix="%"
+                                            data-decimals="0">100%</span>
+                                        <span class="exp-metric-label">Backup &amp; access monitoring responsibility</span>
+                                    </div>
+                                    <div class="exp-metric">
+                                        <span class="exp-metric-num">IT Ops</span>
+                                        <span class="exp-metric-label">Hardware, network, DB &amp; endpoint support</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+
+                            <div class="exp-block exp-delay-3">
+                                <div class="exp-block-label">Key Contributions</div>
+                                <ul class="exp-contrib">
+                                    <li>Daily IT operations &amp; uptime management</li>
+                                    <li>Network, switch &amp; router administration</li>
+                                    <li>Database administration &amp; backup auditing</li>
+                                    <li>Data Privacy Act (DPA) compliance</li>
+                                    <li>Endpoint maintenance &amp; patch deployment</li>
+                                    <li>SOP development &amp; documentation</li>
+                                    <li>User training &amp; self-service enablement</li>
+                                </ul>
+                            </div>
+
+                            <div class="exp-block exp-delay-4">
+                                <div class="exp-block-label">Technologies</div>
+                                <div class="exp-tech">
+                                    <span class="exp-chip">IT Operations</span>
+                                    <span class="exp-chip">Hardware Support</span>
+                                    <span class="exp-chip">Network Administration</span>
+                                    <span class="exp-chip">Router Configuration</span>
+                                    <span class="exp-chip">Switches</span>
+                                    <span class="exp-chip">Database Administration</span>
+                                    <span class="exp-chip">Microsoft Excel</span>
+                                    <span class="exp-chip">Data Privacy</span>
+                                    <span class="exp-chip">Endpoint Maintenance</span>
+                                    <span class="exp-chip">Software Troubleshooting</span>
+                                    <span class="exp-chip">SOP Development</span>
+                                    <span class="exp-chip">IT Asset Management</span>
+                                    <span class="exp-chip">User Training</span>
+                                </div>
+                            </div>
+
+                            <details class="exp-details exp-block exp-delay-5">
+                                <summary aria-label="Toggle detailed responsibilities">
+                                    <span>
+                                        <span class="exp-details-label-show">View detailed responsibilities</span>
+                                        <span class="exp-details-label-hide">Hide detailed responsibilities</span>
+                                        <span class="exp-details-count">(10)</span>
+                                    </span>
+                                    <i class="fas fa-chevron-down exp-details-chevron" aria-hidden="true"></i>
+                                </summary>
+                                <div class="exp-details-body">
+                                    <div class="exp-details-body-inner">
+                                        <ol class="exp-req-list">
+                                            <li>Maintained daily operational health across all workstation hardware, peripheral devices, and operating system builds to ensure 99% IT infrastructure uptime.</li>
+                                            <li>Managed local network connectivity, workstation switch connections, and router configurations to eliminate office connectivity disruptions.</li>
+                                            <li>Audited daily automated database backups, system access logs, and user activity histories to guarantee complete compliance with Data Privacy Act (DPA) standards.</li>
+                                            <li>Administered database permission boundaries and user role access levels to secure patient records and sensitive clinic administrative files.</li>
+                                            <li>Analyzed operational system logs and service usage data using Microsoft Excel, producing structured weekly performance and compliance reports for leadership.</li>
+                                            <li>Executed routine hardware maintenance, software updates, and patch deployments across office endpoints to lower hardware failure rates.</li>
+                                            <li>Troubleshot system software glitches, database connectivity errors, and office application crashes to minimize operational downtime.</li>
+                                            <li>Authored standard operating procedures (SOPs) and preventive maintenance check sheets for office hardware and specialized administrative software.</li>
+                                            <li>Trained non-technical staff members on proper system usage, security best practices, and basic self-service troubleshooting techniques, cutting internal support requests by 30%.</li>
+                                            <li>Managed IT equipment inventories, tracking hardware health, software license validity, and supply allocation to optimize departmental IT expenses.</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </details>
+                        </article>
                     </div>
                 </div>
+
+                <!-- ── Education ─────────────────────────────── -->
+                <div class="exp-row">
+                    <span class="exp-node-wrap" aria-hidden="true"><span class="exp-node"></span></span>
+                    <div class="exp-card-wrap">
+                        <article class="exp-card">
+                            <div class="exp-block exp-head">
+                                <span class="exp-date"><i class="fas fa-graduation-cap"></i>2022 – 2026</span>
+                                <h3 class="exp-company">Lyceum of the Philippines University – Batangas</h3>
+                                <p class="exp-location"><i class="fas fa-map-marker-alt"></i>Batangas City</p>
+                                <h4 class="exp-role">Bachelor of Science in Information Technology – Multimedia
+                                    Technology</h4>
+                                <p class="exp-summary">Graduated with Latin honors at a general weighted average of
+                                    <strong>1.54 (Cum Laude)</strong>.
+                                </p>
+                            </div>
+
+                            <div class="exp-block exp-delay-2">
+                                <div class="exp-block-label">Education Highlights</div>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="exp-badge"><i class="fas fa-award"></i>Cum Laude</span>
+                                    <span class="exp-badge"><i class="fas fa-star"></i>Dean's Lister (2022–2026)</span>
+                                    <span class="exp-badge"><i class="fas fa-trophy"></i>GWA 1.54</span>
+                                </div>
+                                <p class="exp-summary"><i
+                                        class="fas fa-book mr-1 text-blue-500 dark:text-blue-400"></i>Thesis:
+                                    <strong>LyceumVault</strong> — "An Integrated Digital Repository for LPU-Batangas
+                                    Theses and Dissertations."
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -3020,6 +3834,108 @@
             };
             document.addEventListener('keydown', blockKeys);
             document.addEventListener('contextmenu', e => e.preventDefault());
+        })();
+    </script>
+
+    <script>
+        // ══════════════ EXPERIENCE TIMELINE ══════════════
+        (function () {
+            const section = document.getElementById('experience');
+            if (!section) return;
+
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const rows = section.querySelectorAll('.exp-row');
+            const lineFill = section.querySelector('.exp-line-fill');
+            const counters = section.querySelectorAll('.exp-metric-num[data-value]');
+            const firstCard = section.querySelector('.exp-card');
+
+            // Enable reveal styles only once JS is confirmed available (no-JS fallback shows content)
+            section.classList.add('exp-ready');
+
+            // Reset counters to 0 so they can animate once; static values in HTML remain for no-JS
+            counters.forEach(function (el) {
+                const target = parseFloat(el.dataset.value);
+                const decimals = parseInt(el.dataset.decimals || '0', 10);
+                el.textContent = (reduced ? target : 0).toFixed(decimals) + (el.dataset.suffix || '');
+            });
+
+            // Row entrance reveal (runs once)
+            if ('IntersectionObserver' in window) {
+                const revealIO = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            revealIO.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+                rows.forEach(function (r) { revealIO.observe(r); });
+            } else {
+                rows.forEach(function (r) { r.classList.add('is-visible'); });
+            }
+
+            // Animated impact counters (run once when first card enters viewport)
+            function runCounter(el) {
+                const target = parseFloat(el.dataset.value);
+                const decimals = parseInt(el.dataset.decimals || '0', 10);
+                const suffix = el.dataset.suffix || '';
+                const duration = 900;
+                let start = null;
+                function frame(now) {
+                    if (start === null) start = now;
+                    const t = Math.min(1, (now - start) / duration);
+                    const eased = 1 - Math.pow(1 - t, 3);
+                    el.textContent = (target * eased).toFixed(decimals) + suffix;
+                    if (t < 1) requestAnimationFrame(frame);
+                }
+                requestAnimationFrame(frame);
+            }
+
+            if (firstCard && counters.length && 'IntersectionObserver' in window) {
+                const counterIO = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            counters.forEach(runCounter);
+                            counterIO.disconnect();
+                        }
+                    });
+                }, { threshold: 0.25 });
+                counterIO.observe(firstCard);
+            }
+
+            // Timeline progress line follows scroll position (rAF-throttled, transform-only)
+            if (lineFill && !reduced) {
+                function updateLine() {
+                    const vh = window.innerHeight || document.documentElement.clientHeight;
+                    const rect = section.getBoundingClientRect();
+                    const start = vh * 0.92;
+                    const end = vh * 0.08;
+                    let p = (start - rect.top) / (rect.height + (start - end));
+                    p = Math.max(0, Math.min(1, p));
+                    lineFill.style.transform = 'scaleY(' + p + ')';
+                }
+                let ticking = false;
+                const onScroll = function () {
+                    if (ticking) return;
+                    ticking = true;
+                    requestAnimationFrame(function () { updateLine(); ticking = false; });
+                };
+                window.addEventListener('scroll', onScroll, { passive: true });
+                window.addEventListener('resize', onScroll);
+                updateLine();
+            }
+
+            // Active node tracking (marks the card currently centered in the viewport)
+            if ('IntersectionObserver' in window) {
+                const activeIO = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        entry.target.classList.toggle('is-active', entry.isIntersecting);
+                    });
+                }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
+                rows.forEach(function (r) { activeIO.observe(r); });
+            } else {
+                rows.forEach(function (r) { r.classList.add('is-active'); });
+            }
         })();
     </script>
 </body>
