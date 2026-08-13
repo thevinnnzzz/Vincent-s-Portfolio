@@ -582,33 +582,6 @@
             background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
         }
 
-        .skill-bar {
-            height: 8px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-        }
-
-        .skill-progress {
-            height: 100%;
-            border-radius: 4px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-            background-size: 200% 100%;
-            transition: width 1s ease-in-out;
-            min-width: 0;
-            animation: shimmer 2s ease-in-out infinite;
-        }
-
-        @keyframes shimmer {
-            0% {
-                background-position: 200% 0;
-            }
-
-            100% {
-                background-position: -200% 0;
-            }
-        }
-
         /* Scroll Reveal Animations */
         .reveal {
             opacity: 0;
@@ -1295,189 +1268,189 @@
         }
 
         /* Infinite Marquee Animation */
-        .marquee-wrapper {
-            position: relative;
-            padding: 1.5rem 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            overflow-x: auto;
-            overflow-y: hidden;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            cursor: grab;
-            -webkit-overflow-scrolling: touch;
-            touch-action: pan-x;
-        }
-
-        .marquee-wrapper::-webkit-scrollbar {
-            display: none;
-        }
-
-        .marquee-wrapper:active {
-            cursor: grabbing;
-        }
-
-        .marquee-wrapper.is-dragging .marquee-track {
-            animation-play-state: paused !important;
-        }
-
-        .marquee-track {
-            display: flex;
-            gap: 2rem;
-            will-change: transform;
-            min-width: max-content;
-        }
-
-        .animate-marquee-rtl {
-            animation: marquee-rtl 35s linear infinite;
-        }
-
-        .animate-marquee-ltr {
-            animation: marquee-ltr 35s linear infinite;
-        }
-
-        .marquee-wrapper:hover:not(.is-dragging) .marquee-track {
-            animation-play-state: paused;
-        }
-
-        @keyframes marquee-rtl {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        @keyframes marquee-ltr {
-            0% {
-                transform: translateX(-50%);
-            }
-
-            100% {
-                transform: translateX(0);
-            }
-        }
-
-        .marquee-item {
-            will-change: transform;
-            user-select: none;
-            -webkit-user-select: none;
-            pointer-events: auto;
-        }
-
-        /* Tool Info Panel */
-        .tool-info-panel {
-            opacity: 0;
-            transform: translateY(20px) scale(0.95);
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .tool-info-panel.show {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .tool-info-panel .tool-info-icon {
-            animation: iconPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-        }
-
-        @keyframes iconPop {
-            0% {
-                transform: scale(0) rotate(-10deg);
-                opacity: 0;
-            }
-
-            100% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
-        }
-
-        .tool-info-panel .tool-info-title {
-            animation: fadeSlideUp 0.4s 0.1s ease both;
-        }
-
-        .tool-info-panel .tool-info-desc {
-            animation: fadeSlideUp 0.4s 0.2s ease both;
-        }
-
-        .tool-info-panel .tool-info-features li {
-            animation: fadeSlideUp 0.3s ease both;
-        }
-
-        .tool-info-panel .tool-info-features li:nth-child(1) {
-            animation-delay: 0.3s;
-        }
-
-        .tool-info-panel .tool-info-features li:nth-child(2) {
-            animation-delay: 0.4s;
-        }
-
-        .tool-info-panel .tool-info-features li:nth-child(3) {
-            animation-delay: 0.5s;
-        }
-
-        .tool-info-panel .tool-info-features li:nth-child(4) {
-            animation-delay: 0.6s;
-        }
-
-        @keyframes fadeSlideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .marquee-item {
-                width: 5rem !important;
-                height: 5rem !important;
-            }
-
-            .marquee-item i {
-                font-size: 1.5rem !important;
-            }
-
-            .marquee-item span {
-                font-size: 0.6rem !important;
-            }
-
-            .marquee-track {
-                gap: 1rem;
-            }
-
-            .marquee-wrapper {
-                padding: 1rem 0;
-            }
-
-            .tool-info-panel {
-                margin: 1rem;
-                padding: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .marquee-item {
-                width: 4rem !important;
-                height: 4rem !important;
-            }
-
-            .marquee-item i {
-                font-size: 1.25rem !important;
-            }
-        }
-    </style>
+                .marquee-wrapper {
+                    position: relative;
+                    padding: 1.5rem 0;
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 1rem;
+                    backdrop-filter: blur(10px);
+                    -webkit-backdrop-filter: blur(10px);
+                    overflow-x: auto;
+                    overflow-y: hidden;
+                    scrollbar-width: none;
+                    -ms-overflow-style: none;
+                    cursor: grab;
+                    -webkit-overflow-scrolling: touch;
+                    touch-action: pan-x;
+                }
+        
+                .marquee-wrapper::-webkit-scrollbar {
+                    display: none;
+                }
+        
+                .marquee-wrapper:active {
+                    cursor: grabbing;
+                }
+        
+                .marquee-wrapper.is-dragging .marquee-track {
+                    animation-play-state: paused !important;
+                }
+        
+                .marquee-track {
+                    display: flex;
+                    gap: 2rem;
+                    will-change: transform;
+                    min-width: max-content;
+                }
+        
+                .animate-marquee-rtl {
+                    animation: marquee-rtl 35s linear infinite;
+                }
+        
+                .animate-marquee-ltr {
+                    animation: marquee-ltr 35s linear infinite;
+                }
+        
+                .marquee-wrapper:hover:not(.is-dragging) .marquee-track {
+                    animation-play-state: paused;
+                }
+        
+                @keyframes marquee-rtl {
+                    0% {
+                        transform: translateX(0);
+                    }
+        
+                    100% {
+                        transform: translateX(-50%);
+                    }
+                }
+        
+                @keyframes marquee-ltr {
+                    0% {
+                        transform: translateX(-50%);
+                    }
+        
+                    100% {
+                        transform: translateX(0);
+                    }
+                }
+        
+                .marquee-item {
+                    will-change: transform;
+                    user-select: none;
+                    -webkit-user-select: none;
+                    pointer-events: auto;
+                }
+        
+                /* Tool Info Panel */
+                .tool-info-panel {
+                    opacity: 0;
+                    transform: translateY(20px) scale(0.95);
+                    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+                }
+        
+                .tool-info-panel.show {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+        
+                .tool-info-panel .tool-info-icon {
+                    animation: iconPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+                }
+        
+                @keyframes iconPop {
+                    0% {
+                        transform: scale(0) rotate(-10deg);
+                        opacity: 0;
+                    }
+        
+                    100% {
+                        transform: scale(1) rotate(0deg);
+                        opacity: 1;
+                    }
+                }
+        
+                .tool-info-panel .tool-info-title {
+                    animation: fadeSlideUp 0.4s 0.1s ease both;
+                }
+        
+                .tool-info-panel .tool-info-desc {
+                    animation: fadeSlideUp 0.4s 0.2s ease both;
+                }
+        
+                .tool-info-panel .tool-info-features li {
+                    animation: fadeSlideUp 0.3s ease both;
+                }
+        
+                .tool-info-panel .tool-info-features li:nth-child(1) {
+                    animation-delay: 0.3s;
+                }
+        
+                .tool-info-panel .tool-info-features li:nth-child(2) {
+                    animation-delay: 0.4s;
+                }
+        
+                .tool-info-panel .tool-info-features li:nth-child(3) {
+                    animation-delay: 0.5s;
+                }
+        
+                .tool-info-panel .tool-info-features li:nth-child(4) {
+                    animation-delay: 0.6s;
+                }
+        
+                @keyframes fadeSlideUp {
+                    0% {
+                        opacity: 0;
+                        transform: translateY(10px);
+                    }
+        
+                    100% {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+        
+                /* Responsive adjustments */
+                @media (max-width: 768px) {
+                    .marquee-item {
+                        width: 5rem !important;
+                        height: 5rem !important;
+                    }
+        
+                    .marquee-item i {
+                        font-size: 1.5rem !important;
+                    }
+        
+                    .marquee-item span {
+                        font-size: 0.6rem !important;
+                    }
+        
+                    .marquee-track {
+                        gap: 1rem;
+                    }
+        
+                    .marquee-wrapper {
+                        padding: 1rem 0;
+                    }
+        
+                    .tool-info-panel {
+                        margin: 1rem;
+                        padding: 1rem;
+                    }
+                }
+        
+                @media (max-width: 480px) {
+                    .marquee-item {
+                        width: 4rem !important;
+                        height: 4rem !important;
+                    }
+        
+                    .marquee-item i {
+                        font-size: 1.25rem !important;
+                    }
+                }
+            </style>
 
     <style>
         /* ══════════════ EXPERIENCE SECTION — CAREER TIMELINE ══════════════ */
@@ -2133,6 +2106,305 @@
             }
         }
     </style>
+
+    <style>
+        /* ══════════════ SKILLS SECTION — CATEGORY CARDS ══════════════ */
+
+        /* Grid: 2 columns on tablet/desktop, single column on mobile */
+        #skills .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            #skills .skills-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        /* Card */
+        #skills .skill-card {
+            position: relative;
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 10px 24px -14px rgba(15, 23, 42, 0.18);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .dark #skills .skill-card {
+            background: #111827;
+            border-color: rgba(148, 163, 184, 0.14);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 16px 40px -20px rgba(0, 0, 0, 0.7);
+        }
+
+        @media (hover: hover) {
+            #skills .skill-card:hover {
+                transform: translateY(-4px);
+                border-color: rgba(59, 130, 246, 0.5);
+                box-shadow: 0 6px 14px -6px rgba(15, 23, 42, 0.1), 0 22px 44px -20px rgba(59, 130, 246, 0.35);
+            }
+
+            .dark #skills .skill-card:hover {
+                border-color: rgba(59, 130, 246, 0.55);
+            }
+        }
+
+        /* Card header */
+        #skills .skill-card-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.9rem;
+        }
+
+        #skills .skill-card-icon {
+            width: 2.75rem;
+            height: 2.75rem;
+            flex-shrink: 0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.15rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+            transition: transform 0.3s ease;
+        }
+
+        @media (hover: hover) {
+            #skills .skill-card:hover .skill-card-icon {
+                transform: scale(1.08);
+            }
+        }
+
+        #skills .skill-card-title {
+            font-size: 1.08rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #0f172a;
+        }
+
+        .dark #skills .skill-card-title {
+            color: #f8fafc;
+        }
+
+        #skills .skill-card-desc {
+            margin-top: 0.3rem;
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: #64748b;
+        }
+
+        .dark #skills .skill-card-desc {
+            color: #94a3b8;
+        }
+
+        /* Subgroups (Full-Stack development) */
+        #skills .skill-subgroup {
+            margin-top: 1.05rem;
+        }
+
+        #skills .skill-subgroup-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        #skills .skill-subgroup-title::before {
+            content: '';
+            flex-shrink: 0;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        }
+
+        .dark #skills .skill-subgroup-title {
+            color: #94a3b8;
+        }
+
+        /* Chips */
+        #skills .skill-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        #skills .skill-card > .skill-chips {
+            margin-top: 1.1rem;
+        }
+
+        #skills .skill-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.78rem;
+            font-weight: 500;
+            padding: 0.38rem 0.85rem;
+            border-radius: 999px;
+            color: #475569;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            white-space: nowrap;
+        }
+
+        .dark #skills .skill-chip {
+            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(148, 163, 184, 0.2);
+        }
+
+        @media (hover: hover) {
+            #skills .skill-chip:hover {
+                color: #2563eb;
+                background: #eff6ff;
+                border-color: rgba(59, 130, 246, 0.4);
+            }
+
+            .dark #skills .skill-chip:hover {
+                color: #93c5fd;
+                background: rgba(59, 130, 246, 0.12);
+                border-color: rgba(59, 130, 246, 0.35);
+            }
+        }
+
+        #skills .skill-chip i {
+            font-size: 0.82rem;
+            line-height: 1;
+        }
+
+        #skills .skill-chip--brand i {
+            color: #2563eb;
+        }
+
+        .dark #skills .skill-chip--brand i {
+            color: #93c5fd;
+        }
+
+        /* Bands (AI & Automation / Additional Technologies) */
+        #skills .skill-band {
+            margin-top: 1.5rem;
+            border-radius: 16px;
+            padding: 1.5rem;
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 10px 24px -14px rgba(15, 23, 42, 0.18);
+        }
+
+        .dark #skills .skill-band {
+            background: #111827;
+            border-color: rgba(148, 163, 184, 0.14);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 16px 40px -20px rgba(0, 0, 0, 0.7);
+        }
+
+        #skills .skill-band .skill-band-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        @media (min-width: 768px) {
+            #skills .skill-band--ai .skill-band-inner {
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: space-between;
+            }
+
+            #skills .skill-band--ai .skill-card-head {
+                min-width: 280px;
+                max-width: 340px;
+            }
+
+            #skills .skill-band--ai .skill-chips {
+                flex: 1;
+                align-content: flex-start;
+            }
+        }
+
+        /* Additional technologies — quieter secondary treatment */
+        #skills .skill-band--secondary {
+            background: rgba(15, 23, 42, 0.02);
+            border: 1px dashed rgba(15, 23, 42, 0.18);
+            box-shadow: none;
+        }
+
+        .dark #skills .skill-band--secondary {
+            background: rgba(255, 255, 255, 0.02);
+            border-color: rgba(255, 255, 255, 0.16);
+        }
+
+        #skills .skill-band--secondary .skill-card-icon {
+            background: rgba(15, 23, 42, 0.08);
+            color: #475569;
+            box-shadow: none;
+        }
+
+        .dark #skills .skill-band--secondary .skill-card-icon {
+            background: rgba(255, 255, 255, 0.08);
+            color: #94a3b8;
+        }
+
+        /* Scroll reveal (scoped behind .sk-setup so no-JS keeps content visible) */
+        #skills.sk-setup .skill-card-wrap {
+            opacity: 0;
+            transform: translateY(24px);
+            transition:
+                opacity 0.5s cubic-bezier(0.33, 0, 0.16, 1) var(--sk-delay, 0ms),
+                transform 0.5s cubic-bezier(0.33, 0, 0.16, 1) var(--sk-delay, 0ms);
+        }
+
+        #skills.sk-setup.sk-visible .skill-card-wrap {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Chip stagger delays */
+        #skills .skill-chips .skill-chip:nth-child(1) { --sk-chip-delay: 0.25s; }
+        #skills .skill-chips .skill-chip:nth-child(2) { --sk-chip-delay: 0.30s; }
+        #skills .skill-chips .skill-chip:nth-child(3) { --sk-chip-delay: 0.35s; }
+        #skills .skill-chips .skill-chip:nth-child(4) { --sk-chip-delay: 0.40s; }
+        #skills .skill-chips .skill-chip:nth-child(5) { --sk-chip-delay: 0.45s; }
+        #skills .skill-chips .skill-chip:nth-child(6) { --sk-chip-delay: 0.50s; }
+        #skills .skill-chips .skill-chip:nth-child(7) { --sk-chip-delay: 0.55s; }
+        #skills .skill-chips .skill-chip:nth-child(8) { --sk-chip-delay: 0.60s; }
+        #skills .skill-chips .skill-chip:nth-child(n+9) { --sk-chip-delay: 0.65s; }
+
+        #skills.sk-setup .skill-chip {
+            opacity: 0;
+            transform: translateY(6px);
+            transition:
+                opacity 0.35s ease var(--sk-chip-delay, 0.25s),
+                transform 0.35s ease var(--sk-chip-delay, 0.25s),
+                color 0.2s ease,
+                background-color 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        #skills.sk-setup.sk-visible .skill-chip {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Reduced motion: disable reveal animation, keep content fully visible */
+        @media (prefers-reduced-motion: reduce) {
+            #skills.sk-setup .skill-card-wrap,
+            #skills.sk-setup .skill-chip {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
@@ -2427,364 +2699,456 @@
                 <h2 class="text-3xl font-bold mb-4">My <span class="gradient-text">Skills</span></h2>
                 <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6"></div>
                 <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
-                    The technologies and tools I use to bring ideas to life
+                    Technical skills spanning IT support, enterprise systems, networking, software development, and
+                    automation.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div>
-                    <h3 class="text-xl font-semibold mb-6">Frontend Development</h3>
-                    <div class="space-y-6">
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span>HTML/CSS</span>
-                                <span>95%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 95%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span>JavaScript</span>
-                                <span>90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 90%"></div>
+            <div class="skills-grid">
+
+                <!-- IT Support & Systems -->
+                <div class="skill-card-wrap" style="--sk-delay: 0ms">
+                    <article class="skill-card">
+                        <div class="skill-card-head">
+                            <div class="skill-card-icon"><i class="fas fa-headset" aria-hidden="true"></i></div>
+                            <div class="skill-card-head-text">
+                                <h3 class="skill-card-title">IT Support &amp; Systems</h3>
+                                <p class="skill-card-desc">Hands-on technical support and endpoint troubleshooting.</p>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span>React</span>
-                                <span>85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 85%"></div>
-                            </div>
+                        <div class="skill-chips">
+                            <span class="skill-chip">IT Service Desk</span>
+                            <span class="skill-chip">Technical Support</span>
+                            <span class="skill-chip">Level 1 Support</span>
+                            <span class="skill-chip">Windows Administration</span>
+                            <span class="skill-chip">Hardware Troubleshooting</span>
+                            <span class="skill-chip">Software Troubleshooting</span>
+                            <span class="skill-chip">Remote Support</span>
+                            <span class="skill-chip">Incident Management</span>
+                            <span class="skill-chip">SLA Management</span>
+                            <span class="skill-chip">Ticket Management</span>
+                            <span class="skill-chip">Knowledge Base</span>
+                            <span class="skill-chip">IT Asset Management</span>
+                            <span class="skill-chip">Endpoint Support</span>
+                            <span class="skill-chip">Jira Service Desk</span>
+                            <span class="skill-chip">TeamViewer</span>
+                            <span class="skill-chip">Snipe-IT</span>
                         </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span>TypeScript</span>
-                                <span>80%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 80%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span>Tailwind CSS</span>
-                                <span>85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 85%"></div>
-                            </div>
-                        </div>
-                    </div>
+                    </article>
                 </div>
 
-                <div>
-                    <h3 class="text-xl font-semibold mb-6">Backend & Other Skills</h3>
-                    <div class="space-y-6">
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span>PHP</span>
-                                <span>85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 85%"></div>
+                <!-- Cloud, Identity & Administration -->
+                <div class="skill-card-wrap" style="--sk-delay: 90ms">
+                    <article class="skill-card">
+                        <div class="skill-card-head">
+                            <div class="skill-card-icon"><i class="fas fa-cloud" aria-hidden="true"></i></div>
+                            <div class="skill-card-head-text">
+                                <h3 class="skill-card-title">Cloud, Identity &amp; Administration</h3>
+                                <p class="skill-card-desc">Enterprise identity, access, and endpoint administration.</p>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span>MySQL</span>
-                                <span>80%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 80%"></div>
+                        <div class="skill-chips">
+                            <span class="skill-chip skill-chip--brand"><i class="fab fa-microsoft"
+                                    aria-hidden="true"></i>Microsoft Azure</span>
+                            <span class="skill-chip skill-chip--brand"><i class="fab fa-microsoft"
+                                    aria-hidden="true"></i>Microsoft Entra ID</span>
+                            <span class="skill-chip skill-chip--brand"><i class="fab fa-microsoft"
+                                    aria-hidden="true"></i>Microsoft 365</span>
+                            <span class="skill-chip skill-chip--brand"><i class="fab fa-microsoft"
+                                    aria-hidden="true"></i>Microsoft Intune</span>
+                            <span class="skill-chip">Google Admin Console</span>
+                            <span class="skill-chip">Identity &amp; Access Management</span>
+                            <span class="skill-chip">User Account Administration</span>
+                            <span class="skill-chip">Endpoint Management</span>
+                            <span class="skill-chip">Software License Management</span>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Networking & Security -->
+                <div class="skill-card-wrap" style="--sk-delay: 180ms">
+                    <article class="skill-card">
+                        <div class="skill-card-head">
+                            <div class="skill-card-icon"><i class="fas fa-network-wired" aria-hidden="true"></i></div>
+                            <div class="skill-card-head-text">
+                                <h3 class="skill-card-title">Networking &amp; Security</h3>
+                                <p class="skill-card-desc">LAN fundamentals, troubleshooting, and security controls.</p>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span>Node.js</span>
-                                <span>70%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 70%"></div>
+                        <div class="skill-chips">
+                            <span class="skill-chip">TCP/IP</span>
+                            <span class="skill-chip">IPv4</span>
+                            <span class="skill-chip">DNS</span>
+                            <span class="skill-chip">DHCP</span>
+                            <span class="skill-chip">VLANs</span>
+                            <span class="skill-chip">Switching</span>
+                            <span class="skill-chip">Routing</span>
+                            <span class="skill-chip">SSH</span>
+                            <span class="skill-chip">Network Troubleshooting</span>
+                            <span class="skill-chip">IP Configuration</span>
+                            <span class="skill-chip">Switch Port Troubleshooting</span>
+                            <span class="skill-chip">Endpoint Security</span>
+                            <span class="skill-chip">Access Control</span>
+                            <span class="skill-chip">Data Privacy</span>
+                            <span class="skill-chip">Authentication</span>
+                            <span class="skill-chip">RBAC</span>
+                            <span class="skill-chip">Network Security Fundamentals</span>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Full-Stack Development -->
+                <div class="skill-card-wrap" style="--sk-delay: 270ms">
+                    <article class="skill-card">
+                        <div class="skill-card-head">
+                            <div class="skill-card-icon"><i class="fas fa-code" aria-hidden="true"></i></div>
+                            <div class="skill-card-head-text">
+                                <h3 class="skill-card-title">Full-Stack Development</h3>
+                                <p class="skill-card-desc">Building web applications from interface to database.</p>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span>Firebase</span>
-                                <span>75%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 75%"></div>
+                        <div class="skill-subgroup">
+                            <h4 class="skill-subgroup-title">Frontend</h4>
+                            <div class="skill-chips">
+                                <span class="skill-chip">HTML</span>
+                                <span class="skill-chip">CSS</span>
+                                <span class="skill-chip">JavaScript</span>
+                                <span class="skill-chip">TypeScript</span>
+                                <span class="skill-chip">React</span>
+                                <span class="skill-chip">Tailwind CSS</span>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span>Git</span>
-                                <span>85%</span>
+                        <div class="skill-subgroup">
+                            <h4 class="skill-subgroup-title">Backend</h4>
+                            <div class="skill-chips">
+                                <span class="skill-chip">Node.js</span>
+                                <span class="skill-chip">Express.js</span>
+                                <span class="skill-chip">REST APIs</span>
                             </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                        <div class="skill-subgroup">
+                            <h4 class="skill-subgroup-title">Database &amp; Backend Services</h4>
+                            <div class="skill-chips">
+                                <span class="skill-chip">SQL</span>
+                                <span class="skill-chip">MySQL</span>
+                                <span class="skill-chip">Supabase</span>
                             </div>
+                        </div>
+                        <div class="skill-subgroup">
+                            <h4 class="skill-subgroup-title">Development Tools</h4>
+                            <div class="skill-chips">
+                                <span class="skill-chip skill-chip--brand"><i class="fab fa-git-alt"
+                                        aria-hidden="true"></i>Git</span>
+                                <span class="skill-chip skill-chip--brand"><i class="fab fa-github"
+                                        aria-hidden="true"></i>GitHub</span>
+                                <span class="skill-chip">Postman</span>
+                                <span class="skill-chip">Vite</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+</div>
+
+            <div class="skill-band skill-band--ai skill-card-wrap" style="--sk-delay: 120ms">
+                <article class="skill-band-inner">
+                    <div class="skill-card-head">
+                        <div class="skill-card-icon"><i class="fas fa-robot" aria-hidden="true"></i></div>
+                        <div class="skill-card-head-text">
+                            <h3 class="skill-card-title">AI &amp; Automation</h3>
+                            <p class="skill-card-desc">Modern AI tooling, prompt workflows, and automation.</p>
                         </div>
                     </div>
-                </div>
+                    <div class="skill-chips">
+                        <span class="skill-chip">LLMs</span>
+                        <span class="skill-chip">AI Tools</span>
+                        <span class="skill-chip">Prompt Engineering</span>
+                        <span class="skill-chip">AI-Assisted Development</span>
+                        <span class="skill-chip">Google Apps Script</span>
+                        <span class="skill-chip">Workflow Automation</span>
+                        <span class="skill-chip">API Integration</span>
+                    </div>
+                </article>
             </div>
 
-            <div class="mt-16">
-                <h3 class="text-xl font-semibold mb-8 text-center">Tools & Technologies</h3>
+            <!-- Additional Technologies -->
+            <div class="skill-band skill-band--secondary skill-card-wrap" style="--sk-delay: 210ms">
+                <article class="skill-band-inner">
+                    <div class="skill-card-head">
+                        <div class="skill-card-icon"><i class="fas fa-layer-group" aria-hidden="true"></i></div>
+                        <div class="skill-card-head-text">
+                            <h3 class="skill-card-title">Additional Technologies</h3>
+                            <p class="skill-card-desc">Languages and tools for additional technical breadth.</p>
+                        </div>
+                    </div>
+                    <div class="skill-chips">
+                        <span class="skill-chip">Python</span>
+                        <span class="skill-chip">Java</span>
+                        <span class="skill-chip">C++</span>
+                        <span class="skill-chip">PHP</span>
+                        <span class="skill-chip">MASM Assembly</span>
+                        <span class="skill-chip">XAMPP</span>
+                        <span class="skill-chip">Firebase</span>
+                    </div>
+                </article>
+            </div>
 
-                <!-- Dual Marquee Container -->
-                <div class="relative">
-                    <!-- Top Marquee: Right to Left -->
-                    <div class="relative mb-4">
-                        <div class="marquee-wrapper overflow-x-auto rounded-2xl">
-                            <div class="marquee-track flex items-center gap-8 animate-marquee-rtl">
-                                <!-- Set 1 -->
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
-                                    data-tool="html5">
-                                    <i
-                                        class="fab fa-html5 text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">HTML5</span>
+                        <div class="mt-16">
+                            <h3 class="text-xl font-semibold mb-8 text-center">Tools & Technologies</h3>
+
+                            <!-- Dual Marquee Container -->
+                            <div class="relative">
+                                <!-- Top Marquee: Right to Left -->
+                                <div class="relative mb-4">
+                                    <div class="marquee-wrapper overflow-x-auto rounded-2xl">
+                                        <div class="marquee-track flex items-center gap-8 animate-marquee-rtl">
+                                            <!-- Set 1 -->
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                                data-tool="html5">
+                                                <i
+                                                    class="fab fa-html5 text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">HTML5</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                                data-tool="css3">
+                                                <i
+                                                    class="fab fa-css3-alt text-3xl text-blue-500 group-hover:text-blue-400 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">CSS3</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-yellow-500/20 hover:border-yellow-400/50 cursor-pointer group"
+                                                data-tool="javascript">
+                                                <i
+                                                    class="fab fa-js text-3xl text-yellow-500 group-hover:text-yellow-400 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">JavaScript</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                                data-tool="typescript">
+                                                <i
+                                                    class="fas fa-code text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">TypeScript</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group"
+                                                data-tool="react">
+                                                <i
+                                                    class="fab fa-react text-3xl text-cyan-400 group-hover:text-cyan-300 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">React</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-indigo-500/20 hover:border-indigo-400/50 cursor-pointer group"
+                                                data-tool="php">
+                                                <i
+                                                    class="fab fa-php text-3xl text-indigo-600 group-hover:text-indigo-500 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">PHP</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
+                                                data-tool="nodejs">
+                                                <i
+                                                    class="fab fa-node-js text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Node.js</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
+                                                data-tool="express">
+                                                <i
+                                                    class="fas fa-server text-3xl text-green-500 group-hover:text-green-400 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Express</span>
+                                            </div>
+                                            <!-- Set 2 (Duplicate) -->
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                                data-tool="html5">
+                                                <i
+                                                    class="fab fa-html5 text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">HTML5</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                                data-tool="css3">
+                                                <i
+                                                    class="fab fa-css3-alt text-3xl text-blue-500 group-hover:text-blue-400 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">CSS3</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-yellow-500/20 hover:border-yellow-400/50 cursor-pointer group"
+                                                data-tool="javascript">
+                                                <i
+                                                    class="fab fa-js text-3xl text-yellow-500 group-hover:text-yellow-400 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">JavaScript</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                                data-tool="typescript">
+                                                <i
+                                                    class="fas fa-code text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">TypeScript</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group"
+                                                data-tool="react">
+                                                <i
+                                                    class="fab fa-react text-3xl text-cyan-400 group-hover:text-cyan-300 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">React</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-indigo-500/20 hover:border-indigo-400/50 cursor-pointer group"
+                                                data-tool="php">
+                                                <i
+                                                    class="fab fa-php text-3xl text-indigo-600 group-hover:text-indigo-500 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">PHP</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
+                                                data-tool="nodejs">
+                                                <i
+                                                    class="fab fa-node-js text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Node.js</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
+                                                data-tool="express">
+                                                <i
+                                                    class="fas fa-server text-3xl text-green-500 group-hover:text-green-400 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Express</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-gray-900 to-transparent pointer-events-none z-10">
+                                    </div>
+                                    <div
+                                        class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-gray-900 to-transparent pointer-events-none z-10">
+                                    </div>
                                 </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
-                                    data-tool="css3">
-                                    <i
-                                        class="fab fa-css3-alt text-3xl text-blue-500 group-hover:text-blue-400 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">CSS3</span>
+
+                                <!-- Central Info Panel -->
+                                <div id="tool-info-panel"
+                                    class="tool-info-panel hidden relative z-20 mx-auto max-w-2xl my-6 rounded-2xl backdrop-blur-xl bg-white/80 dark:bg-gray-800/80 border border-white/30 dark:border-gray-700/30 shadow-2xl p-6 transform transition-all duration-500">
+                                    <button id="close-tool-info"
+                                        class="absolute top-3 right-3 w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <div class="flex items-start gap-4">
+                                        <div id="tool-info-icon"
+                                            class="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0"></div>
+                                        <div class="flex-1">
+                                            <h4 id="tool-info-title" class="text-xl font-bold text-gray-800 dark:text-white mb-2">
+                                            </h4>
+                                            <p id="tool-info-desc" class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                                            </p>
+                                            <ul id="tool-info-features"
+                                                class="mt-3 space-y-1 text-sm text-gray-500 dark:text-gray-400"></ul>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-yellow-500/20 hover:border-yellow-400/50 cursor-pointer group"
-                                    data-tool="javascript">
-                                    <i
-                                        class="fab fa-js text-3xl text-yellow-500 group-hover:text-yellow-400 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">JavaScript</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
-                                    data-tool="typescript">
-                                    <i
-                                        class="fas fa-code text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">TypeScript</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group"
-                                    data-tool="react">
-                                    <i
-                                        class="fab fa-react text-3xl text-cyan-400 group-hover:text-cyan-300 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">React</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-indigo-500/20 hover:border-indigo-400/50 cursor-pointer group"
-                                    data-tool="php">
-                                    <i
-                                        class="fab fa-php text-3xl text-indigo-600 group-hover:text-indigo-500 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">PHP</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
-                                    data-tool="nodejs">
-                                    <i
-                                        class="fab fa-node-js text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Node.js</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
-                                    data-tool="express">
-                                    <i
-                                        class="fas fa-server text-3xl text-green-500 group-hover:text-green-400 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Express</span>
-                                </div>
-                                <!-- Set 2 (Duplicate) -->
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
-                                    data-tool="html5">
-                                    <i
-                                        class="fab fa-html5 text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">HTML5</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
-                                    data-tool="css3">
-                                    <i
-                                        class="fab fa-css3-alt text-3xl text-blue-500 group-hover:text-blue-400 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">CSS3</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-yellow-500/20 hover:border-yellow-400/50 cursor-pointer group"
-                                    data-tool="javascript">
-                                    <i
-                                        class="fab fa-js text-3xl text-yellow-500 group-hover:text-yellow-400 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">JavaScript</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
-                                    data-tool="typescript">
-                                    <i
-                                        class="fas fa-code text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">TypeScript</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group"
-                                    data-tool="react">
-                                    <i
-                                        class="fab fa-react text-3xl text-cyan-400 group-hover:text-cyan-300 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">React</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-indigo-500/20 hover:border-indigo-400/50 cursor-pointer group"
-                                    data-tool="php">
-                                    <i
-                                        class="fab fa-php text-3xl text-indigo-600 group-hover:text-indigo-500 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">PHP</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
-                                    data-tool="nodejs">
-                                    <i
-                                        class="fab fa-node-js text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Node.js</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
-                                    data-tool="express">
-                                    <i
-                                        class="fas fa-server text-3xl text-green-500 group-hover:text-green-400 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Express</span>
+
+                                <!-- Bottom Marquee: Left to Right -->
+                                <div class="relative">
+                                    <div class="marquee-wrapper overflow-x-auto rounded-2xl">
+                                        <div class="marquee-track flex items-center gap-8 animate-marquee-ltr">
+                                            <!-- Set 1 -->
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group"
+                                                data-tool="vite">
+                                                <i
+                                                    class="fas fa-bolt text-3xl text-purple-500 group-hover:text-purple-400 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Vite</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group"
+                                                data-tool="tailwind">
+                                                <i
+                                                    class="fas fa-wind text-3xl text-cyan-500 group-hover:text-cyan-400 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Tailwind</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group"
+                                                data-tool="bootstrap">
+                                                <i
+                                                    class="fab fa-bootstrap text-3xl text-purple-600 group-hover:text-purple-500 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Bootstrap</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                                data-tool="mysql">
+                                                <i
+                                                    class="fas fa-database text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">MySQL</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-500/20 hover:border-orange-400/50 cursor-pointer group"
+                                                data-tool="firebase">
+                                                <i
+                                                    class="fas fa-fire text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Firebase</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
+                                                data-tool="supabase">
+                                                <i
+                                                    class="fas fa-database text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Supabase</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-600/20 hover:border-orange-500/50 cursor-pointer group"
+                                                data-tool="git">
+                                                <i
+                                                    class="fab fa-git-alt text-3xl text-orange-600 group-hover:text-orange-500 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Git</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-gray-500/20 hover:border-gray-400/50 cursor-pointer group"
+                                                data-tool="github">
+                                                <i
+                                                    class="fab fa-github text-3xl text-gray-700 dark:text-gray-300 group-hover:text-gray-500 dark:group-hover:text-gray-200 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">GitHub</span>
+                                            </div>
+                                            <!-- Set 2 (Duplicate) -->
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group"
+                                                data-tool="vite">
+                                                <i
+                                                    class="fas fa-bolt text-3xl text-purple-500 group-hover:text-purple-400 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Vite</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group"
+                                                data-tool="tailwind">
+                                                <i
+                                                    class="fas fa-wind text-3xl text-cyan-500 group-hover:text-cyan-400 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Tailwind</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group"
+                                                data-tool="bootstrap">
+                                                <i
+                                                    class="fab fa-bootstrap text-3xl text-purple-600 group-hover:text-purple-500 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Bootstrap</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
+                                                data-tool="mysql">
+                                                <i
+                                                    class="fas fa-database text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">MySQL</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-500/20 hover:border-orange-400/50 cursor-pointer group"
+                                                data-tool="firebase">
+                                                <i
+                                                    class="fas fa-fire text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Firebase</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
+                                                data-tool="supabase">
+                                                <i
+                                                    class="fas fa-database text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Supabase</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-600/20 hover:border-orange-500/50 cursor-pointer group"
+                                                data-tool="git">
+                                                <i
+                                                    class="fab fa-git-alt text-3xl text-orange-600 group-hover:text-orange-500 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Git</span>
+                                            </div>
+                                            <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-gray-500/20 hover:border-gray-400/50 cursor-pointer group"
+                                                data-tool="github">
+                                                <i
+                                                    class="fab fa-github text-3xl text-gray-700 dark:text-gray-300 group-hover:text-gray-500 dark:group-hover:text-gray-200 transition-colors"></i>
+                                                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">GitHub</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-gray-900 to-transparent pointer-events-none z-10">
+                                    </div>
+                                    <div
+                                        class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-gray-900 to-transparent pointer-events-none z-10">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div
-                            class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-gray-900 to-transparent pointer-events-none z-10">
-                        </div>
-                        <div
-                            class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-gray-900 to-transparent pointer-events-none z-10">
-                        </div>
-                    </div>
 
-                    <!-- Central Info Panel -->
-                    <div id="tool-info-panel"
-                        class="tool-info-panel hidden relative z-20 mx-auto max-w-2xl my-6 rounded-2xl backdrop-blur-xl bg-white/80 dark:bg-gray-800/80 border border-white/30 dark:border-gray-700/30 shadow-2xl p-6 transform transition-all duration-500">
-                        <button id="close-tool-info"
-                            class="absolute top-3 right-3 w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
-                            <i class="fas fa-times"></i>
-                        </button>
-                        <div class="flex items-start gap-4">
-                            <div id="tool-info-icon"
-                                class="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0"></div>
-                            <div class="flex-1">
-                                <h4 id="tool-info-title" class="text-xl font-bold text-gray-800 dark:text-white mb-2">
-                                </h4>
-                                <p id="tool-info-desc" class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-                                </p>
-                                <ul id="tool-info-features"
-                                    class="mt-3 space-y-1 text-sm text-gray-500 dark:text-gray-400"></ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bottom Marquee: Left to Right -->
-                    <div class="relative">
-                        <div class="marquee-wrapper overflow-x-auto rounded-2xl">
-                            <div class="marquee-track flex items-center gap-8 animate-marquee-ltr">
-                                <!-- Set 1 -->
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group"
-                                    data-tool="vite">
-                                    <i
-                                        class="fas fa-bolt text-3xl text-purple-500 group-hover:text-purple-400 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Vite</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group"
-                                    data-tool="tailwind">
-                                    <i
-                                        class="fas fa-wind text-3xl text-cyan-500 group-hover:text-cyan-400 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Tailwind</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group"
-                                    data-tool="bootstrap">
-                                    <i
-                                        class="fab fa-bootstrap text-3xl text-purple-600 group-hover:text-purple-500 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Bootstrap</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
-                                    data-tool="mysql">
-                                    <i
-                                        class="fas fa-database text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">MySQL</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-500/20 hover:border-orange-400/50 cursor-pointer group"
-                                    data-tool="firebase">
-                                    <i
-                                        class="fas fa-fire text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Firebase</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
-                                    data-tool="supabase">
-                                    <i
-                                        class="fas fa-database text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Supabase</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-600/20 hover:border-orange-500/50 cursor-pointer group"
-                                    data-tool="git">
-                                    <i
-                                        class="fab fa-git-alt text-3xl text-orange-600 group-hover:text-orange-500 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Git</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-gray-500/20 hover:border-gray-400/50 cursor-pointer group"
-                                    data-tool="github">
-                                    <i
-                                        class="fab fa-github text-3xl text-gray-700 dark:text-gray-300 group-hover:text-gray-500 dark:group-hover:text-gray-200 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">GitHub</span>
-                                </div>
-                                <!-- Set 2 (Duplicate) -->
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group"
-                                    data-tool="vite">
-                                    <i
-                                        class="fas fa-bolt text-3xl text-purple-500 group-hover:text-purple-400 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Vite</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400/50 cursor-pointer group"
-                                    data-tool="tailwind">
-                                    <i
-                                        class="fas fa-wind text-3xl text-cyan-500 group-hover:text-cyan-400 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Tailwind</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/20 hover:border-purple-400/50 cursor-pointer group"
-                                    data-tool="bootstrap">
-                                    <i
-                                        class="fab fa-bootstrap text-3xl text-purple-600 group-hover:text-purple-500 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Bootstrap</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400/50 cursor-pointer group"
-                                    data-tool="mysql">
-                                    <i
-                                        class="fas fa-database text-3xl text-blue-600 group-hover:text-blue-500 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">MySQL</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-500/20 hover:border-orange-400/50 cursor-pointer group"
-                                    data-tool="firebase">
-                                    <i
-                                        class="fas fa-fire text-3xl text-orange-500 group-hover:text-orange-400 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Firebase</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-green-500/20 hover:border-green-400/50 cursor-pointer group"
-                                    data-tool="supabase">
-                                    <i
-                                        class="fas fa-database text-3xl text-green-600 group-hover:text-green-500 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Supabase</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-orange-600/20 hover:border-orange-500/50 cursor-pointer group"
-                                    data-tool="git">
-                                    <i
-                                        class="fab fa-git-alt text-3xl text-orange-600 group-hover:text-orange-500 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Git</span>
-                                </div>
-                                <div class="marquee-item flex-shrink-0 w-24 h-24 rounded-xl backdrop-blur-md bg-white/10 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/30 shadow-lg flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-gray-500/20 hover:border-gray-400/50 cursor-pointer group"
-                                    data-tool="github">
-                                    <i
-                                        class="fab fa-github text-3xl text-gray-700 dark:text-gray-300 group-hover:text-gray-500 dark:group-hover:text-gray-200 transition-colors"></i>
-                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">GitHub</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-gray-900 to-transparent pointer-events-none z-10">
-                        </div>
-                        <div
-                            class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-gray-900 to-transparent pointer-events-none z-10">
-                        </div>
-                    </div>
-                </div>
+            <p class="text-center text-sm text-gray-500 dark:text-gray-400 mt-10">
+                Core skills applied hands-on during Level 1 IT Support at
+                <a href="#experience" class="font-medium underline-animation text-blue-600 dark:text-blue-400">HelloConnect</a>
+                &mdash; see Experience for context.
+            </p>
             </div>
     </section>
 
@@ -3592,6 +3956,10 @@
         })();
     </script>
 
+    
+
+    
+
     <script>
         // Tool Info Panel Logic
         (function () {
@@ -3776,7 +4144,7 @@
         })();
     </script>
 
-    <script>
+<script>
         // Marquee Drag/Touch Scrolling
         (function () {
             const marquees = document.querySelectorAll('.marquee-wrapper');
@@ -3856,7 +4224,7 @@
         })();
     </script>
 
-    <script>
+<script>
         // Auto-update footer year
         document.getElementById("footer-year").textContent = new Date().getFullYear();
     </script>

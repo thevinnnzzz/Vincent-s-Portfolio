@@ -99,48 +99,40 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Animate skill bars on scroll
-function initSkillBarsAnimation() {
-    const skillSection = document.querySelector('#skills');
-    if (!skillSection) return;
+// Reveal skill cards and chips on scroll
+function initSkillsReveal() {
+    const section = document.querySelector('#skills');
+    if (!section) return;
 
-    const skillProgressBars = skillSection.querySelectorAll('.skill-progress');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const supportsIO = 'IntersectionObserver' in window;
 
-    // Store the target widths and set initial state
-    skillProgressBars.forEach(bar => {
-        const targetWidth = bar.style.width || bar.getAttribute('data-width');
-        if (targetWidth) {
-            bar.setAttribute('data-target-width', targetWidth);
-            bar.style.width = '0'; // Start at 0 for animation
-        }
-    });
+    // Enable reveal styles only when JS is available (no-JS keeps content visible)
+    section.classList.add('sk-setup');
 
-    // Create observer for the skills section
-    const skillsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+    const reveal = function () {
+        section.classList.add('sk-visible');
+    };
+
+    if (reduced || !supportsIO) {
+        reveal();
+        return;
+    }
+
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
             if (entry.isIntersecting) {
-                // Animate all skill bars when section comes into view
-                skillProgressBars.forEach((bar, index) => {
-                    const targetWidth = bar.getAttribute('data-target-width');
-                    if (targetWidth) {
-                        // Stagger the animations slightly for a nicer effect
-                        setTimeout(() => {
-                            bar.style.width = targetWidth;
-                        }, index * 100);
-                    }
-                });
-                // Only animate once
-                skillsObserver.unobserve(entry.target);
+                reveal();
+                observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.12 });
 
-    // Observe the skills section itself
-    skillsObserver.observe(skillSection);
+    observer.observe(section);
 }
 
-// Initialize skill bars when DOM is ready
-document.addEventListener('DOMContentLoaded', initSkillBarsAnimation);
+// Initialize skill card reveal when DOM is ready
+document.addEventListener('DOMContentLoaded', initSkillsReveal);
 
 // Dynamically generate project cards from projects-data.js
 function loadProjectCards() {
@@ -416,13 +408,6 @@ function initStaggeredAnimations() {
     projectCards.forEach((card, index) => {
         card.classList.add('reveal-scale');
         card.style.transitionDelay = `${index * 0.1}s`;
-    });
-
-    // Add stagger to tool icons
-    const toolIcons = document.querySelectorAll('#skills .bg-white, #skills .dark\\:bg-gray-800');
-    toolIcons.forEach((icon, index) => {
-        icon.classList.add('reveal-scale', 'icon-bounce');
-        icon.style.transitionDelay = `${index * 0.05}s`;
     });
 
     // Add shimmer to buttons
